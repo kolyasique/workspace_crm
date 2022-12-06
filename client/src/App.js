@@ -15,6 +15,8 @@ import StartPage from './components/StartPage/StartPage';
 import { startUserSigninAC } from './store/actions/userActions';
 import MainPageCompany from './components/MainPageCompany/MainPageCompany';
 import Login from './components/Login/Login';
+import AuthForm from './components/AuthForm/AuthForm';
+import LoginAdmin from './components/LoginAdmin/LoginAdmin';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +43,8 @@ function App() {
           <Header />
           <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/reg" element={<AuthForm />} />
+          <Route path="/loginAdmin" element={<LoginAdmin />} />
           </Routes>
           {user
             ? (

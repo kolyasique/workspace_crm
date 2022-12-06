@@ -1,12 +1,10 @@
-/* eslint-disable max-len */
 import React, { useState } from 'react';
 
-const formInitialState = {
-  login: '',
-  password: '',
-};
-
-export default function Login() {
+export default function LoginAdmin() {
+  const formInitialState = {
+    login: '',
+    password: '',
+  };
   const [loginForm, setLoginForm] = useState([]);
 
   const handleSubmit = (e) => {
@@ -32,13 +30,14 @@ export default function Login() {
   const handleInput = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
+
   return (
     <div className="loginform">
       <form onSubmit={handleSubmit}>
         {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
           {/* <img className="log8o" src={log8o} alt="VB" /> */}
-          <p className="inftext">Вход для сотрудника</p>
+          <p className="inftext">Вход для Админа</p>
         </div>
         <div className="form-input">
           <label className="form-label">login</label>
@@ -49,15 +48,6 @@ export default function Login() {
           <label className="form-label">Password</label>
           <input type="password" className="form-control" value={loginForm.password} name="password" onChange={handleInput} />
         </div>
-
-        {/* <div className="toggle-switch">
-        <p>Зареги</p>
-        <div>
-          <input className="toggle" type="checkbox" id="toggle" onClick={handleFormChange} checked={!isSignup} />
-          <label className="toggle-label" htmlFor="toggle" />
-        </div>
-        <p>Sign In</p>
-      </div> */}
 
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>
