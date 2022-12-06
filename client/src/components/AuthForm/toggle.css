@@ -1,0 +1,59 @@
+/* https://codepen.io/havardob/pen/VwKEjWW */
+/* https://jsonformatter.org/scss-to-css */
+
+.toggle-switch {
+    display: flex;
+    height: 45px;
+    width: 100%;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 1.5rem 0 1rem 0;
+  }
+  
+  .toggle,
+  .toggle:after,
+  .toggle:before {
+    box-sizing: border-box;
+  }
+  .toggle {
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toggle[type="checkbox"] {
+    visibility: hidden;
+  }
+  .toggle[type="checkbox"]:checked + label {
+    transform: rotate(360deg);
+    background-color: #000;
+  }
+  .toggle[type="checkbox"]:checked + label:before {
+    transform: translateX(30px);
+    background-color: #fff;
+  }
+  .toggle-label {
+    display: flex;
+    width: 4em;
+    height: 1.75em;
+    border: 3px solid;
+    border-radius: 99em;
+    position: relative;
+    transition: transform 0.75s ease-in-out;
+    transform-origin: 50% 50%;
+    cursor: pointer;
+  }
+  .toggle-label:before {
+    transition: transform 0.75s ease;
+    transition-delay: 0.5s;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    background-color: #000;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+  }
+  
