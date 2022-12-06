@@ -9,15 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: Sequelize.TEXT,
-      company_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Companies',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-      },
+      name: { type: Sequelize.TEXT },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
