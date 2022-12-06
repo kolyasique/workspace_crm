@@ -1,4 +1,13 @@
 .workerPanel{
     display: flex;
     flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly
+}
+.workerForm{
+ width: 45%;
+}
+.workerList{
+    width: 45%;
 }

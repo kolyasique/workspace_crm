@@ -1,0 +1,13 @@
+.loginFormDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.loginForm{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 5px;
+}

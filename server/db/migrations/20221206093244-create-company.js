@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
       },
       inn: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       email: {

@@ -1,7 +1,9 @@
-'use strict';
+/* eslint-disable camelcase */
+
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Work_category extends Model {
     /**
@@ -9,13 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({ Worker }) {
+      Work_category.hasMany(Worker, { foreignKey: 'category_id' });
     }
   }
   Work_category.init({
     name: DataTypes.TEXT,
-    company_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Work_category',
