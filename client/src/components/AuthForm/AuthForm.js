@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { startUserAuthAC } from '../../store/actions/userActions';
@@ -14,12 +15,12 @@ const formInitialState = {
 // eslint-disable-next-line react/prop-types
 export default function AuthForm() {
   const dispatch = useDispatch();
-  const [isSignup, setIsSignup] = useState(true);
+  // const [isSignup, setIsSignup] = useState(true);
   const [form, setForm] = useState(formInitialState);
 
-  const handleFormChange = () => {
-    setIsSignup(!isSignup);
-  };
+  // const handleFormChange = () => {
+  //   setIsSignup(!isSignup);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,14 +67,14 @@ export default function AuthForm() {
           <input type="text" className="form-control" value={form.login} name="login" onChange={handleInput} />
         </div>
 
-        <div className="toggle-switch">
-          <p>Sign Up</p>
+        {/* <div className="toggle-switch">
+          <p>Зареги</p>
           <div>
             <input className="toggle" type="checkbox" id="toggle" onClick={handleFormChange} checked={!isSignup} />
             <label className="toggle-label" htmlFor="toggle" />
           </div>
           <p>Sign In</p>
-        </div>
+        </div> */}
 
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>
