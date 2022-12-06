@@ -9,17 +9,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      login: {
+        type: Sequelize.TEXT,
+      },
+      password: {
+        type: Sequelize.TEXT,
+      },
       name: {
         type: Sequelize.TEXT,
-        allowNull: false,
       },
       second_name: {
         type: Sequelize.TEXT,
-        allowNull: false,
       },
       patronymic: {
         type: Sequelize.TEXT,
-        allowNull: true,
       },
       category_id: {
         type: Sequelize.INTEGER,
@@ -30,13 +33,20 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      company_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Companies',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
       email: {
         type: Sequelize.TEXT,
-        allowNull: false,
       },
       phone: {
         type: Sequelize.TEXT,
-        allowNull: false,
       },
       accepted: {
         type: Sequelize.BOOLEAN,

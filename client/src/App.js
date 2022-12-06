@@ -12,7 +12,7 @@ import Footer from './components/Footer/Footer';
 import StartPage from './components/StartPage/StartPage';
 
 import { startUserSigninAC } from './store/actions/userActions';
-import MainPage from './components/MainPage/MainPage';
+import MainPageCompany from './components/MainPageCompany/MainPageCompany';
 
 function App() {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ function App() {
           <Header />
           {user
             ? (
-              <MainPage />
+              <MainPageCompany />
             ) : <StartPage />}
             <Footer />
         </div>
