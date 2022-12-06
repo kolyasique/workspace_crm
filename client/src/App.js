@@ -1,24 +1,50 @@
-import logo from './logo.svg';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-indent */
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import './App.css';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import StartPage from './components/StartPage/StartPage';
+
+import { startUserSigninAC } from './store/actions/userActions';
+import MainPage from './components/MainPage/MainPage';
 
 function App() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.userStore);
+  const { loading } = useSelector((store) => store.globalStore);
+  useEffect(() => {
+    const abortController = new AbortController();
+    const { signal } = abortController;
+
+    dispatch(startUserSigninAC(signal));
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    loading ? (
+      <div className="spinner-container">
+        <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
+      </div>
+    )
+      : (
+        <div>
+          <Header />
+          {user
+            ? (
+              <MainPage />
+            ) : <StartPage />}
+            <Footer />
+        </div>
+      )
+
   );
 }
 

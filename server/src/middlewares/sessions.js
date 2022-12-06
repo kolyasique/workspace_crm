@@ -2,7 +2,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 module.exports = session({
-  name: 'phaseThree',
+  name: 'userSession',
   store: new FileStore(),
   secret: process.env.SECRET || 'asdf234ragfbxcx2',
   resave: false,

@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 
 const sessions = require('./src/middlewares/sessions');
 const cors = require('./src/middlewares/cors');
-// const errorHandler = require('./src/middlewares/error');
+const errorHandler = require('./src/middlewares/error');
 
-// const BaseRouter = require('./src/routers/api');
+const BaseRouter = require('./src/routers/api');
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors);
 app.use(sessions);
 
-// app.use('/api', BaseRouter);
+app.use('/api', BaseRouter);
 
 // app.use(errorHandler);
 
