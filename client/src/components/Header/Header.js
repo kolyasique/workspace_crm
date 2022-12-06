@@ -30,8 +30,9 @@ export default function Navbar() {
         <> </>
       ) : (
         <>
-          <button> Зарегистрировать</button>
-          <Link to="/login"><button className="nav-logout" type="button">Войти</button></Link>
+          <Link to="/reg"><button className="nav-logout" type="button">Зарегистрироваться</button></Link>
+          <Link to="/login"><button className="nav-logout" type="button">Вход для сотрудника</button></Link>
+          <Link to="/loginAdmin"><button className="nav-logout" type="button">Вход для Админа</button></Link>
         </>
       )}
       {user && <button className={cl.navlogout} type="button" onClick={handleLogout}>SignOut</button> }
