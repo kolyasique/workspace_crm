@@ -47,12 +47,16 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
   try {
-    const { password, email } = req.body;
-    const findWorker = await Worker.findOne({ where: { email }, attributes: ['id', 'name', 'email', 'password'], raw: true });
+    const { password, login } = req.body;
+    console.log(req.body)
+    const findWorker = await Worker.findOne({ where: { login } });
+    // attributes: ['id', 'name', 'login', 'email', 'password']
+    console.log(findWorker)
     if (!findWorker) {
       return res.status(401).json({ msg: 'Try again' });
     }
-    const comparePassword = await bcrypt.compare(password, findWorker.password);
+    // const comparePassword = await bcrypt.compare(password, findWorker.password);
+    const comparePassword = password === findWorker.password;
     if (comparePassword) {
       delete findWorker.password;
       req.session.user = findWorker;

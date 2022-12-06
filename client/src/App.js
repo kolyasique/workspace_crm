@@ -5,6 +5,7 @@
 /* eslint-disable react/jsx-indent */
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import Header from './components/Header/Header';
@@ -13,6 +14,7 @@ import StartPage from './components/StartPage/StartPage';
 
 import { startUserSigninAC } from './store/actions/userActions';
 import MainPageCompany from './components/MainPageCompany/MainPageCompany';
+import Login from './components/Login/Login';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +39,9 @@ function App() {
       : (
         <div>
           <Header />
+          <Routes>
+          <Route path="/login" element={<Login />} />
+          </Routes>
           {user
             ? (
               <MainPageCompany />
