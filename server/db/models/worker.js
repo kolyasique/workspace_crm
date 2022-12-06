@@ -11,22 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Work_category }) {
-      Worker.hasMany(Work_category, { foreignKey: 'category_id' });
+    static associate({ Work_category, Company }) {
+      Worker.belongsTo(Work_category, { foreignKey: 'category_id' });
+      Worker.belongsTo(Company, { foreignKey: 'company_id' });
     }
   }
   Worker.init({
+    login: {
+      type: DataTypes.TEXT,
+    },
+    password: {
+      type: DataTypes.TEXT,
+    },
     name: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     second_name: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     patronymic: {
       type: DataTypes.TEXT,
-      allowNull: true,
     },
     category_id: {
       type: DataTypes.INTEGER,
@@ -37,13 +41,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE',
     },
+    company_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Companies',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
     email: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     phone: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     accepted: {
       type: DataTypes.BOOLEAN,
