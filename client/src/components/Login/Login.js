@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 
+import './Login.css';
+import './toggle.css';
+
 const formInitialState = {
   login: '',
   password: '',
@@ -8,7 +11,7 @@ const formInitialState = {
 
 export default function Login() {
   const [loginForm, setLoginForm] = useState([]);
-
+  const [admSignup, setAdmSignup] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(loginForm);
@@ -29,12 +32,15 @@ export default function Login() {
       .catch(console.error);
     setLoginForm(formInitialState);
   };
+  const handleFormChange = () => {
+    setAdmSignup(!admSignup);
+  };
   const handleInput = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
   return (
-    <div className="loginform">
-      <form onSubmit={handleSubmit}>
+    <div className="loginFormDiv">
+      <form className="loginForm" onSubmit={handleSubmit}>
         {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
           {/* <img className="log8o" src={log8o} alt="VB" /> */}
@@ -50,14 +56,14 @@ export default function Login() {
           <input type="password" className="form-control" value={loginForm.password} name="password" onChange={handleInput} />
         </div>
 
-        {/* <div className="toggle-switch">
-        <p>Зареги</p>
-        <div>
-          <input className="toggle" type="checkbox" id="toggle" onClick={handleFormChange} checked={!isSignup} />
-          <label className="toggle-label" htmlFor="toggle" />
+        <div className="toggle1-switch">
+          <p>Войти как сотрудник</p>
+          <div>
+            <input className="toggle1" type="checkbox" id="toggle1" onClick={handleFormChange} checked={!admSignup} />
+            <label className="toggle1-label" htmlFor="toggle1" />
+          </div>
+          <p>Войти как админ</p>
         </div>
-        <p>Sign In</p>
-      </div> */}
 
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>

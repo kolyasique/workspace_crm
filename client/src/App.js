@@ -34,26 +34,31 @@ function App() {
   }, []);
   return (
     loading ? (
-      <div className="spinner-container">
-        <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
-      </div>
+    <div className="spinner-container">
+    <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
+    </div>
     )
       : (
-        <div>
+        <div className="bodyApp">
           <Header />
-          <Routes>
+          {user
+            ? (
+              <Routes>
+              <Route path="/main" element={<MainPageCompany />} />
+              </Routes>
+            ) : (
+              <Routes>
+              <Route path="/" element={<StartPage />} />
+
+          {/* <Route path="/" element={<StartPage />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/reg" element={<AuthForm />} />
           <Route path="/loginAdmin" element={<LoginAdmin />} />
-          </Routes>
-          {user
-            ? (
-              <MainPageCompany />
-            ) : <StartPage />}
-            <Footer />
+
+              </Routes>
+            )}
         </div>
       )
-
   );
 }
 

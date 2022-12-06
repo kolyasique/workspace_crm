@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { startUserAuthAC } from '../../store/actions/userActions';
 
 import './AuthForm.css';
@@ -15,6 +16,7 @@ const formInitialState = {
 // eslint-disable-next-line react/prop-types
 export default function AuthForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const [isSignup, setIsSignup] = useState(true);
   const [form, setForm] = useState(formInitialState);
 
@@ -28,6 +30,11 @@ export default function AuthForm() {
     dispatch(startUserAuthAC(form));
 
     setForm(formInitialState);
+    try {
+      navigate('/main');
+    } catch (error) {
+      navigate('/');
+    }
   };
 
   const handleInput = (e) => {
@@ -35,7 +42,7 @@ export default function AuthForm() {
   };
 
   return (
-    <div>
+    <div className="formDiv">
       <form className="authform" onSubmit={handleSubmit}>
         {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
