@@ -11,6 +11,7 @@ import Chat from './UI/Chat/Chat';
 import Documents from './UI/Documents/Documents';
 import './TabPanelUser.css';
 import Stat from './UI/Stat/Stat';
+import CalendarComponent from '../Calendar/Calendar';
 
 const functionalBlocks = {
 
@@ -26,7 +27,7 @@ export default function VerticalTabs() {
         <button id="2" className={activeButton === '2' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Stat />); }}> Статистика</button>
         <button id="3" className={activeButton === '3' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Chat />); }}>Сообщения</button>
         <button id="4" className={activeButton === '4' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Clients />); }}>Клиенты</button>
-        <button id="5" className={activeButton === '5' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Documents />); }}>Документы</button>
+        <button id="5" className={activeButton === '5' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<CalendarComponent />); }}>Календарь</button>
       </div>
       <div className="rightComponents">
         <div>{ component }</div>

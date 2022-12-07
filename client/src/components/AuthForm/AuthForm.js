@@ -25,7 +25,6 @@ export default function AuthForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
     setForm(formInitialState);
     try {
       navigate('/adminpage');
