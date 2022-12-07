@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { startUserAuthAC } from '../../store/actions/userActions';
 
 import './AuthForm.css';
@@ -11,12 +11,16 @@ const formInitialState = {
   name: '',
   email: '',
   password: '',
+  // eslint-disable-next-line no-dupe-keys
+  email: '',
+  inn: '',
+  phone: '',
 };
 
 // eslint-disable-next-line react/prop-types
 export default function AuthForm() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const [isSignup, setIsSignup] = useState(true);
   const [form, setForm] = useState(formInitialState);
 
@@ -26,9 +30,7 @@ export default function AuthForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(startUserAuthAC(form));
-
     setForm(formInitialState);
     try {
       navigate('/adminpage');

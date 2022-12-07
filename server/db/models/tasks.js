@@ -1,7 +1,6 @@
 const {
   Model,
 } = require('sequelize');
-const order = require('./order');
 
 module.exports = (sequelize, DataTypes) => {
   class Tasks extends Model {
