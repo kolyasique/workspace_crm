@@ -10,26 +10,23 @@ const wss = new WebSocketServer({
 const usersMap = new Map();
 
 wss.on('connection', (ws, req) => {
-  const { user } = req.session;
+  const { company } = req.session;
 
-  usersMap.set(user.id, { user, ws });
+  usersMap.set(company.id, { company, ws });
 
-  //   message => {type: String, payload: Object};
   ws.on('message', (msg) => {
     const message = JSON.parse(msg);
-    console.log(message);
 
     const { type, payload } = message;
 
-    const sender = usersMap.get(user.id);
-    sender.ws.send(JSON.stringify({ ...message, fromServer: true }));
+    const sender = usersMap.get(company.id);
 
     switch (type) {
       case 'message':
-
+        sender.ws.send(JSON.stringify(message));
         break;
       case 'open':
-
+        sender.ws.send(JSON.stringify({ ...message, fromServer: true }));
         break;
 
       default:
