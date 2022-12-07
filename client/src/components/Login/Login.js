@@ -25,8 +25,6 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(loginForm);
-    dispatch(startUserAuthAC(loginForm));
 
     const url = admSignup ? 'http://localhost:6622/api/auth/signinworker' : 'http://localhost:6622/api/auth/signinadmin';
     fetch(url, {
@@ -39,17 +37,20 @@ export default function Login() {
     })
       .then((res) => {
         if (res.status === 200) {
-          try {
-            navigate('/workerpage');
-          } catch (error) {
-            navigate('/login');
-          }
+          // try {
+          //   navigate('/workerpage');
+          // } catch (error) {
+          //   navigate('/login');
+          // }
           return res.json();
         }
         throw new Error('Something went wrong');
       })
+      .then((res) => {
+        dispatch({ type: 'USER_SIGNIN', payload: res });
+      })
       .catch(console.error);
-
+    navigate('/workerpage');
     setLoginForm(formInitialState);
   };
 

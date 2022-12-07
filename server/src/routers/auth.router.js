@@ -87,8 +87,6 @@ router.post('/createuser', async (req, res) => {
       login, password, name, second_name, patronymic, email, phone, select
     } = req.body;
     const companyId = req.session.company.id;
-
-    console.log(companyId);
     const hashedPassword = await bcrypt.hash(password, 10);
     const createWorker = await Worker.create({
       login, password:hashedPassword, name, second_name, patronymic, category_id:Number(select), company_id: companyId, email, phone,

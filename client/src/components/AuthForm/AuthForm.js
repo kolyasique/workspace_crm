@@ -11,6 +11,10 @@ const formInitialState = {
   name: '',
   email: '',
   password: '',
+  // eslint-disable-next-line no-dupe-keys
+  email: '',
+  inn: '',
+  phone: '',
 };
 
 // eslint-disable-next-line react/prop-types
@@ -26,6 +30,7 @@ export default function AuthForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
 
     dispatch(startUserAuthAC(form));
 
