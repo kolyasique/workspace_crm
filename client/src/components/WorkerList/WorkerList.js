@@ -2,19 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './WorkerList.css';
 
-export default function WorkerList() {
-  const [workers, setWorkers] = useState([]);
-  const abortController = new AbortController();
-  useEffect(() => {
-    fetch('http://localhost:6622/api/adminpanel/getworkers', {
-      credentials: 'include',
-      // ручка за которую у нас цепляется abortcontroller
-      signal: abortController.signal,
-    })
-      .then((res) => res.json())
-      .then((data) => setWorkers(data));
-  }, []);
-  console.log(workers);
+export default function WorkerList({ workers }) {
   return (
     <div className="mainpage usereducer">
       {workers.length !== 0 ? (
