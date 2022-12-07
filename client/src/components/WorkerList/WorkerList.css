@@ -1,0 +1,6 @@
+.oneWorker{
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}

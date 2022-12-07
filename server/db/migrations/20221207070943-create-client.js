@@ -1,8 +1,8 @@
-/* eslint-disable no-unused-vars */
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Companies', {
+    await queryInterface.createTable('Clients', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,28 +10,25 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+        type: Sequelize.STRING,
       },
-      login: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      password: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+      adress: {
+        type: Sequelize.STRING,
       },
       inn: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       email: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+        type: Sequelize.STRING,
       },
-      phone: {
-        type: Sequelize.TEXT,
+      company_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Companies',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Companies');
+    await queryInterface.dropTable("Clients");
   },
 };

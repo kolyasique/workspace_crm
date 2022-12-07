@@ -6,14 +6,10 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class Worker extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate({ Work_category, Company }) {
+    static associate({ Work_category, Company, Tasks}) {
       Worker.belongsTo(Work_category, { foreignKey: 'category_id' });
       Worker.belongsTo(Company, { foreignKey: 'company_id' });
+      Worker.hasMany(Tasks, { foreignKey: 'worker_id' });
     }
   }
   Worker.init({

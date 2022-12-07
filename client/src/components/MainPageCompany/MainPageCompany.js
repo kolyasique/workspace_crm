@@ -7,8 +7,8 @@ export default function MainPageCompany() {
   return (
 
     <div className={cl.workerPanel}>
-      <AddWorkersForm />
-      <WorkerList />
+      <div className={cl.workerForm}><AddWorkersForm /></div>
+      <div className={cl.workerList}><WorkerList /></div>
     </div>
   );
 }

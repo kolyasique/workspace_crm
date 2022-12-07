@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import './WorkerList.css';
 
 export default function WorkerList() {
   const [workers, setWorkers] = useState([]);
@@ -16,10 +17,23 @@ export default function WorkerList() {
   console.log(workers);
   return (
     <div className="mainpage usereducer">
-      <div>
-        {workers.map((el) => (
-          <div key={el.id}>{el.name}</div>))}
-      </div>
+      {workers.length !== 0 ? (
+
+        <div>
+          {workers.map((el) => (
+            <div key={el.id} className="oneWorker">
+              <div>{el.name}</div>
+              <div>{el.second_name}</div>
+              <div>{el.patronymic}</div>
+            </div>
+          ))}
+
+        </div>
+
+      ) : (
+        <div>Список пуст</div>
+      )}
+
     </div>
 
   );

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
@@ -77,6 +78,17 @@ export default function AddWorkersForm() {
           <label className="form-label ">телефон</label>
           <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
         </div>
+
+        <div className="form-input">
+          <label className="form-label ">Должность</label>
+          {/* <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} /> */}
+          <select name="select" onChange={handleInput} value={form.category_id}>
+            <option value="1">Администратор</option>
+            <option value="2" selected>АУП</option>
+            <option value="3">Исполняющий сотрудник</option>
+          </select>
+        </div>
+
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>
     </div>
