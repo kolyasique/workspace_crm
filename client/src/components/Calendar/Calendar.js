@@ -63,6 +63,7 @@ function CalendarComponent() {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(date),
     })
       .then((res) => {

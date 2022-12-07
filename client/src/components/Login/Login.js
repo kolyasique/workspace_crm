@@ -3,7 +3,8 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { startUserAuthAC } from '../../store/actions/userActions';
 import './Login.css';
 import './toggle.css';
 
@@ -16,6 +17,7 @@ export default function Login() {
   const [loginForm, setLoginForm] = useState([]);
   const [admSignup, setAdmSignup] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFormChange = () => {
     setAdmSignup(!admSignup);
@@ -24,6 +26,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(loginForm);
+    dispatch(startUserAuthAC(loginForm));
 
     const url = admSignup ? 'http://localhost:6622/api/auth/signinworker' : 'http://localhost:6622/api/auth/signinadmin';
     fetch(url, {
@@ -46,6 +49,7 @@ export default function Login() {
         throw new Error('Something went wrong');
       })
       .catch(console.error);
+
     setLoginForm(formInitialState);
   };
 
