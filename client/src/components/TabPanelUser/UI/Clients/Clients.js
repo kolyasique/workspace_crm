@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import './Clients.css';
+
 export default function Clients() {
   const [clients, setClients] = useState([]);
   const abortController = new AbortController();
@@ -13,9 +15,9 @@ export default function Clients() {
       .then((data) => setClients(data));
   }, []);
   return (
-    <div>
+    <div className="clientListDiv">
       {clients.map((client) => (
-        <div>{client.name}</div>
+        <div className="clientItem">{client.name}</div>
       ))}
     </div>
   );

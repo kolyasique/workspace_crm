@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { startUserAuthAC } from '../../store/actions/userActions';
+import { useDispatch } from 'react-redux';
+import { startUserAuthAC } from '../../store/actions/userActions';
 
 import './AuthForm.css';
 import './toggle.css';
@@ -15,6 +16,7 @@ const formInitialState = {
 // eslint-disable-next-line react/prop-types
 export default function AuthForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const [isSignup, setIsSignup] = useState(true);
   const [form, setForm] = useState(formInitialState);
 
@@ -24,6 +26,8 @@ export default function AuthForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    dispatch(startUserAuthAC(form));
 
     setForm(formInitialState);
     try {
