@@ -1,9 +1,13 @@
 /* eslint-disable no-unused-vars */
+
 require('dotenv').config();
+
 const express = require('express');
 const morgan = require('morgan');
+const http = require('http');
+const wss = require('./websocket/index');
 
-const sessions = require('./src/middlewares/sessions');
+const sessionParser = require('./src/middlewares/sessions');
 const cors = require('./src/middlewares/cors');
 const errorHandler = require('./src/middlewares/error');
 
@@ -17,7 +21,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors);
-app.use(sessions);
+app.use(sessionParser);
 
 app.use('/api', BaseRouter);
 
@@ -28,6 +32,20 @@ app.use('/api', BaseRouter);
 //   res.status(500).send('Something broke!');
 // });
 
-app.listen(PORT, () => {
+const server = http.createServer(app);
+
+server.on('upgrade', (req, socket, head) => {
+  sessionParser(req, {}, () => {
+    if (!req.session.user) {
+      socket.write('net sessii');
+      socket.end();
+    }
+    wss.handleUpgrade(req, socket, head, (ws) => {
+      wss.emit('connection', ws, req);
+    });
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`Server is up on ${PORT}`);
 });

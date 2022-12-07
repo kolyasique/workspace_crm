@@ -4,10 +4,8 @@ const bcrypt = require('bcrypt');
 const { Worker } = require('../../db/models');
 
 adminPanelRouter.get('/getworkers', async (req, res) => {
-    console.log('addworker')
   try {
-    const allWorkers = await Worker.findAll({where:{company_id:req.session.company.id}});
-    console.log(allWorkers);
+    const allWorkers = await Worker.findAll({ where: { company_id: req.session.company.id } });
     res.json(allWorkers);
   } catch (error) {
     console.log(error);
