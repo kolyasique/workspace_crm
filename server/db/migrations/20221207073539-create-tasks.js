@@ -10,21 +10,31 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       title: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       start: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       end: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       status: {
         type: Sequelize.BOOLEAN,
       },
       worker_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Workers',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
+      order_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Orders',
           key: 'id',
         },
         onDelete: 'CASCADE',
