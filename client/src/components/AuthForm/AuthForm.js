@@ -30,7 +30,10 @@ export default function AuthForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+
     dispatch(startUserAuthAC(form));
+
     setForm(formInitialState);
     try {
       navigate('/adminpage');
