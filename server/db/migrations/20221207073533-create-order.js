@@ -20,14 +20,6 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      task_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Tasks',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

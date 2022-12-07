@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   class Tasks extends Model {
     static associate({ Worker, Order }) {
       Tasks.belongsTo(Worker, { foreignKey: 'worker_id' });
-      Tasks.hasOne(Order, { foreignKey: 'task_id' });
+      Tasks.belongsTo(Order, { foreignKey: 'order_id' });
     }
   }
   Tasks.init({
@@ -28,6 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       references: {
         model: 'Workers',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
+    order_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Orders',
         key: 'id',
       },
       onDelete: 'CASCADE',

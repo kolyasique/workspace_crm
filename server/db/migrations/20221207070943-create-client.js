@@ -11,19 +11,15 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       adress: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       inn: {
         type: Sequelize.INTEGER,
-        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       company_id: {
         type: Sequelize.INTEGER,
