@@ -48,10 +48,10 @@ router.post('/signup', async (req, res) => {
 router.post('/signin', async (req, res) => {
   try {
     const { password, login } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     const findWorker = await Worker.findOne({ where: { login } });
     // attributes: ['id', 'name', 'login', 'email', 'password']
-    console.log(findWorker)
+    console.log(findWorker);
     if (!findWorker) {
       return res.status(401).json({ msg: 'Try again' });
     }
@@ -75,7 +75,15 @@ router.post('/createuser', async (req, res) => {
     const companyId = req.session.company.id;
     console.log(companyId);
     const createWorker = await Worker.create({
-      login, password, name, second_name, patronymic, category_id: 1, company_id: companyId, email, phone,
+      login,
+      password,
+      name,
+      second_name,
+      patronymic,
+      category_id: 1,
+      company_id: companyId,
+      email,
+      phone,
     });
     res.status(200);
   } catch (error) {
