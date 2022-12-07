@@ -17,6 +17,7 @@ import MainPageCompany from './components/MainPageCompany/MainPageCompany';
 import Login from './components/Login/Login';
 import AuthForm from './components/AuthForm/AuthForm';
 import LoginAdmin from './components/LoginAdmin/LoginAdmin';
+import MainPageUser from './components/MainPageUser/MainPageUser';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,26 +35,28 @@ function App() {
   }, []);
   return (
     loading ? (
-      <div className="spinner-container">
-        <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
-      </div>
+    <div className="spinner-container">
+    <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
+    </div>
     )
       : (
-        <div>
+        <div className="bodyApp">
           <Header />
-          <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/reg" element={<AuthForm />} />
-          <Route path="/loginAdmin" element={<LoginAdmin />} />
-          </Routes>
           {user
             ? (
-              <MainPageCompany />
-            ) : <StartPage />}
-            <Footer />
+              <Routes>
+              <Route path="/adminpage" element={<MainPageCompany />} />
+              <Route path="/workerpage" element={<MainPageUser />} />
+              </Routes>
+            ) : (
+              <Routes>
+              <Route path="/" element={<StartPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/reg" element={<AuthForm />} />
+              </Routes>
+            )}
         </div>
       )
-
   );
 }
 

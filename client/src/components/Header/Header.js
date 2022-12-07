@@ -2,13 +2,15 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { startFilterCandidatesAC } from '../../store/actions/candidateActions';
 import { userSignoutAC } from '../../store/actions/userActions';
 import cl from './Header.module.css';
+import logoWS from './logoWS.png';
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.userStore);
 
   const handleLogout = useCallback(() => {
@@ -17,6 +19,11 @@ export default function Navbar() {
       { credentials: 'include' },
     ).then((res) => {
       if (res.status === 200) { dispatch(userSignoutAC(null)); }
+      try {
+        navigate('/');
+      } catch (error) {
+        navigate('/main');
+      }
     });
   }, []);
 
@@ -24,18 +31,15 @@ export default function Navbar() {
   //   dispatch(startFilterCandidatesAC(e.target.value));
   // };
   return (
+
     <div className={cl.header}>
-      <img className={cl.navlogo} src="https://w7.pngwing.com/pngs/510/957/png-transparent-price-discounts-and-allowances-brand-logo-cheap-price-text-logo-publishing.png" alt="nav-logo-beaver" />
+      <img className={cl.navlogo} src={logoWS} alt="workspace" />
       {user ? (
         <> </>
       ) : (
-        <>
-          <Link to="/reg"><button className="nav-logout" type="button">Зарегистрироваться</button></Link>
-          <Link to="/login"><button className="nav-logout" type="button">Вход для сотрудника</button></Link>
-          <Link to="/loginAdmin"><button className="nav-logout" type="button">Вход для Админа</button></Link>
-        </>
+        <Link to="/login"><button className={cl.logoutBtn} type="button">Вход</button></Link>
       )}
-      {user && <button className={cl.navlogout} type="button" onClick={handleLogout}>SignOut</button> }
+      {user && <button className={cl.logoutBtn} type="button" onClick={handleLogout}>SignOut</button> }
 
     </div>
   );
