@@ -1,0 +1,13 @@
+.taskContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: aquamarine;
+    padding: 10px;
+}
+.taskItem{
+    background-color: azure;
+    width: 100%;
+}
