@@ -17,6 +17,7 @@ import MainPageCompany from './components/MainPageCompany/MainPageCompany';
 import Login from './components/Login/Login';
 import AuthForm from './components/AuthForm/AuthForm';
 import LoginAdmin from './components/LoginAdmin/LoginAdmin';
+import MainPageUser from './components/MainPageUser/MainPageUser';
 
 function App() {
   const dispatch = useDispatch();
@@ -44,17 +45,14 @@ function App() {
           {user
             ? (
               <Routes>
-              <Route path="/main" element={<MainPageCompany />} />
+              <Route path="/adminpage" element={<MainPageCompany />} />
+              <Route path="/workerpage" element={<MainPageUser />} />
               </Routes>
             ) : (
               <Routes>
               <Route path="/" element={<StartPage />} />
-
-          {/* <Route path="/" element={<StartPage />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/reg" element={<AuthForm />} />
-          <Route path="/loginAdmin" element={<LoginAdmin />} />
-
+              <Route path="/login" element={<Login />} />
+              <Route path="/reg" element={<AuthForm />} />
               </Routes>
             )}
         </div>

@@ -23,3 +23,23 @@
   .navlogout:hover {
     background-color: aquamarine;
   }
+  .logoutBtn {
+    background: none;
+     border: 2px solid #00D4C6; 
+      width: 40%;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: .4s;
+      text-align: center;
+  }
+  
+  .logoutBtn:hover {
+    background-color: #00D4C6;
+    color: #fff;
+  }
