@@ -36,7 +36,7 @@ const server = http.createServer(app);
 
 server.on('upgrade', (req, socket, head) => {
   sessionParser(req, {}, () => {
-    if (!req.session.user) {
+    if (!req.session.company) {
       socket.write('net sessii');
       socket.end();
     }
