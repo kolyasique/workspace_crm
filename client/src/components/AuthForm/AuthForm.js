@@ -31,9 +31,9 @@ export default function AuthForm() {
 
     setForm(formInitialState);
     try {
-      navigate('/main');
+      navigate('/adminpage');
     } catch (error) {
-      navigate('/');
+      navigate('/reg');
     }
   };
 
