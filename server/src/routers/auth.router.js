@@ -81,24 +81,6 @@ router.post('/signinadmin', async (req, res) => {
   }
 });
 
-router.post('/createuser', async (req, res) => {
-  try {
-    const {
-      login, password, name, second_name, patronymic, email, phone, select
-    } = req.body;
-    const companyId = req.session.company.id;
-
-    console.log(companyId);
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const createWorker = await Worker.create({
-      login, password:hashedPassword, name, second_name, patronymic, category_id:Number(select), company_id: companyId, email, phone,
-
-    });
-    res.status(200);
-  } catch (error) {
-    return res.status(400).json({ msg: error.message });
-  }
-});
 router.get('/signout', (req, res) => {
   req.session.destroy();
   res.clearCookie('userSession');

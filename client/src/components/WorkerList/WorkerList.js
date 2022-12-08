@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './WorkerList.css';
 
-export default function WorkerList({ workers }) {
+function WorkerList({ workers }) {
   return (
     <div className="mainpage usereducer">
       {workers.length !== 0 ? (
@@ -26,3 +26,5 @@ export default function WorkerList({ workers }) {
 
   );
 }
+
+export default WorkerList;

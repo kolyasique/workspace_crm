@@ -13,7 +13,7 @@ const formInitialState = {
   email: '',
 };
 
-export default function AddWorkersForm() {
+export default function AddWorkersForm({ setWorkers, workers }) {
   const [form, setForm] = useState(formInitialState);
 
   const handleInput = (e) => {
@@ -23,7 +23,7 @@ export default function AddWorkersForm() {
     e.preventDefault();
     console.log(form);
 
-    const url = 'http://localhost:6622/api/auth/createuser';
+    const url = 'http://localhost:6622/api/adminpanel/createuser';
     fetch(url, {
       method: 'POST',
       credentials: 'include',
@@ -32,9 +32,10 @@ export default function AddWorkersForm() {
       },
       body: JSON.stringify(form),
     })
-      .then((res) => {
-        if (res.status === 204) return res.json();
-        throw new Error('Something went wrong');
+      .then((res) => res.json())
+      .then((worker) => {
+        console.log(worker, 88888);
+        setWorkers((prev) => [...prev, worker]);
       })
       .catch(console.error);
     setForm(formInitialState);
@@ -83,9 +84,9 @@ export default function AddWorkersForm() {
           <label className="form-label ">Должность</label>
           {/* <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} /> */}
           <select name="select" onChange={handleInput} value={form.category_id}>
-            <option value="1">Администратор</option>
-            <option value="2" selected>АУП</option>
-            <option value="3">Исполняющий сотрудник</option>
+            <option value={1}>Администратор</option>
+            <option value={2} selected>АУП</option>
+            <option value={3}>Исполняющий сотрудник</option>
           </select>
         </div>
 

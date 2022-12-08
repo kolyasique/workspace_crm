@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { startUserAuthAC } from '../../store/actions/userActions';
 
 import './AuthForm.css';
 import './toggle.css';
@@ -21,22 +20,32 @@ const formInitialState = {
 export default function AuthForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [isSignup, setIsSignup] = useState(true);
   const [form, setForm] = useState(formInitialState);
-
-  // const handleFormChange = () => {
-  //   setIsSignup(!isSignup);
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(startUserAuthAC(form));
+
+    const url = 'http://localhost:6622/api/auth/signup';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+        throw new Error('Something went wrong');
+      })
+      .then((res) => {
+        dispatch({ type: 'USER_SIGNIN', payload: res });
+      })
+      .catch(console.error);
+    navigate('/adminpage');
     setForm(formInitialState);
-    try {
-      navigate('/adminpage');
-    } catch (error) {
-      navigate('/reg');
-    }
   };
 
   const handleInput = (e) => {
