@@ -66,7 +66,7 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           <h2>Задачи</h2>
-          {tasks.map((task) => (
+          {tasks?.map((task) => (
             <div key={task.id} className="taskItem">
               <div className="taskItemUpperDiv">
                 <div className="taskType">{task.task_type}</div>
