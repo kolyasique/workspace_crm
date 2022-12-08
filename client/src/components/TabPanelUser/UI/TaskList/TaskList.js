@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 import { Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { SliderComponent } from '../Slider/SliderToggle';
 import './TaskList.css';
 // import SearchTool from '../SearchTool/SearchTool';
