@@ -2,19 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 function SliderComponent({
-  value, handleChange, min, max, step, marks,
+  value, handleChange, min, max, step, id,
 }) {
   return (
     <Container>
       <Slider
         type="range"
+        id={id}
         defaultValue={value}
         onChange={handleChange}
         min={min}
         max={max}
-        dots
         step={step}
-        marks={marks}
       />
     </Container>
   );

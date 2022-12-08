@@ -18,26 +18,33 @@ export default function TaskList() {
     question: '',
     value: null,
   });
-  const [taskStatus, setTaskStatus] = useState({ value: 0, mean: 'Начать->' });
+  const [disabledBtn, setDisabledBtn] = useState(true);
+
+  const [taskStatus, setTaskStatus] = useState({ id: null, value: 0, mean: 'Начать ->' });
+
+  useEffect(() => {
+    if (taskStatus.value === 100) {
+      setDisabledBtn(false);
+    }
+    if (taskStatus.value !== 100) {
+      setDisabledBtn(true);
+    }
+    // console.log(taskStatus);
+  }, [taskStatus]);
 
   const handleChange = (e) => {
-    switch (e.target.value) {
-      case 25:
-        setTaskStatus({ value: e.target.value, mean: 'Начали' });
-        break;
-      case 75:
-        setTaskStatus({ value: e.target.value, mean: 'Заканчиваем' });
-        break;
-      case 100:
-        setTaskStatus({ value: e.target.value, mean: 'Закончили' });
-        break;
-      default:
-        console.log('Sorry, we are out of');
+    // setTaskStatus(Number(e.target.value));
+    if (e.target.value === '25') {
+      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Начали' });
+    } else if (e.target.value === '50') {
+      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'В процессе' });
+    } else if (e.target.value === '75') {
+      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Заканчиваем' });
+    } else if (e.target.value === '100') {
+      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Выполнено' });
     }
-
-    setTaskStatus({ value: e.target.value });
   };
-
+  console.log(taskStatus);
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/gettasks', {
@@ -47,7 +54,7 @@ export default function TaskList() {
       .then((res) => res.json())
       .then((data) => setTasks(data));
   }, []);
-
+  console.log(taskStatus, disabledBtn, 'Taskstatus');
   return (
     <div className="taskContainer">
       <div className="taskTools">
@@ -60,7 +67,7 @@ export default function TaskList() {
         <div className="toDoTasks">
           <h2>Задачи</h2>
           {tasks.map((task) => (
-            <div className="taskItem">
+            <div key={task.id} className="taskItem">
               <div className="taskItemUpperDiv">
                 <div className="taskType">{task.task_type}</div>
                 <div className="taskTitle">{task.title}</div>
@@ -69,17 +76,18 @@ export default function TaskList() {
                 <div className="taskContent">{task.content}</div>
                 <input type="checkbox" />
               </div>
-              <div>{taskStatus.value}</div>
+              <div>{taskStatus.mean}</div>
               <SliderComponent
                 dots
                 step={25}
+                id={task.id}
                 value={taskStatus.value}
                 handleChange={handleChange}
                 min={0}
                 max={100}
                 marks={{ 0: 'Начало', 25: 'В работе', 100: 'Выполнено' }}
               />
-              {' '}
+              <button id={task.id} disabled={disabledBtn} type="button">Завершить</button>
 
             </div>
           ))}
