@@ -18,22 +18,21 @@ export default function TaskList() {
     question: '',
     value: null,
   });
-  const [disabledBtn, setDisabledBtn] = useState(true);
-
+  const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});
+  const [filteredTasks, setFilteredTasks] = useState([tasks]);
 
-  useEffect(() => {
-    if (taskStatus.value === 100) {
-      setDisabledBtn(false);
-    }
-    if (taskStatus.value !== 100) {
-      setDisabledBtn(true);
-    }
-    // console.log(taskStatus);
-  }, [taskStatus]);
+  // useEffect(() => {
+  //   if (taskStatus.value === 100) {
+  //     setDisabledBtn(false);
+  //   }
+  //   if (taskStatus.value !== 100) {
+  //     setDisabledBtn(true);
+  //   }
+  //   // console.log(taskStatus);
+  // }, [taskStatus]);
 
   const getProgressStatus = (progressStatus) => {
-    console.log(progressStatus, 'Прогрес стаутс');
     switch (progressStatus) {
       case 'Haчало':
         return 0;
@@ -47,9 +46,15 @@ export default function TaskList() {
         return 0;
     }
   };
-  console.log(taskStatus);
+  console.log(taskStatus, 'Это таск статус');
+  console.log(disabledBtn, 'Это дисейбл батонс статус');
+
   const handleChange = (e) => {
+    console.log(e.target.value, 'Это е таргет велью');
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value });
+    if (e.target.value === '100') {
+      setDisabledBtn({ ...disabledBtn, [e.target.id]: true });
+    }
   };
 
   const abortController = new AbortController();
@@ -59,12 +64,41 @@ export default function TaskList() {
       signal: abortController.signal,
     })
       .then((res) => res.json())
-      .then((data) => setTasks(data));
+      .then(
+        (data) => setTasks(data),
+      );
   }, []);
-  console.log(taskStatus, disabledBtn, 'Taskstatus');
+
+  function doTaskFilter(filterType) {
+    const newTaskArr = [...tasks];
+    switch (filterType) {
+      case 'clear':
+        return setFilteredTasks(tasks);
+      case 'personal':
+        return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'personal'));
+      case 'ordered':
+        return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'ordered'));
+      default:
+        return setFilteredTasks(tasks);
+    }
+    // if (filterType === 'clear') {
+    //   setFilteredTasks(tasks);
+    // }
+    // const tasksFromLocal = localStorage.getItem('tasks');
+    // console.log(tasksFromLocal);
+    // setTasks(tasksFromLocal);
+    // console.log(tasks, 'После получения с локальной формы');
+    // if (e.target.value == 'clear') {
+    //   return setTasks(tasksFromLocal);
+    // } return setTasks(tasks.filter((el) => el.task_type == e.target.value));
+  }
+  console.log(tasks, 'Это таски вне функции');
   return (
     <div className="taskContainer">
       <div className="taskTools">
+        <button type="button" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>personal</button>
+        <button type="button" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>ordered</button>
+        <button type="button" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>clear</button>
         <form className="taskTools">
           <input type="text" />
           <button type="submit">искать</button>
@@ -72,23 +106,22 @@ export default function TaskList() {
       </div>
       <div className="taskContainer2">
         <div className="toDoTasks">
-          <h2>Задачи</h2>
 
-          {tasks.map((task) => {
+          {filteredTasks.map((task) => {
             const sliderValue = getProgressStatus(task?.progress_status);
             console.log(sliderValue);
             // console.log(task.progress_status);
             return (
               <div key={task.id} className="taskItem">
                 <div className="taskItemUpperDiv">
-                  <div className="taskType">{task.task_type}</div>
+                  <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
                   <div className="taskTitle">{task.title}</div>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
                   <input type="checkbox" />
                 </div>
-                <div>{taskStatus[task.id]}</div>
+                <div>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
                 <SliderComponent
                   dots
                   step={25}
@@ -97,9 +130,8 @@ export default function TaskList() {
                   handleChange={handleChange}
                   min={0}
                   max={100}
-                  marks={{ 0: 'Начало', 25: 'В работе', 100: 'Выполнено' }}
                 />
-                <button id={task.id} disabled={disabledBtn} type="button">Завершить</button>
+                <button className="deleteTask" id={task.id} disabled={!disabledBtn[task.id]} type="button">Завершить</button>
 
               </div>
             );
