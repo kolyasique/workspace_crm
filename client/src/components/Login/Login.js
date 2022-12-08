@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { startUserAuthAC } from '../../store/actions/userActions';
 import './Login.css';
 import './toggle.css';
 
@@ -37,11 +36,6 @@ export default function Login() {
     })
       .then((res) => {
         if (res.status === 200) {
-          // try {
-          //   navigate('/workerpage');
-          // } catch (error) {
-          //   navigate('/login');
-          // }
           return res.json();
         }
         throw new Error('Something went wrong');

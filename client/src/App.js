@@ -12,7 +12,6 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import StartPage from './components/StartPage/StartPage';
 
-import { startUserSigninAC } from './store/actions/userActions';
 import MainPageCompany from './components/MainPageCompany/MainPageCompany';
 import Login from './components/Login/Login';
 import AuthForm from './components/AuthForm/AuthForm';
@@ -25,9 +24,17 @@ function App() {
   const { loading } = useSelector((store) => store.globalStore);
   useEffect(() => {
     const abortController = new AbortController();
-    const { signal } = abortController;
 
-    dispatch(startUserSigninAC(signal));
+    fetch('http://localhost:6622/api/auth', {
+      credentials: 'include',
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch({ type: 'USER_SIGNIN', payload: res.user });
+        dispatch({ type: 'SET_LOADING', payload: false });
+      })
+      .catch(console.error);
 
     return () => {
       abortController.abort();
