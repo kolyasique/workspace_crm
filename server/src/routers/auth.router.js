@@ -46,7 +46,7 @@ router.post('/signinworker', async (req, res) => {
       return res.status(401).json({ msg: 'Try again' });
     }
     const comparePassword = await bcrypt.compare(password, findWorker.password);
-    if (comparePassword && findWorker.category_id !== 1) {
+    if (comparePassword) {
       delete findWorker.password;
       delete findWorker.createdAt;
       delete findWorker.updatedAt;
