@@ -44,6 +44,7 @@ export default function TaskList() {
       setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Выполнено' });
     }
   };
+
   console.log(taskStatus);
   const abortController = new AbortController();
   useEffect(() => {
