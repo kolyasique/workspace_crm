@@ -1,7 +1,6 @@
 const calendarRouter = require('express').Router();
 
 const { Tasks } = require('../../db/models');
-const { Order } = require('../../db/models');
 
 calendarRouter.get('/', async (req, res) => {
   try {
@@ -21,7 +20,7 @@ calendarRouter.post('/', async (req, res) => {
     console.log('🚀🚀🚀🚀 =>>>>> file: calendar.router.js:19 =>>>>> calendarRouter.post =>>>>> workerId', workerId);
     const { title, start, end } = req.body;
     await Tasks.create({
-      title, start, end, worker_id: workerId,
+      title, start, end, worker_id: workerId, creator_id: workerId,
     });
     res.status(200);
   } catch (error) {

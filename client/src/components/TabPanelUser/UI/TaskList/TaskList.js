@@ -73,6 +73,7 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           <h2>Задачи</h2>
+
           {tasks.map((task) => {
             const sliderValue = getProgressStatus(task?.progress_status);
             console.log(sliderValue);
