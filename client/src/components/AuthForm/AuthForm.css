@@ -1,0 +1,110 @@
+  .authform {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+      padding: 2rem;
+      width: 30vw;
+      max-width: 500px;
+      min-width: 300px;
+      background-color: rgb(190, 188, 202);
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.709); 
+    }
+    /* .authform {
+      margin: auto;
+      margin-top: 6rem;
+      padding: 4rem;
+      width: 30vw;
+      max-width: 500px;
+      min-width: 300px;
+      background-color: rgba(228, 156, 62, 0.489);
+      border: 1px solid  rgb(214, 158, 86);
+      border-radius: 5px;
+      text-align: center;
+    } */
+    .form-input   {
+      display: flex;
+      width: 75%;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    .form-input input {
+      width: 90%;
+    }
+    .buttonSubmit {
+      font-weight: bold;
+      color: #ffffff;
+      width: 50%;
+      margin-top: 10px;
+      /* margin-left: 80px; */
+      height: 30px;
+      border-radius: 5px;
+      border: none;
+      background-color: rgba(98, 10, 10, 0.427);
+      box-shadow: 0 8px 16px 0 rgba(183, 99, 99, 0.2), 0 6px 20px 0 rgba(175, 17, 17, 0.19);
+  }
+  .buttonSubmit:hover {
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      background-color: rgba(158, 158, 158, 0.724);
+      transition: .2s ease-in-out;
+  }
+  .form-control {
+    border: 1px solid #B97979;
+    border-radius: 3px;
+    /* -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px; */
+    background: rgb(234, 234, 234) !important;
+    /* outline: none; */
+    height: 24px;
+    width: 120px;
+    text-align: center;
+  }
+  .form-label {
+    margin: 5px;
+    letter-spacing: 3px;
+    color: #ffffff;
+  }
+  .inf{
+    display: flex;
+    flex-direction: row;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 500;
+  }
+    /* .log8o{
+      width: 100px;
+      position: relative;
+      left: -50px;
+      top: -50px;
+      height: 100px;
+    } */
+    /* .inftext{
+      display: flex;
+      font-size: 48px;
+      font-weight: 400;
+      margin-bottom: -150px;
+      position: relative;
+      top: -50px;
+      color: white;
+      flex-direction: row;
+    } */
+    .loginPassword{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgb(74, 96, 96);
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-top: 0px;
+      padding-bottom: 10px;
+      border-radius: 5px;
+      width: 100%;
+    }
+    .formDiv{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }

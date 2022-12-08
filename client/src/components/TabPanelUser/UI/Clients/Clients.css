@@ -1,0 +1,19 @@
+.clientListDiv{
+    display: flex;
+    flex-direction: column;
+margin: 10px;
+box-shadow: 0 0 7px rgba(21, 21, 21, 0.5);
+width: 95%;
+height: 350px;
+max-height: 350px;
+overflow-y: scroll;
+border-radius: 5px;
+    
+}
+.clientItem{
+    margin: 5px;
+    height: 15%;
+    box-shadow: 0 0 7px rgba(21, 21, 21, 0.5);
+    padding: 5px;
+
+}

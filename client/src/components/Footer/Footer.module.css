@@ -1,0 +1,8 @@
+.footerBox{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:70px;   /* Высота блока "footer" */
+    background:#66ccff;
+      
+}
