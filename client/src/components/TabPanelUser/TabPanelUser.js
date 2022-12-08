@@ -30,6 +30,7 @@ export default function VerticalTabs() {
         <button id="3" className={activeButton === '3' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Messages />); }}>Сообщения</button>
         <button id="4" className={activeButton === '4' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Clients />); }}>Клиенты</button>
         <button id="5" className={activeButton === '5' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<CalendarComponent />); }}>Календарь</button>
+        <button id="6" className={activeButton === '6' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<CalendarComponent />); }}>Сотрудники</button>
       </div>
       <div className="rightComponents">{ component }</div>
     </div>

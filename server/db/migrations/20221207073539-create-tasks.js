@@ -9,7 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      task_type: {
+        type: Sequelize.TEXT,
+      },
       title: {
+        type: Sequelize.TEXT,
+      },
+      content: {
         type: Sequelize.TEXT,
       },
       start: {
@@ -18,8 +24,22 @@ module.exports = {
       end: {
         type: Sequelize.TEXT,
       },
+      progress_status: {
+        defaultValue: 'Создана',
+        type: Sequelize.TEXT,
+      },
       status: {
+        allowNull: true,
         type: Sequelize.BOOLEAN,
+      },
+      creator_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Workers',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       worker_id: {
         type: Sequelize.INTEGER,
@@ -32,7 +52,7 @@ module.exports = {
       },
       order_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'Orders',
           key: 'id',

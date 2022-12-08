@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Work_category, Company, Tasks}) {
       Worker.belongsTo(Work_category, { foreignKey: 'category_id' });
       Worker.belongsTo(Company, { foreignKey: 'company_id' });
+      Worker.hasMany(Tasks, { foreignKey: 'creator_id' });
       Worker.hasMany(Tasks, { foreignKey: 'worker_id' });
     }
   }
