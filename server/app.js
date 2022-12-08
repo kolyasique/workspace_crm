@@ -20,6 +20,7 @@ const PORT = process.env.PORT ?? 6622;
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/images', express.static('images'));
 app.use(cors);
 app.use(sessionParser);
 
