@@ -23,7 +23,7 @@ wss.on('connection', (ws, req) => {
 
     switch (type) {
       case 'message':
-        sender.ws.send(JSON.stringify(message));
+        sender.ws.send(JSON.stringify({ ...message, auth: true }));
         break;
       case 'open':
         sender.ws.send(JSON.stringify({ ...message, fromServer: true }));
