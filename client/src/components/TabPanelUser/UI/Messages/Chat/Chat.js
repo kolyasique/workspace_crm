@@ -24,19 +24,21 @@ export default function Chat({ recValue, socket }) {
 
   useEffect(() => {
     socket.onopen = () => {
-      socket.send(JSON.stringify({ type: 'open', payload: 'moe soobshenie' }));
+      socket.send(JSON.stringify({ type: 'open', payload: { chatWithUser: recValue.id } }));
     };
 
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('ESS', message);
 
-      const { type, payload, auth } = message;
+      const { type, payload } = message;
 
       switch (type) {
         case 'message':
-          addMessage(payload, auth);
-
+          addMessage(payload, payload?.auth);
+          break;
+        case 'offline':
+          console.log('status offline:', message.data);
           break;
 
         default:
@@ -54,7 +56,7 @@ export default function Chat({ recValue, socket }) {
 
     socket.send(JSON.stringify({
       type: 'message',
-      payload: Object.fromEntries(new FormData(chatForm.current)),
+      payload: { ...Object.fromEntries(new FormData(chatForm.current)), chatWithUser: recValue.id },
     }));
     chatForm.current.reset();
   };
