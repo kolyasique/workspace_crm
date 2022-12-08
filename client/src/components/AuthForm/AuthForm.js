@@ -45,6 +45,7 @@ export default function AuthForm() {
       })
       .catch(console.error);
     navigate('/adminpage');
+
     setForm(formInitialState);
   };
 

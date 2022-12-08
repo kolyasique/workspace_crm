@@ -21,7 +21,6 @@ export default function AddWorkersForm({ setWorkers, workers }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
 
     const url = 'http://localhost:6622/api/adminpanel/createuser';
     fetch(url, {
