@@ -1,23 +1,22 @@
 .chatPage {
-    width: 1000px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
 }
 .chat {
     width: 70%;
     height: 100%;
+    background-color: white;
 }
 .chatbox {
-    background-color: white;
     width: 100%;
-    height: 85%;
-    border: 1px solid black;
+    height: 90%;
     display: flex;
     flex-direction: column;
 }
 .chatform {
     display: flex;
     width: 100%;
-    height: 15%;
+    height: 10%;
     min-width: 250px;
 }
 .chatform > input {
@@ -33,8 +32,22 @@
 .chatContacts {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     width: 30%;
     height: 100%;
     background: lightblue;
+}
+.contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;;
+    width: 90%;
+    background: white;
+    height: 10%;
+    margin: 3%;
+    transition: 0,5s;
+}
+.contact:hover {
+    background: rgb(222, 238, 240);
+    transform: scale(1.05);
 }

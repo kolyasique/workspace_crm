@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { ChatContext } from '../../context/Chat.context';
+import { MainContext } from '../../context/Main.context';
 import './messages.css';
 
 export default function Messages() {
   const socket = new WebSocket('ws://localhost:6622');
-  const { state } = useContext(ChatContext);
+  const { state } = useContext(MainContext);
 
   const chatForm = useRef();
 
@@ -41,10 +41,18 @@ export default function Messages() {
           <input type="text" name="text" />
           <input type="hidden" name="user_from" value={state === null ? '' : state.authUser.id} />
           <input type="hidden" name="user_to" />
-          <button type="submit">Send</button>
+          <button type="submit">Отправить</button>
         </form>
       </div>
-      <div className="chatContacts">{state === null ? '' : state.companyUsers.map((user) => (<div key={user.id}>{user.name}</div>))}</div>
+      <div className="chatContacts">
+        {state === null ? '' : state.companyUsers.map((user) => (
+          <div className="contact" key={user.id}>
+            {user.second_name}
+            {' '}
+            {user.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

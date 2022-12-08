@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
-export const ChatContext = React.createContext();
+export const MainContext = React.createContext();
 
-export default function ChatContextProvider({ children }) {
+export default function MainContextProvider({ children }) {
   const [state, setState] = useState(null);
 
   useEffect(() => {
@@ -15,6 +15,7 @@ export default function ChatContextProvider({ children }) {
       .then((res) => res.json())
       .then((res) => setState(res))
       .catch(console.log);
+    console.log(state);
 
     return () => {
       abortController.abort();
@@ -24,8 +25,8 @@ export default function ChatContextProvider({ children }) {
   const value = useMemo(() => ({ state }), [state]);
 
   return (
-    <ChatContext.Provider value={value}>
+    <MainContext.Provider value={value}>
       {children}
-    </ChatContext.Provider>
+    </MainContext.Provider>
   );
 }
