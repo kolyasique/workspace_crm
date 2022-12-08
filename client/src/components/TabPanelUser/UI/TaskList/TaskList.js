@@ -20,7 +20,7 @@ export default function TaskList() {
   });
   const [disabledBtn, setDisabledBtn] = useState(true);
 
-  const [taskStatus, setTaskStatus] = useState({ id: null, value: 0, mean: 'Начать ->' });
+  const [taskStatus, setTaskStatus] = useState({});
 
   useEffect(() => {
     if (taskStatus.value === 100) {
@@ -32,19 +32,26 @@ export default function TaskList() {
     // console.log(taskStatus);
   }, [taskStatus]);
 
-  const handleChange = (e) => {
-    // setTaskStatus(Number(e.target.value));
-    if (e.target.value === '25') {
-      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Начали' });
-    } else if (e.target.value === '50') {
-      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'В процессе' });
-    } else if (e.target.value === '75') {
-      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Заканчиваем' });
-    } else if (e.target.value === '100') {
-      setTaskStatus({ id: e.target.id, value: Number(e.target.value), mean: 'Выполнено' });
+  const getProgressStatus = (progressStatus) => {
+    console.log(progressStatus, 'Прогрес стаутс');
+    switch (progressStatus) {
+      case 'Haчало':
+        return 0;
+      case 'Уже':
+        return 50;
+      case 'Почти':
+        return 75;
+      case 'Завершениe':
+        return 100;
+      default:
+        return 0;
     }
   };
   console.log(taskStatus);
+  const handleChange = (e) => {
+    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value });
+  };
+
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/gettasks', {
@@ -66,31 +73,36 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           <h2>Задачи</h2>
-          {tasks.map((task) => (
-            <div key={task.id} className="taskItem">
-              <div className="taskItemUpperDiv">
-                <div className="taskType">{task.task_type}</div>
-                <div className="taskTitle">{task.title}</div>
-              </div>
-              <div className="taskItemLowerDiv">
-                <div className="taskContent">{task.content}</div>
-                <input type="checkbox" />
-              </div>
-              <div>{taskStatus.mean}</div>
-              <SliderComponent
-                dots
-                step={25}
-                id={task.id}
-                value={taskStatus.value}
-                handleChange={handleChange}
-                min={0}
-                max={100}
-                marks={{ 0: 'Начало', 25: 'В работе', 100: 'Выполнено' }}
-              />
-              <button id={task.id} disabled={disabledBtn} type="button">Завершить</button>
+          {tasks.map((task) => {
+            const sliderValue = getProgressStatus(task?.progress_status);
+            console.log(sliderValue);
+            // console.log(task.progress_status);
+            return (
+              <div key={task.id} className="taskItem">
+                <div className="taskItemUpperDiv">
+                  <div className="taskType">{task.task_type}</div>
+                  <div className="taskTitle">{task.title}</div>
+                </div>
+                <div className="taskItemLowerDiv">
+                  <div className="taskContent">{task?.content}</div>
+                  <input type="checkbox" />
+                </div>
+                <div>{taskStatus[task.id]}</div>
+                <SliderComponent
+                  dots
+                  step={25}
+                  id={task.id}
+                  value={sliderValue}
+                  handleChange={handleChange}
+                  min={0}
+                  max={100}
+                  marks={{ 0: 'Начало', 25: 'В работе', 100: 'Выполнено' }}
+                />
+                <button id={task.id} disabled={disabledBtn} type="button">Завершить</button>
 
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
         {/* <div className="taskInProcess">
           <h2>Выполняется</h2>
