@@ -4,7 +4,7 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import TaskList from './UI/TaskList/TaskList';
 import Clients from './UI/Clients/Clients';
 import Documents from './UI/Documents/Documents';
@@ -20,6 +20,7 @@ const functionalBlocks = {
 export default function VerticalTabs({ socket }) {
   const [component, setComponent] = useState(<TaskList />);
   const [activeButton, setActiveButton] = useState('1');
+
 
   return (
     <div className="box">

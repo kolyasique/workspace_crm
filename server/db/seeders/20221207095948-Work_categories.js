@@ -2,10 +2,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Work_categories', [{
-      name: 'Admin',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }, {
       name: 'AUP',
       createdAt: new Date(),
       updatedAt: new Date(),

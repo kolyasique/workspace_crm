@@ -33,7 +33,6 @@ export default function AddWorkersForm({ setWorkers, workers }) {
     })
       .then((res) => res.json())
       .then((worker) => {
-        console.log(worker, 88888);
         setWorkers((prev) => [...prev, worker]);
       })
       .catch(console.error);
@@ -83,9 +82,8 @@ export default function AddWorkersForm({ setWorkers, workers }) {
           <label className="form-label ">Должность</label>
           {/* <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} /> */}
           <select name="select" onChange={handleInput} value={form.category_id}>
-            <option value={1}>Администратор</option>
-            <option value={2} selected>АУП</option>
-            <option value={3}>Исполняющий сотрудник</option>
+            <option value={1} selected>АУП</option>
+            <option value={2}>Исполняющий сотрудник</option>
           </select>
         </div>
 

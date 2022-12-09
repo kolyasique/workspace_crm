@@ -28,7 +28,7 @@ export default function MainPageCompany() {
         />
 
       </div>
-      <div className={cl.workerList}><WorkerList workers={workers} /></div>
+      <div className={cl.workerList}><WorkerList setWorkers={setWorkers} workers={workers} /></div>
       <div className="File"><File /></div>
     </div>
   );
