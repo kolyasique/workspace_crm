@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 function SliderComponent({
-  value, handleChange, min, max, step, id,
+  value, handleChange, min, max, step, id, key, disabled,
 }) {
   return (
     <Container>
       <Slider
+        disabled={disabled}
+        key={key}
         type="range"
         id={id}
         defaultValue={value}

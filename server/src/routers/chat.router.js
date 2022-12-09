@@ -3,6 +3,7 @@ const router = require('express').Router();
 const { Worker } = require('../../db/models');
 
 router.get('/', async (req, res) => {
+  console.log('Пришло сообщение от', req.session.company.id);
   const userId = req.session.company.id;
   const companyId = req.session.company.company_id;
   try {
