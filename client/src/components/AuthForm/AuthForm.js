@@ -24,7 +24,6 @@ export default function AuthForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const url = 'http://localhost:6622/api/auth/signup';
     fetch(url, {
       method: 'POST',
@@ -101,6 +100,5 @@ export default function AuthForm() {
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>
     </div>
-
   );
 }
