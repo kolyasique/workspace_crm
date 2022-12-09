@@ -17,7 +17,7 @@ import Messages from './UI/Messages/Messages';
 const functionalBlocks = {
 
 };
-export default function VerticalTabs({ socket }) {
+export default function VerticalTabs() {
   const [component, setComponent] = useState(<TaskList />);
   const [activeButton, setActiveButton] = useState('1');
 
@@ -26,7 +26,7 @@ export default function VerticalTabs({ socket }) {
       <div className="leftMenu">
         <button id="1" className={activeButton === '1' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<TaskList />); }}>Главная</button>
         <button id="2" className={activeButton === '2' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Stat />); }}> Статистика</button>
-        <button id="3" className={activeButton === '3' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Messages socket={socket} />); }}>Сообщения</button>
+        <button id="3" className={activeButton === '3' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Messages />); }}>Сообщения</button>
         <button id="4" className={activeButton === '4' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<Clients />); }}>Клиенты</button>
         <button id="5" className={activeButton === '5' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<CalendarComponent />); }}>Календарь</button>
         <button id="6" className={activeButton === '6' ? 'activeButton' : 'unActiveButton'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<CalendarComponent />); }}>Сотрудники</button>

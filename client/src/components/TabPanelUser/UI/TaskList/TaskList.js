@@ -183,7 +183,6 @@ export default function TaskList() {
                   min={0}
                   max={100}
                 />
-
               </div>
             );
           })}

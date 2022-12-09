@@ -1,11 +1,16 @@
 /* eslint-disable no-param-reassign */
-import React, { useRef, useEffect, useContext } from 'react';
+import React, {
+  useRef, useEffect, useContext, useState,
+} from 'react';
 import { MainContext } from '../../../../../context/Main.context';
+import { SocketContext } from '../../../../../context/Socket.context';
 
-export default function Chat({ recValue, socket }) {
+export default function Chat({ recValue, showMessages }) {
   const chatForm = useRef();
   const chatbox = useRef();
   const { state } = useContext(MainContext);
+  const { socket } = useContext(SocketContext);
+  const [status, setStatus] = useState('Не в сети');
 
   const addMessage = (newMessage, auth) => {
     const div = document.createElement('div');
@@ -29,21 +34,31 @@ export default function Chat({ recValue, socket }) {
 
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log('ESS', message);
 
       const { type, payload } = message;
 
       switch (type) {
         case 'message':
+          console.log('rabotaet case message');
+          console.log({ message });
           addMessage(payload, payload?.auth);
           break;
         case 'offline':
-          console.log('status offline:', message.data);
+          console.log('rabotaet case offline');
+          setStatus('Не в сети');
+          break;
+        case 'online':
+          console.log('rabotaet case online');
+          setStatus('В сети');
           break;
 
         default:
           break;
       }
+    };
+    socket.onclose = () => {
+      setStatus('Не в сети');
+      console.log('rabotaet onclose');
     };
 
     return () => {
@@ -67,7 +82,15 @@ export default function Chat({ recValue, socket }) {
         {' '}
         {recValue.name}
       </h3>
-      <div ref={chatbox} id="chatbox" className="chatbox chatbox-close" />
+      <span className="chatStatus">{status}</span>
+      <div ref={chatbox} id="chatbox" className="chatbox">
+        {showMessages.map((message) => (
+          <div key={message.id} className={recValue.id === message.user_from ? 'chatbox-textstart' : 'chatbox-textend'}>
+            <span className="chatbox-date">{new Date(message.createdAt).toLocaleString('ru-RU')}</span>
+            <span className="chatbox-text">{message.text}</span>
+          </div>
+        ))}
+      </div>
       <form ref={chatForm} name="chatForm" className="chatform" onSubmit={handleSubmit}>
         <input type="text" name="text" />
         <input type="hidden" name="user_from" value={state === null ? '' : state.authUser.id} />

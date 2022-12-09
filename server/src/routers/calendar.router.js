@@ -5,7 +5,6 @@ const { Tasks } = require('../../db/models');
 calendarRouter.get('/', async (req, res) => {
   try {
     const workerId = req.session.company.id;
-    console.log('🚀🚀🚀🚀 =>>>>> file: calendar.router.js:8 =>>>>> calendarRouter.get =>>>>> workerId', workerId);
     const events = await Tasks.findAll({ where: { worker_id: workerId } });
     res.json(events);
   } catch (error) {
@@ -17,8 +16,6 @@ calendarRouter.get('/', async (req, res) => {
 calendarRouter.post('/', async (req, res) => {
   try {
     const workerId = req.session.company.id;
-    console.log('🚀🚀🚀🚀 =>>>>> file: calendar.router.js:19 =>>>>> calendarRouter.post =>>>>> workerId', workerId);
-    const { title, start, end } = req.body;
     await Tasks.create({
       title, start, end, worker_id: workerId, creator_id: workerId,
     });
