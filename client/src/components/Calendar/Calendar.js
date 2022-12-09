@@ -76,8 +76,8 @@ function CalendarComponent() {
 
   return (
     <div className="Calendar">
-      <h1>Календарь</h1>
-      <h2>Добавить новую задачу</h2>
+      <h2>Календарь</h2>
+      <h3>Добавить личную задачу</h3>
       <div>
         <input type="text" placeholder="Добавить задачу" style={{ width: '20%', marginRight: '10px' }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
         <DatePicker placeholderText="Начальная дата" style={{ marginRight: '10px' }} selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
