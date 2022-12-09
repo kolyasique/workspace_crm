@@ -16,7 +16,18 @@ userPanelRouter.get('/gettasks', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
-
+userPanelRouter.get('/getworkers', async (req, res) => {
+  const { id } = req.session.company;
+  try {
+    if (id) {
+      const allWorkers = await Worker.findAll({ where: { company_id: id } });
+      res.json(allWorkers);
+    } else console.log('ОШИБКА');
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: error.message });
+  }
+});
 userPanelRouter.get('/getclients', async (req, res) => {
   const { company_id } = req.session.company;
   console.log(req.session);
@@ -26,6 +37,25 @@ userPanelRouter.get('/getclients', async (req, res) => {
     res.json(allClients);
   } catch (error) {
     console.log(error);
+    res.status(400).json({ msg: error.message });
+  }
+});
+
+userPanelRouter.post('/createtask', async (req, res) => {
+  const {
+    title, content, startDate, endDate, taskForUserId,
+  } = req.body;
+  const sessionId = req.session.company.id;
+  const taskType = (sessionId == taskForUserId ? 'personal' : 'ordered');
+  console.log(taskType);
+  try {
+    console.log('taskId');
+    const createTask = await Tasks.create({
+      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null,
+    });
+    // const success = { success: 'Задача создана!' };
+    res.json({ createTask, sessionId });
+  } catch (error) {
     res.status(400).json({ msg: error.message });
   }
 });
