@@ -36,11 +36,8 @@ router.post('/signup', async (req, res) => {
 router.post('/signinworker', async (req, res) => {
   try {
     const { password, login } = req.body;
-
-    console.log(req.body);
     const findWorker = await Worker.findOne({ where: { login } });
     // attributes: ['id', 'name', 'login', 'email', 'password']
-    console.log(findWorker);
 
     if (!findWorker) {
       return res.status(401).json({ msg: 'Try again' });
@@ -60,11 +57,9 @@ router.post('/signinworker', async (req, res) => {
 router.post('/signinadmin', async (req, res) => {
   try {
     const { password, inn } = req.body;
-    console.log(req.body);
 
     const findCompany = await Company.findOne({ where: { inn } });
     // attributes: ['id', 'name', 'login', 'email', 'password']
-    console.log({ findCompany }, 'Это файнд компани');
     if (!findCompany) {
       return res.status(401).json({ msg: 'Try again' });
     }

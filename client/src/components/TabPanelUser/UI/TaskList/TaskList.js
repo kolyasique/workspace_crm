@@ -132,22 +132,11 @@ export default function TaskList() {
                   max={100}
                 />
                 <button className="deleteTask" id={task.id} disabled={!disabledBtn[task.id]} type="button">Завершить</button>
-
               </div>
             );
           })}
         </div>
-        {/* <div className="taskInProcess">
-          <h2>Выполняется</h2>
-          {tasks.map((task) => (
-            <div className="taskItem">
-              <div className="taskTitle">{task.title}</div>
-              <input type="checkbox" />
-            </div>
-          ))}
-        </div> */}
       </div>
-      {/* <Modal key={modalParams.id} visible={modal} setVisible={setModal} /> */}
     </div>
   );
 }

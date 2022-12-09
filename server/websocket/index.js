@@ -9,9 +9,7 @@ const wss = new WebSocketServer({
   clientTracking: false,
 });
 
-const usersMap = new Map();
-
-wss.on('connection', (ws, req) => {
+wss.on('connection', (ws, req, usersMap) => {
   const { company } = req.session;
 
   usersMap.set(company.id, { company, ws });
@@ -26,7 +24,6 @@ wss.on('connection', (ws, req) => {
 
     switch (type) {
       case 'message':
-
         Message.create({
           text: payload.text,
           user_from: payload.user_from,
@@ -45,11 +42,22 @@ wss.on('connection', (ws, req) => {
 
         break;
       case 'open':
-        sender.ws.send(JSON.stringify({ ...message, fromServer: true }));
+        if (sender && reciever) {
+          sender.ws.send(JSON.stringify({ type: 'online' }));
+          reciever.ws.send(JSON.stringify({ type: 'online' }));
+        }
         break;
 
       default:
         break;
+    }
+  });
+  ws.on('close', (msg) => {
+    const message = JSON.parse(msg);
+    usersMap.delete(company.id);
+    const receiver = usersMap.get(+message.chatWithUser);
+    if (receiver) {
+      receiver.ws.send(JSON.stringify({ type: 'offline' }));
     }
   });
 });
