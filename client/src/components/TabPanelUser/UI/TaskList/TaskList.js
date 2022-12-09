@@ -2,25 +2,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
-import { Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-// import styled from 'styled-components';
 import { SliderComponent } from '../Slider/SliderToggle';
 import './TaskList.css';
-// import SearchTool from '../SearchTool/SearchTool';
+import Modal from '../Modal/Modal';
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modalParams, setModalParams] = useState({
-    visible: false,
-    id: null,
-    question: '',
-    value: null,
-  });
   const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [disabledSlider, setDisabledSlider] = useState(false);
 
   // useEffect(() => {
   //   if (taskStatus.value === 100) {
@@ -33,15 +26,18 @@ export default function TaskList() {
   // }, [taskStatus]);
 
   const getProgressStatus = (progressStatus) => {
+    console.log(progressStatus, 'GHJUHTCNFEC');
     switch (progressStatus) {
-      case 'Haчало':
-        return 0;
-      case 'Уже':
-        return 50;
-      case 'Почти':
-        return 75;
-      case 'Завершениe':
-        return 100;
+      case '0':
+        return 'Начать';
+      case '25':
+        return 'Принята';
+      case '50':
+        return 'Выполняется';
+      case '75':
+        return 'Согласование';
+      case '100':
+        return 'Готово';
       default:
         return 0;
     }
@@ -51,8 +47,9 @@ export default function TaskList() {
 
   const handleChange = (e) => {
     console.log(e.target.value, 'Это е таргет велью');
-    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value });
+    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
     if (e.target.value === '100') {
+      setDisabledSlider(true);
       setDisabledBtn({ ...disabledBtn, [e.target.id]: true });
     }
   };
@@ -69,6 +66,10 @@ export default function TaskList() {
       );
   }, []);
 
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
+
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
     switch (filterType) {
@@ -81,18 +82,8 @@ export default function TaskList() {
       default:
         return setFilteredTasks(tasks);
     }
-    // if (filterType === 'clear') {
-    //   setFilteredTasks(tasks);
-    // }
-    // const tasksFromLocal = localStorage.getItem('tasks');
-    // console.log(tasksFromLocal);
-    // setTasks(tasksFromLocal);
-    // console.log(tasks, 'После получения с локальной формы');
-    // if (e.target.value == 'clear') {
-    //   return setTasks(tasksFromLocal);
-    // } return setTasks(tasks.filter((el) => el.task_type == e.target.value));
   }
-  console.log(tasks, 'Это таски вне функции');
+
   return (
     <div className="taskContainer">
       <div className="taskTools">
@@ -103,14 +94,22 @@ export default function TaskList() {
           <input type="text" />
           <button type="submit">искать</button>
         </form>
+        <button
+          type="button"
+          onClick={() => {
+            setModalVisible(true);
+          }}
+        >
+          +
+
+        </button>
       </div>
       <div className="taskContainer2">
         <div className="toDoTasks">
 
           {filteredTasks.map((task) => {
-            const sliderValue = getProgressStatus(task?.progress_status);
-            console.log(sliderValue);
-            // console.log(task.progress_status);
+            // const sliderValue = getProgressStatus(task?.progress_status);
+            console.log(222);
             return (
               <div key={task.id} className="taskItem">
                 <div className="taskItemUpperDiv">
@@ -123,10 +122,11 @@ export default function TaskList() {
                 </div>
                 <div>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
                 <SliderComponent
-                  dots
+                  disabled={disabledSlider}
+                  key={task.id}
                   step={25}
                   id={task.id}
-                  value={sliderValue}
+                  value={0}
                   handleChange={handleChange}
                   min={0}
                   max={100}
@@ -137,17 +137,8 @@ export default function TaskList() {
             );
           })}
         </div>
-        {/* <div className="taskInProcess">
-          <h2>Выполняется</h2>
-          {tasks.map((task) => (
-            <div className="taskItem">
-              <div className="taskTitle">{task.title}</div>
-              <input type="checkbox" />
-            </div>
-          ))}
-        </div> */}
       </div>
-      {/* <Modal key={modalParams.id} visible={modal} setVisible={setModal} /> */}
+      <Modal visible={modalVisible} setVisible={setModalVisible} />
     </div>
   );
 }

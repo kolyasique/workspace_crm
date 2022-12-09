@@ -18,6 +18,7 @@ function Modal({
   return (
     <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
       <div className={cl.myModalContent} onClick={(e) => e.stopPropagation()}>
+        <p>Добавить задачу</p>
         {children}
         {/* <ModalTimer timeLeft={timeLeft} />
         <QuestionForm question={question} id={id} setVisibleBtn={setVisibleBtn} value={value} /> */}

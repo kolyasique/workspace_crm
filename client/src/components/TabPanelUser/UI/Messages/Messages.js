@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext, useState } from 'react';
 import { MainContext } from '../../../../context/Main.context';
 import Chat from './Chat/Chat';
@@ -20,7 +21,7 @@ export default function Messages({ socket }) {
       {showChat ? <Chat socket={socket} recValue={recValue} /> : <div className="chat" /> }
       <div className="chatContacts">
         {state === null ? '' : state.companyUsers.map((user) => (
-          <div className="contact" key={user.id} data-value={JSON.stringify(user)} onClick={handleClick}>
+          <div key={user.id} className="contact" data-value={JSON.stringify(user)} onClick={handleClick}>
             {user.second_name}
             {' '}
             {user.name}
