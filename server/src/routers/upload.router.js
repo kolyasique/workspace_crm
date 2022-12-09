@@ -1,12 +1,13 @@
 const uploadRouter = require('express').Router();
+const { Document } = require('../../db/models');
 const fileMiddleware = require('../middlewares/file');
 
-uploadRouter.post('/upload', fileMiddleware.single('avatar'), (req, res) => {
+uploadRouter.post('/upload', fileMiddleware.single('avatar'), async (req, res) => {
   try {
-    console.log('avatar');
-    if (req.file) {
-      res.json(req.file);
-    }
+    const newForm = JSON.parse(req.body.form);
+    const { text } = newForm;
+    const createFile = await Document.create({ text, file: req.file.path });
+    res.json(createFile);
   } catch (error) {
     console.log('=====', error);
   }
