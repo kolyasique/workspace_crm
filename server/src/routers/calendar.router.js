@@ -20,7 +20,7 @@ calendarRouter.post('/', async (req, res) => {
     console.log('🚀🚀🚀🚀 =>>>>> file: calendar.router.js:19 =>>>>> calendarRouter.post =>>>>> workerId', workerId);
     const { title, start, end } = req.body;
     await Tasks.create({
-      title, start, end, worker_id: workerId, creator_id: workerId,
+      title, start, end, worker_id: workerId, creator_id: workerId, task_type: 'personal',
     });
     res.status(200);
   } catch (error) {

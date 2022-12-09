@@ -15,6 +15,8 @@ export default function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
+  const [find, setFind] = useState('');
+  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:19 =>>>>> TaskList =>>>>> find', find);
 
   const getProgressStatus = (progressStatus) => {
     console.log(progressStatus, 'GHJUHTCNFEC');
@@ -33,15 +35,15 @@ export default function TaskList() {
         return 0;
     }
   };
-  console.log(taskStatus, 'Это таск статус');
-  console.log(disabledBtn, 'Это дисейбл батонс статус');
+  // console.log(taskStatus, 'Это таск статус');
+  // console.log(disabledBtn, 'Это дисейбл батонс статус');
 
   // useEffect(() => {
 
   // }, [taskStatus]);
 
   const handleChange = (e) => {
-    console.log(e.target.value, 'Это е таргет велью');
+    // console.log(e.target.value, 'Это е таргет велью');
     const taskId = e.target.id;
     const taskProgressStatus = getProgressStatus(e.target.value);
     const taskToUpdate = { [taskId]: taskProgressStatus };
@@ -87,6 +89,7 @@ export default function TaskList() {
       })
       .catch(console.error);
   };
+
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/gettasks', {
@@ -115,6 +118,25 @@ export default function TaskList() {
     }
   }
 
+  const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.toLowerCase()));
+  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
+  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> findTasks', findTasks);
+
+  // const handleSubFind = (e) => {
+  //   e.preventDefault();
+  //   fetch('http://localhost:6622/api/userpanel/gettasks', {
+  //     credentials: 'include',
+  //     signal: abortController.signal,
+  //   })
+  //     .then((res) => res.json())
+  //     .then((tasksArr) => {
+  //       if (tasksArr.filter((task) => task.title === find).length >= 1) {
+  //         setTasks(tasksArr.filter((task) => task.title === find));
+  //         setFind('');
+  //       } else { setTasks(tasks); alert('задание не найдено'); }
+  //     });
+  // };
+
   return (
     <div className="taskContainer">
       <div className="taskTools">
@@ -122,8 +144,8 @@ export default function TaskList() {
         <button type="button" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>ordered</button>
         <button type="button" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>clear</button>
         <form className="taskTools">
-          <input type="text" />
-          <button type="submit">искать</button>
+          <input type="text" onChange={(e) => setFind(e.target.value)} placeholder="найти задание" />
+          {/* <button type="submit" onClick={handleSubFind}>искать</button> */}
         </form>
         <button
           type="button"
