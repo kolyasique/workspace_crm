@@ -21,10 +21,7 @@ adminPanelRouter.post('/createuser', async (req, res) => {
     const {
       login, password, name, second_name, patronymic, email, phone, select,
     } = req.body;
-    console.log('🚀🚀🚀🚀 =>>>>> file: adminPanel.router.js:24 =>>>>> adminPanelRouter.post =>>>>> req.body', req.body);
     const companyId = req.session.company.id;
-
-    console.log(companyId);
     const hashedPassword = await bcrypt.hash(password, 10);
     const createWorker = await Worker.create({
       login,
@@ -41,6 +38,18 @@ adminPanelRouter.post('/createuser', async (req, res) => {
     res.json(createWorker);
   } catch (error) {
     return res.status(400).json({ msg: error.message });
+  }
+});
+
+adminPanelRouter.delete('/deleteuser', async (req, res) => {
+  const { id } = req.body;
+  console.log('🚀🚀🚀🚀 =>>>>> file: adminPanel.router.js:46 =>>>>> adminPanelRouter.delete =>>>>> req.body', req.body);
+  try {
+    const deleteWorkers = await Worker.destroy({ where: { id } });
+    res.json(id);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: error.message });
   }
 });
 

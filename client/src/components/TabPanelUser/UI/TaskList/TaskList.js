@@ -2,46 +2,33 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
-import { Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-// import styled from 'styled-components';
 import { SliderComponent } from '../Slider/SliderToggle';
 import './TaskList.css';
-// import SearchTool from '../SearchTool/SearchTool';
+import Modal from '../Modal/Modal';
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [modalParams, setModalParams] = useState({
-    visible: false,
-    id: null,
-    question: '',
-    value: null,
-  });
   const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});
+  const [done, setDone] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
-
-  // useEffect(() => {
-  //   if (taskStatus.value === 100) {
-  //     setDisabledBtn(false);
-  //   }
-  //   if (taskStatus.value !== 100) {
-  //     setDisabledBtn(true);
-  //   }
-  //   // console.log(taskStatus);
-  // }, [taskStatus]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [disabledSlider, setDisabledSlider] = useState({});
 
   const getProgressStatus = (progressStatus) => {
+    console.log(progressStatus, 'GHJUHTCNFEC');
     switch (progressStatus) {
-      case 'Haчало':
-        return 0;
-      case 'Уже':
-        return 50;
-      case 'Почти':
-        return 75;
-      case 'Завершениe':
-        return 100;
+      case '0':
+        return 'Новая';
+      case '25':
+        return 'Принята';
+      case '50':
+        return 'Выполняется';
+      case '75':
+        return 'Согласование';
+      case '100':
+        return 'Завершить';
       default:
         return 0;
     }
@@ -49,14 +36,57 @@ export default function TaskList() {
   console.log(taskStatus, 'Это таск статус');
   console.log(disabledBtn, 'Это дисейбл батонс статус');
 
+  // useEffect(() => {
+
+  // }, [taskStatus]);
+
   const handleChange = (e) => {
     console.log(e.target.value, 'Это е таргет велью');
-    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value });
+    const taskId = e.target.id;
+    const taskProgressStatus = getProgressStatus(e.target.value);
+    const taskToUpdate = { [taskId]: taskProgressStatus };
+    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
+    // useEffect(() => {
+    const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskToUpdate),
+    })
+      .then((res) => res.json())
+    // .then((data) => {
+    //   console.log(data, 'це дата статуса');
+    //   setDone({ ...done, [data]: true });
+    // })
+      .catch(console.error);
     if (e.target.value === '100') {
+      setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
       setDisabledBtn({ ...disabledBtn, [e.target.id]: true });
     }
+    // }}, [taskStatus]);
   };
 
+  const handleClick = (e) => {
+    const taskId = { taskId: [e.target.id] };
+    const url = 'http://localhost:6622/api/userpanel/settaskdone';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskId),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, 'це дата статуса');
+        setDone({ ...done, [data]: true });
+      })
+      .catch(console.error);
+  };
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/gettasks', {
@@ -64,10 +94,12 @@ export default function TaskList() {
       signal: abortController.signal,
     })
       .then((res) => res.json())
-      .then(
-        (data) => setTasks(data),
-      );
+      .then((data) => setTasks(data));
   }, []);
+
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
 
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
@@ -81,62 +113,82 @@ export default function TaskList() {
       default:
         return setFilteredTasks(tasks);
     }
-    // if (filterType === 'clear') {
-    //   setFilteredTasks(tasks);
-    // }
-    // const tasksFromLocal = localStorage.getItem('tasks');
-    // console.log(tasksFromLocal);
-    // setTasks(tasksFromLocal);
-    // console.log(tasks, 'После получения с локальной формы');
-    // if (e.target.value == 'clear') {
-    //   return setTasks(tasksFromLocal);
-    // } return setTasks(tasks.filter((el) => el.task_type == e.target.value));
   }
-  console.log(tasks, 'Это таски вне функции');
+
   return (
     <div className="taskContainer">
       <div className="taskTools">
-        <button type="button" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>personal</button>
-        <button type="button" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>ordered</button>
-        <button type="button" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>clear</button>
+        <button type="button" className="filterMyTasksBtn" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>Свои задачи</button>
+        <button type="button" className="filterMyTaskFromAnotherBtn" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>Поставленные</button>
+        <button type="button" className="clearFilterBtn" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>Все задачи</button>
         <form className="taskTools">
           <input type="text" />
           <button type="submit">искать</button>
         </form>
+        <button
+          type="button"
+          onClick={() => {
+            setModalVisible(true);
+          }}
+        >
+          Добавить задачу
+
+        </button>
       </div>
       <div className="taskContainer2">
         <div className="toDoTasks">
 
           {filteredTasks.map((task) => {
-            const sliderValue = getProgressStatus(task?.progress_status);
-            console.log(sliderValue);
-            // console.log(task.progress_status);
+            // const sliderValue = getProgressStatus(task?.progress_status);
+            if (done[task.id] === true || task.status === true) {
+              return (
+                <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
+                  <div className="taskItemUpperDiv">
+                    <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
+
+                    <div className="taskTitle">{task.title}</div>
+                    <div className="taskStatus">
+                      Выполнено
+                    </div>
+                  </div>
+                  <div className="taskItemLowerDiv">
+                    <div className="taskContent">{task?.content}</div>
+                  </div>
+
+                </div>
+              );
+            }
             return (
-              <div key={task.id} className="taskItem">
+            // {done[task.id] === true || task.status === true ? (
+            //   <div></div>) : (
+            //     <div></div>)}
+              <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
                 <div className="taskItemUpperDiv">
                   <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
                   <div className="taskTitle">{task.title}</div>
+                  {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
+                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Новая</>) }</button>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
-                  <input type="checkbox" />
                 </div>
-                <div>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
+
                 <SliderComponent
-                  dots
+                  width="70%"
+                  disabled={disabledSlider[task.id]}
                   step={25}
                   id={task.id}
-                  value={sliderValue}
+                  value={0}
                   handleChange={handleChange}
                   min={0}
                   max={100}
                 />
-                <button className="deleteTask" id={task.id} disabled={!disabledBtn[task.id]} type="button">Завершить</button>
               </div>
             );
           })}
         </div>
       </div>
+      <Modal visible={modalVisible} setVisible={setModalVisible} tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }

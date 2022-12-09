@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { Worker, Message, Sequelize } = require('../../db/models');
 
+
 router.get('/user', async (req, res) => {
   const userId = req.session.company.id;
   const companyId = req.session.company.company_id;

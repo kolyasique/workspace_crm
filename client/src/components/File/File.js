@@ -1,31 +1,44 @@
 /* eslint-disable react/button-has-type */
-import React, { useState, useCallback } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 export default function File() {
   const [img, setImg] = useState(null);
-  const [avatar, setAvatar] = useState(null);
+  const [form, setForm] = useState({
+    text: '',
+    image: '',
+  });
 
-  const sendFile = useCallback(async () => {
-    try {
-      const data = new FormData();
-      data.append('avatar', img);
-      console.log(data);
-      await axios.post('http://localhost:6622/api/upload', data, {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      })
-        .then((res) => setAvatar(res.data.path));
-    } catch (error) {
-      console.log('=====>', error);
-    }
-  }, [img]);
-  console.log(avatar);
+  const handeleInput = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    // e.preventDefault();
+    const data = new FormData();
+    data.append('avatar', img);
+    data.append('form', JSON.stringify(form));
+    const url = 'http://localhost:6622/api/upload';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+    setForm(form);
+    console.log(form);
+  };
+
+  const uploudImg = (e) => {
+    setImg(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
+
   return (
-    <>
-      <input type="file" onChange={(e) => setImg(e.target.files[0])} />
-      <button className="btn" onClick={sendFile}>Загрузить документ</button>
-    </>
+    <form className="imageForm">
+      <input onChange={handeleInput} name="text" value={form.text} />
+      <input type="file" onChange={uploudImg} />
+      <button type="submit" onClick={handleSubmit}>Загрузить документ</button>
+    </form>
   );
 }
