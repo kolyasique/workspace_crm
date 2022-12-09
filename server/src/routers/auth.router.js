@@ -37,7 +37,7 @@ router.post('/signinworker', async (req, res) => {
   try {
     const { password, login } = req.body;
 
-    console.log(req.body);
+    
     const findWorker = await Worker.findOne({ where: { login } });
     // attributes: ['id', 'name', 'login', 'email', 'password']
     console.log(findWorker);

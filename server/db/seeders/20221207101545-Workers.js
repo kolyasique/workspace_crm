@@ -8,7 +8,7 @@ module.exports = {
       name: 'Миша',
       second_name: 'Иванов',
       patronymic: 'Иванович',
-      category_id: '3',
+      category_id: '2',
       company_id: '1',
       email: '123@123',
       phone: '89222222222',
@@ -41,11 +41,11 @@ module.exports = {
       accepted: 'true',
       createdAt: new Date(),
       updatedAt: new Date(),
-    }
+    },
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Workers', null, {});
-  }
+  },
 };
