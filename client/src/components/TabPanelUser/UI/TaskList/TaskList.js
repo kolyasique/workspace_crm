@@ -102,7 +102,7 @@ export default function TaskList() {
 
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
-    const findTasks = newTaskArr.length == 0 ? [...tasks] : newTaskArr.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+    const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
     console.log(findTasks, 'dotaskfilter findtask');
     switch (filterType) {
       case 'clear':
@@ -117,9 +117,9 @@ export default function TaskList() {
         return setFilteredTasks(tasks);
     }
   }
-  const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query));
-  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
-  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> findTasks', findTasks);
+  // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+  // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
+  // console.log('FindTASK', findTasks);
 
   return (
     <div className="taskContainer">

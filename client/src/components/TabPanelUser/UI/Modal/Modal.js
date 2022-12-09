@@ -38,6 +38,8 @@ function Modal({
   };
 
   const handleSubmit = (e) => {
+    console.log(workersForList);
+    console.log(formTask);
     e.preventDefault();
     console.log('handlesubmit');
     // const taskId = { taskId: [e.target.id] };
@@ -73,7 +75,7 @@ function Modal({
           <input type="date" value={formTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
           <label className="form-label ">Должность</label>
           <select name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput}>
-            <option selected disabled>Исполнитель задачи</option>
+            <option selected disabled value="">Исполнитель задачи</option>
             {workersForList.map((worker) => (
               <option value={worker.id}>
                 {worker.second_name}
