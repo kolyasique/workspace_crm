@@ -15,11 +15,9 @@ export default function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
-  const [find, setFind] = useState('');
-  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:19 =>>>>> TaskList =>>>>> find', find);
+  const [find, setFind] = useState({ query: '' });
 
   const getProgressStatus = (progressStatus) => {
-    console.log(progressStatus, 'GHJUHTCNFEC');
     switch (progressStatus) {
       case '0':
         return 'Новая';
@@ -35,20 +33,18 @@ export default function TaskList() {
         return 0;
     }
   };
-  // console.log(taskStatus, 'Это таск статус');
-  // console.log(disabledBtn, 'Это дисейбл батонс статус');
 
   // useEffect(() => {
 
   // }, [taskStatus]);
 
   const handleChange = (e) => {
-    // console.log(e.target.value, 'Это е таргет велью');
+    console.log(e.target.value, 'Это е таргет велью');
     const taskId = e.target.id;
     const taskProgressStatus = getProgressStatus(e.target.value);
     const taskToUpdate = { [taskId]: taskProgressStatus };
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
-    // useEffect(() => {
+
     const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
     fetch(url, {
       method: 'POST',
@@ -59,10 +55,7 @@ export default function TaskList() {
       body: JSON.stringify(taskToUpdate),
     })
       .then((res) => res.json())
-    // .then((data) => {
-    //   console.log(data, 'це дата статуса');
-    //   setDone({ ...done, [data]: true });
-    // })
+
       .catch(console.error);
     if (e.target.value === '100') {
       setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
@@ -89,7 +82,6 @@ export default function TaskList() {
       })
       .catch(console.error);
   };
-
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/gettasks', {
@@ -104,8 +96,14 @@ export default function TaskList() {
     setFilteredTasks(tasks);
   }, [tasks]);
 
+  // const sortedAndSearchedPosts = useMemo(()=>{
+  //   return sortedPosts.filter(post=>post.title.toLowerCase().includes(filter.query))
+  // }, [filter.query,sortedPosts])
+
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
+    const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+    console.log(findTasks, 'dotaskfilter findtask');
     switch (filterType) {
       case 'clear':
         return setFilteredTasks(tasks);
@@ -113,29 +111,15 @@ export default function TaskList() {
         return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'personal'));
       case 'ordered':
         return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'ordered'));
+      case 'searchfilter':
+        return setFilteredTasks(findTasks);
       default:
         return setFilteredTasks(tasks);
     }
   }
-
-  const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.toLowerCase()));
-  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
-  console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> findTasks', findTasks);
-
-  // const handleSubFind = (e) => {
-  //   e.preventDefault();
-  //   fetch('http://localhost:6622/api/userpanel/gettasks', {
-  //     credentials: 'include',
-  //     signal: abortController.signal,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((tasksArr) => {
-  //       if (tasksArr.filter((task) => task.title === find).length >= 1) {
-  //         setTasks(tasksArr.filter((task) => task.title === find));
-  //         setFind('');
-  //       } else { setTasks(tasks); alert('задание не найдено'); }
-  //     });
-  // };
+  // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+  // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
+  // console.log('FindTASK', findTasks);
 
   return (
     <div className="taskContainer">
@@ -143,10 +127,9 @@ export default function TaskList() {
         <button type="button" className="filterMyTasksBtn" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>Свои задачи</button>
         <button type="button" className="filterMyTaskFromAnotherBtn" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>Поставленные</button>
         <button type="button" className="clearFilterBtn" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>Все задачи</button>
-        <form className="taskTools">
-          <input type="text" onChange={(e) => setFind(e.target.value)} placeholder="найти задание" />
-          {/* <button type="submit" onClick={handleSubFind}>искать</button> */}
-        </form>
+
+        <input type="text" id="searchfilter" value={find.query} onChange={(e) => { setFind({ ...find, query: e.target.value }); doTaskFilter(e.target.id); }} placeholder="найти задание" />
+
         <button
           type="button"
           onClick={() => {
@@ -205,6 +188,7 @@ export default function TaskList() {
                   min={0}
                   max={100}
                 />
+
               </div>
             );
           })}
