@@ -11,19 +11,10 @@ export default function TaskList() {
   const [tasks, setTasks] = useState([]);
   const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});
+  const [done, setDone] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [disabledSlider, setDisabledSlider] = useState(false);
-
-  // useEffect(() => {
-  //   if (taskStatus.value === 100) {
-  //     setDisabledBtn(false);
-  //   }
-  //   if (taskStatus.value !== 100) {
-  //     setDisabledBtn(true);
-  //   }
-  //   // console.log(taskStatus);
-  // }, [taskStatus]);
+  const [disabledSlider, setDisabledSlider] = useState({});
 
   const getProgressStatus = (progressStatus) => {
     console.log(progressStatus, 'GHJUHTCNFEC');
@@ -45,15 +36,57 @@ export default function TaskList() {
   console.log(taskStatus, 'Это таск статус');
   console.log(disabledBtn, 'Это дисейбл батонс статус');
 
+  // useEffect(() => {
+
+  // }, [taskStatus]);
+
   const handleChange = (e) => {
     console.log(e.target.value, 'Это е таргет велью');
+    const taskId = e.target.id;
+    const taskProgressStatus = getProgressStatus(e.target.value);
+    const taskToUpdate = { [taskId]: taskProgressStatus };
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
+    // useEffect(() => {
+    const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskToUpdate),
+    })
+      .then((res) => res.json())
+    // .then((data) => {
+    //   console.log(data, 'це дата статуса');
+    //   setDone({ ...done, [data]: true });
+    // })
+      .catch(console.error);
     if (e.target.value === '100') {
-      setDisabledSlider(true);
+      setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
       setDisabledBtn({ ...disabledBtn, [e.target.id]: true });
     }
+    // }}, [taskStatus]);
   };
 
+  const handleClick = (e) => {
+    const taskId = { taskId: [e.target.id] };
+    const url = 'http://localhost:6622/api/userpanel/settaskdone';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskId),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, 'це дата статуса');
+        setDone({ ...done, [data]: true });
+      })
+      .catch(console.error);
+  };
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/gettasks', {
@@ -61,9 +94,7 @@ export default function TaskList() {
       signal: abortController.signal,
     })
       .then((res) => res.json())
-      .then(
-        (data) => setTasks(data),
-      );
+      .then((data) => setTasks(data));
   }, []);
 
   useEffect(() => {
@@ -100,7 +131,7 @@ export default function TaskList() {
             setModalVisible(true);
           }}
         >
-          +
+          Добавить задачу
 
         </button>
       </div>
@@ -109,21 +140,39 @@ export default function TaskList() {
 
           {filteredTasks.map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
-            console.log(222);
+            if (done[task.id] === true || task.status === true) {
+              return (
+                <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
+                  <div className="taskItemUpperDiv">
+                    <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
+
+                    <div className="taskTitle">{task.title}</div>
+                    <div className="taskStatus">Выполнено</div>
+                  </div>
+                  <div className="taskItemLowerDiv">
+                    <div className="taskContent">{task?.content}</div>
+                  </div>
+
+                </div>
+              );
+            }
             return (
-              <div key={task.id} className="taskItem">
+            // {done[task.id] === true || task.status === true ? (
+            //   <div></div>) : (
+            //     <div></div>)}
+              <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
                 <div className="taskItemUpperDiv">
                   <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
                   <div className="taskTitle">{task.title}</div>
+                  <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
-                  <input type="checkbox" />
                 </div>
-                <div>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
+
                 <SliderComponent
-                  disabled={disabledSlider}
-                  key={task.id}
+                  width="70%"
+                  disabled={disabledSlider[task.id]}
                   step={25}
                   id={task.id}
                   value={0}
@@ -131,7 +180,7 @@ export default function TaskList() {
                   min={0}
                   max={100}
                 />
-                <button className="deleteTask" id={task.id} disabled={!disabledBtn[task.id]} type="button">Завершить</button>
+                <button className="finishTask" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>Завершить</button>
 
               </div>
             );
