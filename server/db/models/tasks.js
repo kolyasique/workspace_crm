@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
     },
     progress_status: {
-      defaultValue: 'Создана',
+      defaultValue: 'Новая',
       type: DataTypes.TEXT,
     },
     status: {

@@ -20,7 +20,7 @@ export default function TaskList() {
     console.log(progressStatus, 'GHJUHTCNFEC');
     switch (progressStatus) {
       case '0':
-        return 'Начать';
+        return 'Новая';
       case '25':
         return 'Принята';
       case '50':
@@ -28,7 +28,7 @@ export default function TaskList() {
       case '75':
         return 'Согласование';
       case '100':
-        return 'Готово';
+        return 'Завершить';
       default:
         return 0;
     }
@@ -118,9 +118,9 @@ export default function TaskList() {
   return (
     <div className="taskContainer">
       <div className="taskTools">
-        <button type="button" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>personal</button>
-        <button type="button" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>ordered</button>
-        <button type="button" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>clear</button>
+        <button type="button" className="filterMyTasksBtn" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>Свои задачи</button>
+        <button type="button" className="filterMyTaskFromAnotherBtn" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>Поставленные</button>
+        <button type="button" className="clearFilterBtn" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>Все задачи</button>
         <form className="taskTools">
           <input type="text" />
           <button type="submit">искать</button>
@@ -147,7 +147,9 @@ export default function TaskList() {
                     <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
 
                     <div className="taskTitle">{task.title}</div>
-                    <div className="taskStatus">Выполнено</div>
+                    <div className="taskStatus">
+                      Выполнено
+                    </div>
                   </div>
                   <div className="taskItemLowerDiv">
                     <div className="taskContent">{task?.content}</div>
@@ -164,7 +166,8 @@ export default function TaskList() {
                 <div className="taskItemUpperDiv">
                   <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
                   <div className="taskTitle">{task.title}</div>
-                  <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
+                  {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
+                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Новая</>) }</button>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
@@ -180,14 +183,13 @@ export default function TaskList() {
                   min={0}
                   max={100}
                 />
-                <button className="finishTask" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>Завершить</button>
 
               </div>
             );
           })}
         </div>
       </div>
-      <Modal visible={modalVisible} setVisible={setModalVisible} />
+      <Modal visible={modalVisible} setVisible={setModalVisible} tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }
