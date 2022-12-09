@@ -11,7 +11,7 @@ const initialvalue = {
   content: '',
   startDate: '',
   endDate: '',
-  taskForUserId: null,
+  taskForUserId: '',
 
 };
 function Modal({
