@@ -12,8 +12,8 @@ export default function File() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // e.preventDefault();
     const data = new FormData();
     data.append('avatar', img);
     data.append('form', JSON.stringify(form));
@@ -35,10 +35,10 @@ export default function File() {
   };
 
   return (
-    <form className="imageForm" onSubmit={handleSubmit}>
+    <form className="imageForm">
       <input onChange={handeleInput} name="text" value={form.text} />
       <input type="file" onChange={uploudImg} />
-      <button type="submit">Загрузить документ</button>
+      <button type="submit" onClick={handleSubmit}>Загрузить документ</button>
     </form>
   );
 }

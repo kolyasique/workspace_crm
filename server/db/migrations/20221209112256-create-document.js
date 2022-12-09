@@ -15,6 +15,12 @@ module.exports = {
       file: {
         type: Sequelize.STRING
       },
+      worker_id: {
+        type: Sequelize.INTEGER
+      },
+      client_id: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
