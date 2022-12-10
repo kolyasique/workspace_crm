@@ -82,8 +82,9 @@ export default function AddWorkersForm({ setWorkers, workers }) {
           <label className="form-label ">Должность</label>
           {/* <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} /> */}
           <select name="select" onChange={handleInput} value={form.category_id}>
-            <option value={1} selected>АУП</option>
-            <option value={2}>Исполняющий сотрудник</option>
+            <option selected disabled>Категория сотрудника</option>
+            <option value={1}>Управляющий</option>
+            <option value={2}>Исполняющий</option>
           </select>
         </div>
 

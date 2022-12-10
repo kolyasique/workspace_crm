@@ -4,6 +4,7 @@ const fileMiddleware = require('../middlewares/file');
 
 uploadRouter.post('/upload', fileMiddleware.single('avatar'), async (req, res) => {
   try {
+
     const newForm = JSON.parse(req.body.form);
     const idC = JSON.parse(req.body.client_id);
     const { text } = newForm;

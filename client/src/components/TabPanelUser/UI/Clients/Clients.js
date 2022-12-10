@@ -43,6 +43,7 @@ export default function Clients() {
   //   setForm({ ...form, [e.target.name]: e.target.value });
   // };
 
+
   const uploudImg = (e) => {
     setImg(e.target.files[0]);
     console.log(e.target.files[0]);

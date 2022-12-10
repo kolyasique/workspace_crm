@@ -8,14 +8,13 @@ export default function MainContextProvider({ children }) {
   useEffect(() => {
     const abortController = new AbortController();
 
-    fetch('http://localhost:6622/api/chat', {
+    fetch('http://localhost:6622/api/chat/user', {
       credentials: 'include',
       signal: abortController.signal,
     })
       .then((res) => res.json())
       .then((res) => setState(res))
       .catch(console.log);
-    console.log(state);
 
     return () => {
       abortController.abort();

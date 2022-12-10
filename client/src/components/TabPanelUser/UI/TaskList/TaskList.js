@@ -15,12 +15,12 @@ export default function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
+  const [find, setFind] = useState({ query: '' });
 
   const getProgressStatus = (progressStatus) => {
-    console.log(progressStatus, 'GHJUHTCNFEC');
     switch (progressStatus) {
       case '0':
-        return 'Начать';
+        return 'Новая';
       case '25':
         return 'Принята';
       case '50':
@@ -28,13 +28,11 @@ export default function TaskList() {
       case '75':
         return 'Согласование';
       case '100':
-        return 'Готово';
+        return 'Завершить';
       default:
         return 0;
     }
   };
-  console.log(taskStatus, 'Это таск статус');
-  console.log(disabledBtn, 'Это дисейбл батонс статус');
 
   // useEffect(() => {
 
@@ -46,7 +44,7 @@ export default function TaskList() {
     const taskProgressStatus = getProgressStatus(e.target.value);
     const taskToUpdate = { [taskId]: taskProgressStatus };
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
-    // useEffect(() => {
+
     const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
     fetch(url, {
       method: 'POST',
@@ -57,10 +55,7 @@ export default function TaskList() {
       body: JSON.stringify(taskToUpdate),
     })
       .then((res) => res.json())
-    // .then((data) => {
-    //   console.log(data, 'це дата статуса');
-    //   setDone({ ...done, [data]: true });
-    // })
+
       .catch(console.error);
     if (e.target.value === '100') {
       setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
@@ -101,8 +96,14 @@ export default function TaskList() {
     setFilteredTasks(tasks);
   }, [tasks]);
 
+  // const sortedAndSearchedPosts = useMemo(()=>{
+  //   return sortedPosts.filter(post=>post.title.toLowerCase().includes(filter.query))
+  // }, [filter.query,sortedPosts])
+
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
+    const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+    console.log(findTasks, 'dotaskfilter findtask');
     switch (filterType) {
       case 'clear':
         return setFilteredTasks(tasks);
@@ -110,21 +111,25 @@ export default function TaskList() {
         return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'personal'));
       case 'ordered':
         return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'ordered'));
+      case 'searchfilter':
+        return setFilteredTasks(findTasks);
       default:
         return setFilteredTasks(tasks);
     }
   }
+  // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+  // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
+  // console.log('FindTASK', findTasks);
 
   return (
     <div className="taskContainer">
       <div className="taskTools">
-        <button type="button" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>personal</button>
-        <button type="button" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>ordered</button>
-        <button type="button" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>clear</button>
-        <form className="taskTools">
-          <input type="text" />
-          <button type="submit">искать</button>
-        </form>
+        <button type="button" className="filterMyTasksBtn" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>Свои задачи</button>
+        <button type="button" className="filterMyTaskFromAnotherBtn" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>Поставленные</button>
+        <button type="button" className="clearFilterBtn" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>Все задачи</button>
+
+        <input type="text" id="searchfilter" value={find.query} onChange={(e) => { setFind({ ...find, query: e.target.value }); doTaskFilter(e.target.id); }} placeholder="найти задание" />
+
         <button
           type="button"
           onClick={() => {
@@ -147,7 +152,9 @@ export default function TaskList() {
                     <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
 
                     <div className="taskTitle">{task.title}</div>
-                    <div className="taskStatus">Выполнено</div>
+                    <div className="taskStatus">
+                      Выполнено
+                    </div>
                   </div>
                   <div className="taskItemLowerDiv">
                     <div className="taskContent">{task?.content}</div>
@@ -164,7 +171,8 @@ export default function TaskList() {
                 <div className="taskItemUpperDiv">
                   <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
                   <div className="taskTitle">{task.title}</div>
-                  <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div>
+                  {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
+                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Новая</>) }</button>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
@@ -180,14 +188,13 @@ export default function TaskList() {
                   min={0}
                   max={100}
                 />
-                <button className="finishTask" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>Завершить</button>
 
               </div>
             );
           })}
         </div>
       </div>
-      <Modal visible={modalVisible} setVisible={setModalVisible} />
+      <Modal visible={modalVisible} setVisible={setModalVisible} tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }

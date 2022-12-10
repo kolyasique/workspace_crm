@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-indent */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -19,6 +19,8 @@ import AuthForm from './components/AuthForm/AuthForm';
 import LoginAdmin from './components/LoginAdmin/LoginAdmin';
 import MainPageUser from './components/MainPageUser/MainPageUser';
 import 'react-toastify/dist/ReactToastify.css';
+import SocketContextProvider from './context/Socket.context';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -55,7 +57,7 @@ function App() {
             ? (
               <Routes>
               <Route path="/adminpage" element={<MainPageCompany />} />
-              <Route path="/workerpage" element={<MainPageUser />} />
+              <Route path="/workerpage" element={<SocketContextProvider><MainPageUser /></SocketContextProvider>} />
               </Routes>
             ) : (
               <Routes>
