@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Worker.init({
+    avatar: {
+      allowNull: true,
+      type: DataTypes.TEXT,
+    },
     login: {
       type: DataTypes.TEXT,
     },

@@ -33,7 +33,7 @@ export default function Clients() {
     console.log(form);
   };
 
-  const handeleInput = (e) => {
+  const handleInput = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -57,7 +57,7 @@ export default function Clients() {
       {clients.map((client) => (
         <div key={client.id} className="clientItem">
           {client.name}
-          <input onChange={handeleInput} name="text" value={form.text} />
+          <input onChange={handleInput} name="text" value={form.text} />
           <input type="file" onChange={uploudImg} />
           <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить документ</button>
         </div>
