@@ -9,6 +9,7 @@ import Modal from '../Modal/Modal';
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
+  const [allWorkers, setAllWorkers] = useState([]);
   const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});
   const [done, setDone] = useState({});
@@ -34,9 +35,18 @@ export default function TaskList() {
     }
   };
 
-  // useEffect(() => {
-
-  // }, [taskStatus]);
+  const abortController = new AbortController();
+  useEffect(() => {
+    fetch('http://localhost:6622/api/userpanel/gettasks', {
+      credentials: 'include',
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTasks(data.allTasks);
+        setAllWorkers(data.workers);
+      });
+  }, []);
 
   const handleChange = (e) => {
     console.log(e.target.value, 'Это е таргет велью');
@@ -82,15 +92,8 @@ export default function TaskList() {
       })
       .catch(console.error);
   };
-  const abortController = new AbortController();
-  useEffect(() => {
-    fetch('http://localhost:6622/api/userpanel/gettasks', {
-      credentials: 'include',
-      signal: abortController.signal,
-    })
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
-  }, []);
+
+  console.log(allWorkers);
 
   useEffect(() => {
     setFilteredTasks(tasks);
@@ -99,6 +102,20 @@ export default function TaskList() {
   // const sortedAndSearchedPosts = useMemo(()=>{
   //   return sortedPosts.filter(post=>post.title.toLowerCase().includes(filter.query))
   // }, [filter.query,sortedPosts])
+
+  function setCreatorDone(creatorId) {
+    if (creatorId !== undefined) {
+      const nameAndSecondName = `${(allWorkers.filter((el) => el.id == creatorId))[0].name} ${(allWorkers.filter((el) => el.id == creatorId))[0].second_name}`;
+      return nameAndSecondName;
+    }
+    return 'Не удалось загрузить';
+  }
+  // function setCreatorDone(creatorId) {
+  //   const nameAndSecondName2 = `${(allWorkers.filter((el) => el.id == creatorId))[0].name} ${(allWorkers.filter((el) => el.id == creatorId))[0].second_name}`;
+  //   return nameAndSecondName2;
+  // }
+
+  // ${(allWorkers.filter((el) => el.id == task.creator_id))[0].second_name} ${(allWorkers.filter((el) => el.id == task.creator_id))[0].name}
 
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
@@ -149,7 +166,7 @@ export default function TaskList() {
               return (
                 <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
                   <div className="taskItemUpperDiv">
-                    <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
+                    <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type === 'personal' ? ('Личная') : (`${setCreatorDone(task.creator_id)}`)}</div>
 
                     <div className="taskTitle">{task.title}</div>
                     <div className="taskStatus">
@@ -169,7 +186,7 @@ export default function TaskList() {
             //     <div></div>)}
               <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
                 <div className="taskItemUpperDiv">
-                  <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type}</div>
+                  <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type === 'personal' ? ('Личная') : (`${setCreatorDone(task.creator_id)}`)}</div>
                   <div className="taskTitle">{task.title}</div>
                   {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
                   <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Новая</>) }</button>
