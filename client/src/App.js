@@ -6,6 +6,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import './App.css';
 import Header from './components/Header/Header';
@@ -17,6 +18,7 @@ import Login from './components/Login/Login';
 import AuthForm from './components/AuthForm/AuthForm';
 import LoginAdmin from './components/LoginAdmin/LoginAdmin';
 import MainPageUser from './components/MainPageUser/MainPageUser';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +64,7 @@ function App() {
               <Route path="/reg" element={<AuthForm />} />
               </Routes>
             )}
+            <ToastContainer />
         </div>
       )
   );

@@ -9,11 +9,12 @@ uploadRouter.post('/upload', fileMiddleware.single('avatar'), async (req, res) =
     const { text } = newForm;
     const { id } = req.session.company;
     const createFile = await Document.create({
-      text, file: req.file.path, worker_id: id, client_id: idC,
+      text, file: req.file?.path, worker_id: id, client_id: idC,
     });
     res.json(createFile);
   } catch (error) {
     console.log('=====', error);
+    res.sendStatus(400);
   }
 });
 

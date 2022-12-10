@@ -21,7 +21,6 @@ export default function VerticalTabs({ socket }) {
   const [component, setComponent] = useState(<TaskList />);
   const [activeButton, setActiveButton] = useState('1');
 
-
   return (
     <div className="box">
       <div className="leftMenu">
