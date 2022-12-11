@@ -11,6 +11,7 @@ export default function Chat({ recValue, showMessages }) {
   const { state } = useContext(MainContext);
   const { socket } = useContext(SocketContext);
   const [status, setStatus] = useState('Не в сети');
+  const test = useRef();
 
   const addMessage = (newMessage, auth) => {
     const div = document.createElement('div');
@@ -38,6 +39,10 @@ export default function Chat({ recValue, showMessages }) {
       const { type, payload } = message;
 
       switch (type) {
+        case 'online':
+          console.log('rabotaet case online');
+          setStatus('В сети');
+          break;
         case 'message':
           console.log('rabotaet case message');
           console.log({ message });
@@ -46,10 +51,6 @@ export default function Chat({ recValue, showMessages }) {
         case 'offline':
           console.log('rabotaet case offline');
           setStatus('Не в сети');
-          break;
-        case 'online':
-          console.log('rabotaet case online');
-          setStatus('В сети');
           break;
 
         default:
@@ -82,7 +83,7 @@ export default function Chat({ recValue, showMessages }) {
         {' '}
         {recValue.name}
       </h3>
-      <span className="chatStatus">{status}</span>
+      <span ref={test} className="chatStatus">{status}</span>
       <div ref={chatbox} id="chatbox" className="chatbox">
         {showMessages.map((message) => (
           <div key={message.id} className={recValue.id === message.user_from ? 'chatbox-textstart' : 'chatbox-textend'}>

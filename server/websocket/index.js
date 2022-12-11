@@ -35,7 +35,7 @@ wss.on('connection', (ws, req, usersMap) => {
               reciever.ws.send(JSON.stringify({ type: 'message', payload: newMessage }));
             } else {
               sender.ws.send(JSON.stringify({ type: 'message', payload: { ...newMessage.dataValues, auth: true } }));
-              sender.ws.send(JSON.stringify({ type: 'offline', payload: { msg: 'reciever is offline' } }));
+              sender.ws.send(JSON.stringify({ type: 'offline' }));
             }
           })
           .catch(console.log);
