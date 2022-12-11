@@ -194,23 +194,25 @@ export default function TaskList() {
     return diffDaysRawString;
   }
 
-  function doTaskFilter(filterType) {
+  function doTaskFilter(e) {
     const newTaskArr = [...tasks];
-    const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
+    const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(e.target.value.toLowerCase()));
+    setFind({ ...find, query: e.target.value });
     console.log(findTasks, 'dotaskfilter findtask');
-    switch (filterType) {
+    switch (e.target.id) {
       case 'clear':
         return setFilteredTasks(tasks);
       case 'personal':
-        return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'personal'));
+        return setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal'));
       case 'ordered':
-        return setFilteredTasks(newTaskArr.filter((el) => el.task_type === 'ordered'));
+        return setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered'));
       case 'searchfilter':
         return setFilteredTasks(findTasks);
       default:
         return setFilteredTasks(tasks);
     }
   }
+  console.log(find.query, '++_+_+_+_+_+_');
   // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
   // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
   // console.log('FindTASK', findTasks);
@@ -218,11 +220,12 @@ export default function TaskList() {
   return (
     <div className="taskContainer">
       <div className="taskTools">
-        <button type="button" className="filterMyTasksBtn" value="personal" onClick={(e) => doTaskFilter(e.target.value)}>Свои задачи</button>
-        <button type="button" className="filterMyTaskFromAnotherBtn" value="ordered" onClick={(e) => doTaskFilter(e.target.value)}>Поставленные</button>
-        <button type="button" className="clearFilterBtn" value="clear" onClick={(e) => doTaskFilter(e.target.value)}>Все задачи</button>
+        <button type="button" className="filterMyTasksBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Свои задачи</button>
+        <button type="button" className="filterMyTaskFromAnotherBtn" id="ordered" onClick={(e) => doTaskFilter(e)}>Поставленные</button>
+        <button type="button" className="clearFilterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
 
-        <input type="text" id="searchfilter" value={find.query} onChange={(e) => { setFind({ ...find, query: e.target.value }); doTaskFilter(e.target.id); }} placeholder="найти задание" />
+        <input type="text" id="searchfilter" value={find.query} onChange={(e) => doTaskFilter(e)} placeholder="найти задание" />
+        {/* setFind({ ...find, query: e.target.value }) */}
 
         <button
           type="button"
@@ -236,7 +239,7 @@ export default function TaskList() {
       </div>
       <div className="taskContainer2">
         <div className="toDoTasks">
-
+          {/* filteredTasks findTasks (214) */}
           {filteredTasks.map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
             if (done[task.id] === true || task.status === true) {
