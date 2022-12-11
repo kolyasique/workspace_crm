@@ -2,12 +2,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SliderComponent } from '../Slider/SliderToggle';
 import './TaskList.css';
 import Modal from '../Modal/Modal';
+import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
+  const { dateNow, setDateNow, converterDate1 } = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
   const [allWorkers, setAllWorkers] = useState([]);
   const [disabledBtn, setDisabledBtn] = useState({});
@@ -17,6 +19,7 @@ export default function TaskList() {
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
+  // const [dateNow, setDateNow] = useState(null);
 
   const getProgressStatus = (progressStatus) => {
     switch (progressStatus) {
@@ -65,8 +68,8 @@ export default function TaskList() {
       body: JSON.stringify(taskToUpdate),
     })
       .then((res) => res.json())
-
       .catch(console.error);
+
     if (e.target.value === '100') {
       setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
       setDisabledBtn({ ...disabledBtn, [e.target.id]: true });
@@ -103,19 +106,93 @@ export default function TaskList() {
   //   return sortedPosts.filter(post=>post.title.toLowerCase().includes(filter.query))
   // }, [filter.query,sortedPosts])
 
-  function setCreatorDone(creatorId) {
+  function setCreator(creatorId) {
     if (creatorId !== undefined) {
       const nameAndSecondName = `${(allWorkers.filter((el) => el.id == creatorId))[0].name} ${(allWorkers.filter((el) => el.id == creatorId))[0].second_name}`;
       return nameAndSecondName;
     }
-    return 'Не удалось загрузить';
+    return 'Error';
   }
-  // function setCreatorDone(creatorId) {
-  //   const nameAndSecondName2 = `${(allWorkers.filter((el) => el.id == creatorId))[0].name} ${(allWorkers.filter((el) => el.id == creatorId))[0].second_name}`;
-  //   return nameAndSecondName2;
-  // }
+  function createdDate(date) {
+    const newDate = new Date(date);
+    const oldMonth = newDate.getMonth();
+    // const newDate2 = newDate.toLocaleString('ru');
+    const dayDate = newDate.getDate();
+    const dateFullYear = newDate.getFullYear();
 
-  // ${(allWorkers.filter((el) => el.id == task.creator_id))[0].second_name} ${(allWorkers.filter((el) => el.id == task.creator_id))[0].name}
+    let month;
+    switch (oldMonth + 1) {
+      case 1:
+        month = 'Января';
+        break;
+      case 2:
+        month = 'Февраля';
+        break;
+      case 3:
+        month = 'Марта';
+        break;
+      case 4:
+        month = 'Апреля';
+        break;
+      case 5:
+        month = 'Мая';
+        break;
+      case 6:
+        month = 'Июня';
+        break;
+      case 7:
+        month = 'Июля';
+        break;
+      case 8:
+        month = 'Августа';
+        break;
+      case 9:
+        month = 'Сентября';
+        break;
+      case 10:
+        month = 'Октября';
+        break;
+      case 11:
+        month = 'Ноября';
+        break;
+      case 12:
+        month = 'Декабря';
+        break;
+      default: console.log('Что-то не так с твоим месяцем!');
+    }
+    const creationDate = `${String(dayDate)} ${month} ${dateFullYear}`;
+    return creationDate;
+  }
+  function checkRestTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date1.getTime() - date2.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
+
+  function setRestTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+
+    const timeDiff = date1.getTime() - date2.getTime();
+    const diffDaysRaw = (timeDiff / (1000 * 3600 * 24));
+    const diffDaysRawString = `${Math.round(timeDiff / (1000 * 3600 * 24))} дней`;
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    const hoursLeftRaw = timeDiff / (1000 * 3600);
+    const hoursLeftString = `${Math.ceil(timeDiff / (1000 * 3600))} часов`;
+
+    const minutesLeftRaw = timeDiff / (1000 * 60);
+    const minutesLeftString = `${Math.ceil(timeDiff / (1000 * 60))} минут`;
+    if (diffDaysRaw < 1) {
+      return hoursLeftString;
+    }
+    if (hoursLeftRaw < 1) {
+      return minutesLeftString;
+    }
+    return diffDaysRawString;
+  }
 
   function doTaskFilter(filterType) {
     const newTaskArr = [...tasks];
@@ -166,8 +243,9 @@ export default function TaskList() {
               return (
                 <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
                   <div className="taskItemUpperDiv">
-                    <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type === 'personal' ? ('Личная') : (`${setCreatorDone(task.creator_id)}`)}</div>
-
+                    <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
+                      {task.task_type === 'personal' ? ('Личная') : (`${setCreator(task.creator_id)}`)}
+                    </div>
                     <div className="taskTitle">{task.title}</div>
                     <div className="taskStatus">
                       Выполнено
@@ -186,10 +264,12 @@ export default function TaskList() {
             //     <div></div>)}
               <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
                 <div className="taskItemUpperDiv">
-                  <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>{task.task_type === 'personal' ? ('Личная') : (`${setCreatorDone(task.creator_id)}`)}</div>
+                  <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
+                    {task.task_type === 'personal' ? ('Личная') : (`${setCreator(task.creator_id)}`)}
+                  </div>
                   <div className="taskTitle">{task.title}</div>
                   {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
-                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Новая</>) }</button>
+                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начните</>) }</button>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
@@ -205,7 +285,20 @@ export default function TaskList() {
                   min={0}
                   max={100}
                 />
-
+                <div className="taskDates">
+                  <div className="startAt">
+                    <label> Начало</label>
+                    <div>{`${createdDate(task.start)}`}</div>
+                  </div>
+                  <div className="endAt">
+                    <label> Дедлайн</label>
+                    <div>{`${createdDate(task.end)}`}</div>
+                  </div>
+                  <div className="restTime">
+                    <label> Осталось</label>
+                    <div id={task.id}>{checkRestTime(task.end) > 0 ? (`${setRestTime(task.end)}`) : ('Задача просрочена!')}</div>
+                  </div>
+                </div>
               </div>
             );
           })}

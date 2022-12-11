@@ -60,6 +60,7 @@ function Modal({
       })
       .catch(console.error);
     setFormTask(initialvalue);
+    setVisible(false);
   };
 
   return (
