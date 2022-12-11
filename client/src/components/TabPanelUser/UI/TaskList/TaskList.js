@@ -23,6 +23,7 @@ export default function TaskList() {
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
+  const [userId, setUserId] = useState(null);
   // const [dateNow, setDateNow] = useState(null);
 
   const getProgressStatus = (progressStatus) => {
@@ -52,6 +53,7 @@ export default function TaskList() {
       .then((data) => {
         setTasks(data.allTasks);
         setAllWorkers(data.workers);
+        setUserId(data.id);
       });
   }, []);
 
@@ -260,7 +262,7 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           {/* filteredTasks findTasks (214) */}
-          {filteredTasks.map((task) => {
+          {filteredTasks.filter((taskF) => taskF.worker_id === userId).map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
             if (done[task.id] === true || task.status === true) {
               return (
