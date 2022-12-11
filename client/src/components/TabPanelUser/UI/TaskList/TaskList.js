@@ -13,7 +13,7 @@ export default function TaskList() {
     dateNow, setDateNow, converterDate1, tasks, setTasks,
   } = useContext(UserContext);
 
-  const [allWorkers, setAllWorkers] = useState([]);
+  const { allWorkers, setAllWorkers } = useContext(UserContext);
   const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});
   const [done, setDone] = useState({});

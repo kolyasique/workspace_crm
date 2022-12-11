@@ -7,6 +7,7 @@ export const UserContext = React.createContext();
 
 export default function UserContextProvider({ children }) {
   const [dateNow, setDateNow] = useState(null);
+  const [allWorkers, setAllWorkers] = useState([]);
   const [tasks, setTasks] = useState([]);
 
   //   const checkDateNow = new Date();
@@ -94,6 +95,8 @@ export default function UserContextProvider({ children }) {
     convertDate1,
     tasks,
     setTasks,
+    allWorkers,
+    setAllWorkers,
   }));
 
   return (
