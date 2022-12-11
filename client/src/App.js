@@ -21,7 +21,6 @@ import MainPageUser from './components/MainPageUser/MainPageUser';
 import 'react-toastify/dist/ReactToastify.css';
 import SocketContextProvider from './context/Socket.context';
 
-
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.userStore);

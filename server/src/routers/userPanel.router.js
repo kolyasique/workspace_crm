@@ -8,7 +8,10 @@ userPanelRouter.get('/gettasks', async (req, res) => {
   const { id } = req.session.company;
   try {
     const allTasks = await Tasks.findAll({ where: { worker_id: Number(id) } });
-    res.json(allTasks);
+    const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
+    console.log('ff');
+    console.log(allTasks);
+    res.json({ allTasks, workers });
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: error.message });
@@ -56,6 +59,17 @@ userPanelRouter.post('/createtask', async (req, res) => {
   }
 });
 
+userPanelRouter.get('/getinfoforstat', async (req, res) => {
+  const { company_id } = req.session.company;
+  try {
+    const allInfoForTasks = await Worker.findAll({ where: { company_id: Number(company_id) }, include: Tasks });
+    console.log(allInfoForTasks);
+    res.json(allInfoForTasks);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: error.message });
+  }
+});
 // userPanelRouter.post('/addclient', async (req, res) => {
 //   const {
 //     title, content, startDate, endDate, taskForUserId,

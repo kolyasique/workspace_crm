@@ -12,6 +12,7 @@ const formInitialState = {
   patronymic: '',
   phone: '',
   email: '',
+  category_id: '',
 };
 
 export default function AddWorkersForm({ setWorkers, workers }) {
@@ -84,17 +85,17 @@ export default function AddWorkersForm({ setWorkers, workers }) {
           <div className="cut" />
           <label htmlFor="phone" className="placeholder">Телефон</label>
         </div>
-
         <div className="select-container">
           <div className="form-group">
             <div className="select-wrapper">
               <select className="select" name="select" onChange={handleInput} value={form.category_id}>
-                <option selected disabled>Категория сотрудника</option>
+                <option selected value="">Категория сотрудника</option>
                 <option value={1}>Управляющий</option>
                 <option value={2}>Исполняющий</option>
               </select>
             </div>
           </div>
+
         </div>
         <button type="submit" className="submit">Добавить</button>
       </form>
