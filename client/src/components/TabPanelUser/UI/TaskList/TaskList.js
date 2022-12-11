@@ -9,8 +9,10 @@ import Modal from '../Modal/Modal';
 import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
-  const { dateNow, setDateNow, converterDate1 } = useContext(UserContext);
-  const [tasks, setTasks] = useState([]);
+  const {
+    dateNow, setDateNow, converterDate1, tasks, setTasks,
+  } = useContext(UserContext);
+
   const [allWorkers, setAllWorkers] = useState([]);
   const [disabledBtn, setDisabledBtn] = useState({});
   const [taskStatus, setTaskStatus] = useState({});

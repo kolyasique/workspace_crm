@@ -1,48 +1,18 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
-import { showToast } from '../../../../lib/toasti';
 import './Clients.css';
-import CreateOrder from './UI/CreateOrder';
+import CreateClientTask from './UI/CreateClientTask';
+import ClientDocuments from './UI/ClientDocuments';
 import ModalClient from './ModalClient';
 
 export default function Clients() {
+  const [component, setComponent] = useState(null);
   const [clients, setClients] = useState([]);
+  const [clientTasks, setClientTasks] = useState([]);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
   const abortController = new AbortController();
-  const [img, setImg] = useState(null);
-  const [form, setForm] = useState({
-    text: '',
-    image: '',
-  });
-  const [findClient, setFindClient] = useState({ query: '' });
 
-  const handleSubmit = async (e) => {
-    try {
-      // e.preventDefault();
-      const { id } = e.target;
-      const data = new FormData();
-      data.append('avatar', img);
-      data.append('form', JSON.stringify(form));
-      data.append('client_id', id);
-      const url = 'http://localhost:6622/api/upload';
-      const res = await fetch(url, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-      });
-      setForm({
-        text: '',
-        image: '',
-      });
-      console.log(form);
-      if (res.status === 200) {
-        showToast({ message: 'Файл загружен', type: 'success' });
-      }
-    } catch (error) {
-      console.log(error);
-      showToast({ message: 'Не получилось', type: 'error' });
-    }
-  };
+  const [findClient, setFindClient] = useState({ query: '' });
 
   const findClients = clients.filter((el) => (el.name.toLowerCase() + String(el.inn) + el.email + el.adress.toLowerCase()).includes(findClient.query.toLowerCase()));
   // const handeleInput = (e) => {
@@ -54,13 +24,8 @@ export default function Clients() {
       setVisibleModalForOrder(true);
     } catch (error) {
       console.log(error);
-      showToast({ message: 'Не получилось', type: 'error' });
+      // showToast({ message: 'Не получилось', type: 'error' });
     }
-  };
-
-  const uploudImg = (e) => {
-    setImg(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
 
   useEffect(() => {
@@ -73,6 +38,17 @@ export default function Clients() {
       .then((data) => setClients(data));
   }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:6622/api/userpanel/gettasks', {
+      credentials: 'include',
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setClientTasks(data.allTasks);
+        // setAllWorkers(data.workers);
+      });
+  }, []);
   // const getUserDays = (userCreationDay) => {
   //   const date = new Date();
   //   const timeDiff = Math.abs(date.getTime() - userCreationDay.getTime());
@@ -98,25 +74,31 @@ export default function Clients() {
       {findClients.map((client) => (
         <div key={client.id} className="clientItem">
           <div className="clientInfo">
-            <div>{client.name}</div>
-            <div>{`адрес: ${client.adress}`}</div>
-            <div>{client.inn}</div>
-            <div>{client.email}</div>
-            <div>
-              {`С нами уже: ${getUserDays(client.createdAt)} дня`}
+            <div className="clientInfoHead">
+              <div className="clientInn">{client.inn}</div>
+              <div className="clientName">{client.name}</div>
+              <div className="clientPartnershipAge">
+                {`С нами уже: ${getUserDays(client.createdAt)} дня`}
+              </div>
             </div>
+            <div>{`адрес: ${client.adress}`}</div>
+
+            <div>{client.email}</div>
+            {/* <div>
+              {clientTasks.filter((task)=>)map((el))
+              }</div> */}
             {/* <button type="button" value={client.createdAt} onClick={(e) => { getUserDays(e.target.value); }}>SKOLKO</button> */}
           </div>
-          <input type="file" onChange={uploudImg} />
-          <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить документ</button>
-          <button type="button" id={client.id} onClick={(e) => handleClick(e)}>Создать заявку</button>
+          {/* <input type="file" onChange={uploudImg} />
+          <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить документ</button> */}
+          <button type="button" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask />); }}>Создать задачу</button>
           <button type="button" id={client.id}>Взаимодействие</button>
-          <button type="button" id={client.id}>Документы</button>
+          <button type="button" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>
           <button type="button" id={client.id}>Удалить</button>
         </div>
       ))}
       <ModalClient visible={visibleModalForOrder} setVisible={setVisibleModalForOrder}>
-        <CreateOrder />
+        {component}
       </ModalClient>
     </div>
   );

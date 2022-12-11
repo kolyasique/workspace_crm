@@ -7,6 +7,7 @@ export const UserContext = React.createContext();
 
 export default function UserContextProvider({ children }) {
   const [dateNow, setDateNow] = useState(null);
+  const [tasks, setTasks] = useState([]);
 
   //   const checkDateNow = new Date();
   useEffect(() => {
@@ -91,6 +92,8 @@ export default function UserContextProvider({ children }) {
     dateNow,
     setDateNow,
     convertDate1,
+    tasks,
+    setTasks,
   }));
 
   return (
