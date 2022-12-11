@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -54,10 +55,33 @@ const options = {
 
 };
 
+
+
 export default function Stat() {
+  const [allWorkersInclTasks, setAllWorkersInclTasks] = useState([]);
+  const abortController = new AbortController();
+  useEffect(() => {
+    fetch('http://localhost:6622/api/userpanel/getinfoforstat', {
+      credentials: 'include',
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAllWorkersInclTasks(data);
+      });
+  }, []);
+
   return (
     <div>
+
       <Bar data={data} options={options} />
+
+      {/* {allWorkersInclTasks.map((worker) => (
+        <div></div>
+        <div>{worker.name}</div>
+        <div>
+      ))} */}
+
     </div>
   );
 }

@@ -42,7 +42,7 @@
     justify-content: flex-start;
     align-items: center;
     width: 95%;
-    height: 90%;
+    height: 350px;
     border-radius: 5px;
     border: 1px solid lightblue;
    
@@ -156,6 +156,52 @@ box-shadow: none;
     border-radius: 5px;
     font-size: 12px;
 }
+.taskDates{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+.createdAt{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.createdAt label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.startAt{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.startAt label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.endAt{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.endAt label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.restTime{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.restTime label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
 .activeButtonEnd{
 font-size: large;
 }
@@ -239,3 +285,4 @@ color: #000000;
     color: #4a4a4a;
     box-shadow: none;
 }
+
