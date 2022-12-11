@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useMemo } from 'react';
 
 export const MainContext = React.createContext();

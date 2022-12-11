@@ -11,6 +11,7 @@ const formInitialState = {
   patronymic: '',
   phone: '',
   email: '',
+  category_id: '',
 };
 
 export default function AddWorkersForm({ setWorkers, workers }) {
@@ -82,7 +83,7 @@ export default function AddWorkersForm({ setWorkers, workers }) {
           <label className="form-label ">Должность</label>
           {/* <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} /> */}
           <select name="select" onChange={handleInput} value={form.category_id}>
-            <option selected disabled>Категория сотрудника</option>
+            <option selected disabled value="">Категория сотрудника</option>
             <option value={1}>Управляющий</option>
             <option value={2}>Исполняющий</option>
           </select>
