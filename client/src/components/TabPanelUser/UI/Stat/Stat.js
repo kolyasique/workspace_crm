@@ -1,11 +1,63 @@
 import React from 'react';
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  Title,
+} from 'chart.js';
+// eslint-disable-next-line import/no-unresolved
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  Title,
+);
+
+const data = {
+  labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+  datasets: [
+    {
+      label: 'Выполнено',
+      data: [3, 6, 9],
+      backgroundColor: 'green',
+      borderColor: 'black',
+      borderWidth: 1,
+    },
+    {
+      label: 'Просрочено',
+      data: [5, 2, 7],
+      backgroundColor: 'red',
+      borderColor: 'black',
+      borderWidth: 1,
+    },
+  ],
+};
+const options = {
+  responsive: true,
+  plugins: {
+    // legend: {
+    //   position: 'top',
+    // },
+    title: {
+      display: true,
+      text: '2022',
+    },
+  },
+
+};
 
 export default function Stat() {
   return (
     <div>
-      <label htmlFor="file">Downloading progress:</label>
-      <progress id="file" value="32" max="100"> 32% </progress>
-
+      <Bar data={data} options={options} />
     </div>
   );
 }
