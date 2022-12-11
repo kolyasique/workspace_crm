@@ -9,11 +9,15 @@ import Modal from '../Modal/Modal';
 import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
-  const { dateNow, setDateNow, converterDate1 } = useContext(UserContext);
-  const [tasks, setTasks] = useState([]);
-  const [allWorkers, setAllWorkers] = useState([]);
+  const {
+    dateNow, setDateNow, converterDate1, tasks, setTasks,
+  } = useContext(UserContext);
+
+  const {
+    allWorkers, setAllWorkers, taskStatus, setTaskStatus,
+  } = useContext(UserContext);
   const [disabledBtn, setDisabledBtn] = useState({});
-  const [taskStatus, setTaskStatus] = useState({});
+  // const {taskStatus, setTaskStatus} = useContext()
   const [done, setDone] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -212,6 +216,22 @@ export default function TaskList() {
         return setFilteredTasks(tasks);
     }
   }
+
+  function setSliderValueFromBase(progress) {
+    switch (progress) {
+      case 'Начало':
+        return 0;
+      case 'Принята':
+        return 25;
+      case 'Выполняется':
+        return 50;
+      case 'Согласование':
+        return 75;
+      case 'Завершить':
+        return 100;
+      default: return 0;
+    }
+  }
   console.log(find.query, '++_+_+_+_+_+_');
   // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
   // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
@@ -272,7 +292,7 @@ export default function TaskList() {
                   </div>
                   <div className="taskTitle">{task.title}</div>
                   {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
-                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начните</>) }</button>
+                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : task.progress_status }</button>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
@@ -283,7 +303,7 @@ export default function TaskList() {
                   disabled={disabledSlider[task.id]}
                   step={25}
                   id={task.id}
-                  value={0}
+                  value={setSliderValueFromBase(task.progress_status)}
                   handleChange={handleChange}
                   min={0}
                   max={100}

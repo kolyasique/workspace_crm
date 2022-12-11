@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 const userPanelRouter = require('express').Router();
 const bcrypt = require('bcrypt');
@@ -39,7 +40,19 @@ userPanelRouter.get('/getclients', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
-
+// userPanelRouter.get('/getclientstasks', async (req, res) => {
+//   const { id } = req.session.company;
+//   try {
+//     const allTasks = await Tasks.findAll({ where: { worker_id: Number(id) } });
+//     const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
+//     console.log('ff');
+//     console.log(allTasks);
+//     res.json({ allTasks, workers });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).json({ msg: error.message });
+//   }
+// });
 userPanelRouter.post('/createtask', async (req, res) => {
   const {
     title, content, startDate, endDate, taskForUserId,
@@ -58,7 +71,25 @@ userPanelRouter.post('/createtask', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
-
+userPanelRouter.post('/createtaskforclient', async (req, res) => {
+  const {
+    title, content, startDate, endDate, taskForUserId, client_id,
+  } = req.body;
+  console.log(req.body, '😉😉😉');
+  const sessionId = req.session.company.id;
+  const taskType = (sessionId == taskForUserId ? 'personal' : 'ordered');
+  console.log(taskType);
+  try {
+    console.log('taskId');
+    const createTask = await Tasks.create({
+      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null, client_id,
+    });
+    // const success = { success: 'Задача создана!' };
+    res.json({ createTask, sessionId });
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+});
 userPanelRouter.get('/getinfoforstat', async (req, res) => {
   const { company_id } = req.session.company;
   try {

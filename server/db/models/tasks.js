@@ -4,10 +4,11 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class Tasks extends Model {
-    static associate({ Worker, Order }) {
+    static associate({ Worker, Order, Client }) {
       Tasks.belongsTo(Worker, { foreignKey: 'worker_id', as: 'executor' });
       Tasks.belongsTo(Worker, { foreignKey: 'creator_id', as: 'creator' });
       Tasks.belongsTo(Order, { foreignKey: 'order_id' });
+      Tasks.belongsTo(Client, { foreignKey: 'client_id' });
     }
   }
   Tasks.init({
@@ -57,6 +58,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       references: {
         model: 'Orders',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
+    client_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Clients',
         key: 'id',
       },
       onDelete: 'CASCADE',

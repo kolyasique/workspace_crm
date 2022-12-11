@@ -58,6 +58,15 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      client_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Clients',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
