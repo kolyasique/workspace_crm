@@ -9,6 +9,7 @@ export default function UserContextProvider({ children }) {
   const [dateNow, setDateNow] = useState(null);
   const [allWorkers, setAllWorkers] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [taskStatus, setTaskStatus] = useState({});
 
   //   const checkDateNow = new Date();
   useEffect(() => {
@@ -97,6 +98,8 @@ export default function UserContextProvider({ children }) {
     setTasks,
     allWorkers,
     setAllWorkers,
+    taskStatus,
+    setTaskStatus,
   }));
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
@@ -12,7 +13,10 @@ export default function Clients() {
   const [component, setComponent] = useState(null);
   const [clients, setClients] = useState([]);
   const [clientTasks, setClientTasks] = useState([]);
-  const { tasks, setTasks, allWorkers } = useContext(UserContext);
+  const [progressValue, setProgressValue] = useState({});
+  const {
+    tasks, setTasks, allWorkers, taskStatus, setTaskStatus,
+  } = useContext(UserContext);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
   const abortController = new AbortController();
 
@@ -70,7 +74,25 @@ export default function Clients() {
 
     return diffDaysRound;
   }
-  function caseForProgress(progress) {
+
+  function caseForProgress(id, value) {
+    console.log(id, 'id', value, 'value');
+    switch (value) {
+      case 'Начало':
+        return setProgressValue({ ...progressValue, [id]: 0 });
+      case 'Принята':
+        return setProgressValue({ ...progressValue, [id]: 25 });
+      case 'Выполняется':
+        return setProgressValue({ ...progressValue, [id]: 50 });
+      case 'Согласование':
+        return setProgressValue({ ...progressValue, [id]: 75 });
+      case 'Завершить':
+        return setProgressValue({ ...progressValue, [id]: 100 });
+      default: return 0;
+    }
+  }
+
+  function caseForProgressFromBase(progress) {
     switch (progress) {
       case 'Начало':
         return 0;
@@ -85,6 +107,22 @@ export default function Clients() {
       default: return 0;
     }
   }
+
+  console.log(progressValue, 'ПРОГРЕС');
+  useEffect(
+    () => {
+      const statesArr = Object.keys(taskStatus);
+      for (let i = 0; i < statesArr.length; i++) {
+        caseForProgress(statesArr[i]);
+        console.log(statesArr[i], '++');
+        console.log(taskStatus[statesArr[i]], '+++');
+        caseForProgress(statesArr[i], taskStatus[statesArr[i]][0]);
+      }
+    },
+    [taskStatus],
+  );
+
+  console.log(taskStatus);
   return (
     <div>
       <div className="clientPanel">
@@ -122,7 +160,7 @@ export default function Clients() {
                           {`Ответственный: ${(allWorkers.filter((el) => el.id == clientTask.worker_id))[0].name} ${(allWorkers.filter((el) => el.id == clientTask.worker_id))[0].second_name}`}
                         </div>
                         <div className="executorProgressStatus">
-                          <progress max="100" value={caseForProgress(clientTask.progress_status)}>  </progress>
+                          <progress max="100" value={progressValue[clientTask.id] !== undefined ? progressValue[clientTask.id] : caseForProgressFromBase(clientTask.progress_status)}> </progress>
                         </div>
                       </div>
                     </div>
