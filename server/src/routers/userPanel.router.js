@@ -100,10 +100,8 @@ userPanelRouter.post('/settaskdone', async (req, res) => {
   };
   let updateTaskStatus;
   try {
-    console.log(req.body, '_+_+_+_+_+_');
     const findTask = await Tasks.findOne({ where: { id: taskId } });
     const thisTaskDateOfEnd = findTask.end;
-    console.log(checkRestTime(thisTaskDateOfEnd), 'DATA DATA DATA');
     if (checkRestTime(thisTaskDateOfEnd) < 0) {
       updateTaskStatus = await Tasks.update({ status: false }, { where: { id: taskId } });
     } else updateTaskStatus = await Tasks.update({ status: true }, { where: { id: taskId } });
