@@ -91,10 +91,20 @@ userPanelRouter.get('/getinfoforstat', async (req, res) => {
 
 userPanelRouter.post('/settaskdone', async (req, res) => {
   const { taskId } = req.body;
+  const checkRestTime = (dateOfEnd) => {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date1.getTime() - date2.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  };
+  let updateTaskStatus;
   try {
-    console.log(taskId);
-    const updateTaskStatus = await Tasks.update({ status: true }, { where: { id: taskId } });
-    console.log(updateTaskStatus);
+    const findTask = await Tasks.findOne({ where: { id: taskId } });
+    const thisTaskDateOfEnd = findTask.end;
+    if (checkRestTime(thisTaskDateOfEnd) < 0) {
+      updateTaskStatus = await Tasks.update({ status: false }, { where: { id: taskId } });
+    } else updateTaskStatus = await Tasks.update({ status: true }, { where: { id: taskId } });
     res.json(taskId);
   } catch (error) {
     res.status(400).json({ msg: error.message });

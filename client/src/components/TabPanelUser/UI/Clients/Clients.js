@@ -2,9 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { showToast } from '../../../../lib/toasti';
 import './Clients.css';
+import CreateOrder from './UI/CreateOrder';
+import ModalClient from './ModalClient';
 
 export default function Clients() {
   const [clients, setClients] = useState([]);
+  const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
   const abortController = new AbortController();
   const [img, setImg] = useState(null);
   const [form, setForm] = useState({
@@ -45,6 +48,15 @@ export default function Clients() {
   // const handeleInput = (e) => {
   //   setForm({ ...form, [e.target.name]: e.target.value });
   // };
+  const handleClick = async (e) => {
+    try {
+      console.log(e, 'Создать заявку');
+      setVisibleModalForOrder(true);
+    } catch (error) {
+      console.log(error);
+      showToast({ message: 'Не получилось', type: 'error' });
+    }
+  };
 
   const uploudImg = (e) => {
     setImg(e.target.files[0]);
@@ -61,13 +73,23 @@ export default function Clients() {
       .then((data) => setClients(data));
   }, []);
 
-  const getUserDays = (userCreationDay) => {
-    const date = new Date();
-    const timeDiff = Math.abs(date.getTime() - userCreationDay.getTime());
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return console.log(diffDays);
-  };
+  // const getUserDays = (userCreationDay) => {
+  //   const date = new Date();
+  //   const timeDiff = Math.abs(date.getTime() - userCreationDay.getTime());
+  //   const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  //   return console.log(diffDays);
+  // };
 
+  function getUserDays(userCreationDay) {
+    const date1 = new Date(userCreationDay);
+    const date2 = new Date();
+
+    const timeDiff = date2.getTime() - date1.getTime();
+
+    const diffDaysRound = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return diffDaysRound;
+  }
   return (
     <div className="clientListDiv">
       <div className="clientPanel">
@@ -81,18 +103,21 @@ export default function Clients() {
             <div>{client.inn}</div>
             <div>{client.email}</div>
             <div>
-              {`С нами уже: ${client.createdAt.toLocaleString()}`}
+              {`С нами уже: ${getUserDays(client.createdAt)} дня`}
             </div>
-            <button type="button" value={client.createdAt} onClick={(e) => { getUserDays(e.target.value); }}>SKOLKO</button>
+            {/* <button type="button" value={client.createdAt} onClick={(e) => { getUserDays(e.target.value); }}>SKOLKO</button> */}
           </div>
           <input type="file" onChange={uploudImg} />
           <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить документ</button>
-          <button type="button" id={client.id}>Добавить задачу</button>
+          <button type="button" id={client.id} onClick={(e) => handleClick(e)}>Создать заявку</button>
           <button type="button" id={client.id}>Взаимодействие</button>
           <button type="button" id={client.id}>Документы</button>
           <button type="button" id={client.id}>Удалить</button>
         </div>
       ))}
+      <ModalClient visible={visibleModalForOrder} setVisible={setVisibleModalForOrder}>
+        <CreateOrder />
+      </ModalClient>
     </div>
   );
 }
