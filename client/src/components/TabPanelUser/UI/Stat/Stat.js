@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   BarElement,
@@ -55,8 +56,6 @@ const options = {
 
 };
 
-
-
 export default function Stat() {
   const [allWorkersInclTasks, setAllWorkersInclTasks] = useState([]);
   const abortController = new AbortController();
@@ -66,8 +65,8 @@ export default function Stat() {
       signal: abortController.signal,
     })
       .then((res) => res.json())
-      .then((data) => {
-        setAllWorkersInclTasks(data);
+      .then((dataC) => {
+        setAllWorkersInclTasks(dataC);
       });
   }, []);
 

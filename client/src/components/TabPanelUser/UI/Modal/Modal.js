@@ -70,8 +70,8 @@ function Modal({
         <form className={cl.myModalForm} onSubmit={handleSubmit}>
           <input type="text" value={formTask.title} name="title" placeholder="Название" onChange={handleInput} />
           <textarea value={formTask.content} name="content" placeholder="описание" onChange={handleInput} />
-          <input type="date" value={formTask.startDate} name="startDate" placeholder="Дата начала" onChange={handleInput} />
-          <input type="date" value={formTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
+          <input type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" onChange={handleInput} />
+          <input type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
           <label className="form-label ">Должность</label>
           <select name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput}>
             <option selected disabled value="">Исполнитель задачи</option>
