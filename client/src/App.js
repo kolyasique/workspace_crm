@@ -20,6 +20,7 @@ import LoginAdmin from './components/LoginAdmin/LoginAdmin';
 import MainPageUser from './components/MainPageUser/MainPageUser';
 import 'react-toastify/dist/ReactToastify.css';
 import SocketContextProvider from './context/Socket.context';
+import Profile from './components/Profile/Profile';
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
               <Routes>
               <Route path="/" element={<StartPage />} />
               <Route path="/adminpage" element={<MainPageCompany />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/workerpage" element={<SocketContextProvider><MainPageUser /></SocketContextProvider>} />
               <Route path="/login" element={<Login />} />
               </Routes>

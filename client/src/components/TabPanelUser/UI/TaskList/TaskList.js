@@ -24,6 +24,7 @@ export default function TaskList() {
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
   const [userId, setUserId] = useState(null);
+  const [filter, setFilter] = useState('actual');
   // const [dateNow, setDateNow] = useState(null);
 
   const getProgressStatus = (progressStatus) => {
@@ -116,13 +117,12 @@ export default function TaskList() {
     }
     return 'Error';
   }
+
   function createdDate(date) {
     const newDate = new Date(date);
     const oldMonth = newDate.getMonth();
-    // const newDate2 = newDate.toLocaleString('ru');
     const dayDate = newDate.getDate();
     const dateFullYear = newDate.getFullYear();
-
     let month;
     switch (oldMonth + 1) {
       case 1:
@@ -201,21 +201,32 @@ export default function TaskList() {
 
   function doTaskFilter(e) {
     const newTaskArr = [...tasks];
+    const filterElement = e.target.id;
     const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(e.target.value.toLowerCase()));
     setFind({ ...find, query: e.target.value });
-    switch (e.target.id) {
+    switch (filterElement) {
       case 'clear':
-        return setFilteredTasks(tasks);
+        return (setFilteredTasks(tasks), setFilter('clear'));
       case 'personal':
-        return setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal')), setFilter('personal'));
       case 'ordered':
-        return setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered')), setFilter('ordered'));
       case 'searchfilter':
-        return setFilteredTasks(findTasks);
+        return (setFilteredTasks(findTasks), setFilter('searchfilter'));
+      case 'actual':
+        return (setFilteredTasks(findTasks.filter((el) => el.status === null)), setFilter('actual'));
+      case 'successfull':
+        return (setFilteredTasks(findTasks.filter((el) => el.status === true)), setFilter('successfull'));
+      case 'failed':
+        return (setFilteredTasks(findTasks.filter((el) => el.status === false)), setFilter('failed'));
       default:
-        return setFilteredTasks(tasks);
+        return (setFilteredTasks(tasks), setFilter('actual'));
     }
   }
+  // useEffect(() => {
+  //   const e = { e: { target: { filter } } };
+  //   doTaskFilter(e);
+  // }, [filteredTasks]);
 
   function setSliderValueFromBase(progress) {
     switch (progress) {
@@ -232,15 +243,15 @@ export default function TaskList() {
       default: return 0;
     }
   }
-  console.log(find.query, '++_+_+_+_+_+_');
-
-  // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
-  // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
-  // console.log('FindTASK', findTasks);
 
   return (
     <div className="taskContainer">
       <div className="taskTools">
+        <div>
+          <button type="button" className="filterMyTasksBtn" id="actual" onClick={(e) => doTaskFilter(e)}>Актуальные</button>
+          <button type="button" className="filterMyTasksBtn" id="successfull" onClick={(e) => doTaskFilter(e)}>Успешные</button>
+          <button type="button" className="filterMyTasksBtn" id="failed" onClick={(e) => doTaskFilter(e)}>Неуспешные</button>
+        </div>
         <button type="button" className="filterMyTasksBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Свои задачи</button>
         <button type="button" className="filterMyTaskFromAnotherBtn" id="ordered" onClick={(e) => doTaskFilter(e)}>Поставленные</button>
         <button type="button" className="clearFilterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
@@ -263,16 +274,16 @@ export default function TaskList() {
           {/* filteredTasks findTasks (214) */}
           {filteredTasks?.filter((taskF) => taskF.worker_id === userId).map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
-            if (done[task.id] === true || task.status === true) {
+            if ((done[task.id] === true || task.status === true) || (done[task.id] === false || task.status === false)) {
               return (
-                <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
+                <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'failedTaskItem'}>
                   <div className="taskItemUpperDiv">
                     <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
                       {task.task_type === 'personal' ? ('Личная') : (`${setCreator(task.creator_id)}`)}
                     </div>
                     <div className="taskTitle">{task.title}</div>
                     <div className="taskStatus">
-                      Выполнено
+                      { (done[task.id] === true || task.status === true) ? 'Выполнено' : 'Просрочено'}
                     </div>
                   </div>
                   <div className="taskItemLowerDiv">

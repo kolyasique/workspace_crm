@@ -1,7 +1,4 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import './Clients.css';
 import CreateClientTask from './UI/CreateClientTask';
@@ -18,11 +15,12 @@ export default function Clients() {
     tasks, setTasks, allWorkers, taskStatus, setTaskStatus,
   } = useContext(UserContext);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
+  const [findClient, setFindClient] = useState({ query: '' });
   const abortController = new AbortController();
 
-  const [findClient, setFindClient] = useState({ query: '' });
-
-  const findClients = clients.filter((el) => (el.name.toLowerCase() + String(el.inn) + el.email + el.adress.toLowerCase()).includes(findClient.query.toLowerCase()));
+  const findClients = clients
+    .filter((el) => (el.name.toLowerCase() + String(el.inn) + el.email + el.adress
+      .toLowerCase()).includes(findClient.query.toLowerCase()));
   // const handeleInput = (e) => {
   //   setForm({ ...form, [e.target.name]: e.target.value });
   // };
@@ -112,7 +110,7 @@ export default function Clients() {
   useEffect(
     () => {
       const statesArr = Object.keys(taskStatus);
-      for (let i = 0; i < statesArr.length; i++) {
+      for (let i = 0; i < statesArr.length; i += 1) {
         caseForProgress(statesArr[i]);
         console.log(statesArr[i], '++');
         console.log(taskStatus[statesArr[i]], '+++');
@@ -157,7 +155,7 @@ export default function Clients() {
                       <div className="clientTaskTitle">{clientTask.title}</div>
                       <div className="executorTaskStatus">
                         <div className="clientTaskExecutor">
-                          {`Ответственный: ${(allWorkers.filter((el) => el.id == clientTask.worker_id))[0].name} ${(allWorkers.filter((el) => el.id == clientTask.worker_id))[0].second_name}`}
+                          {`Ответственный: ${(allWorkers.filter((el) => +el.id === +clientTask.worker_id))[0].name} ${(allWorkers.filter((el) => +el.id === +clientTask.worker_id))[0].second_name}`}
                         </div>
                         <div className="executorProgressStatus">
                           <progress max="100" value={progressValue[clientTask.id] !== undefined ? progressValue[clientTask.id] : caseForProgressFromBase(clientTask.progress_status)}> </progress>
@@ -167,10 +165,10 @@ export default function Clients() {
                   ))}
 
               </div>
-              {/* <button type="button" value={client.createdAt} onClick={(e) => { getUserDays(e.target.value); }}>SKOLKO</button> */}
             </div>
             {/* <input type="file" onChange={uploudImg} />
-          <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить документ</button> */}
+          <button type="submit" id={client.id}
+          onClick={handleSubmit}>Загрузить документ</button> */}
             <button type="button" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
             <button type="button" id={client.id}>Взаимодействие</button>
             <button type="button" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>

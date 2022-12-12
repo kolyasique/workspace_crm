@@ -23,7 +23,8 @@ export default function WorkersComponent() {
             {worker.avatar === null ? (
               <div className={cl.circleAvatar}> Нет фото</div>
             ) : (
-              <div className={cl.circleAvatar}><p>{worker.avatar}</p></div>
+              // <div className={cl.circleAvatar}><p>{worker.avatar}</p></div>
+              <div className={cl.circleAvatar}><img className={cl.img} src={`http://localhost:6622/${worker.avatar}`} alt="" /></div>
             )}
           </div>
           <div className={cl.workerSeconName}>{worker.second_name}</div>

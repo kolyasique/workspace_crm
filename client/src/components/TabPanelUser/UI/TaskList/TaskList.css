@@ -71,12 +71,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgb(197, 197, 197);
+    background-color: rgb(255, 255, 255);
     width: 90%;
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 3px rgba(21, 21, 21, 0.5);
+    box-shadow: 0 0 7px rgba(2, 116, 38, 0.684);
+}
+.failedTaskItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(255, 243, 243);
+    width: 90%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 7px rgba(255, 0, 0, 0.736);
 }
 .taskItemUpperDiv{
     display: flex;
