@@ -98,9 +98,11 @@ export default function TaskList() {
       .then((data) => {
         console.log(data, 'це дата статуса');
         setDone({ ...done, [data]: true });
+        setFilteredTasks((state) => state.filter((el) => el.id !== +e.target.id));
       })
       .catch(console.error);
   };
+  console.log(filteredTasks, 'ФИЛЬТР');
 
   useEffect(() => {
     setFilteredTasks(tasks);
@@ -208,14 +210,15 @@ export default function TaskList() {
       case 'clear':
         return (setFilteredTasks(tasks), setFilter('clear'));
       case 'personal':
-        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal')), setFilter('personal'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal' && el.status === null)), setFilter('personal'));
       case 'ordered':
-        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered')), setFilter('ordered'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered' && el.status === null)), setFilter('ordered'));
       case 'searchfilter':
         return (setFilteredTasks(findTasks), setFilter('searchfilter'));
       case 'actual':
         return (setFilteredTasks(findTasks.filter((el) => el.status === null)), setFilter('actual'));
       case 'successfull':
+        // (state) => state.filter((el) => el.id !== +e.target.id)
         return (setFilteredTasks(findTasks.filter((el) => el.status === true)), setFilter('successfull'));
       case 'failed':
         return (setFilteredTasks(findTasks.filter((el) => el.status === false)), setFilter('failed'));
