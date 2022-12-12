@@ -5,6 +5,7 @@ const calendarRouter = require('./calendar.router');
 const chatRouter = require('./chat.router');
 const userPanelRouter = require('./userPanel.router');
 const fileRouter = require('./upload.router');
+const avatarRouter = require('./avatar.router');
 
 // const isAuth = require('../middlewares/isAuth');
 
@@ -14,6 +15,7 @@ BaseRouter.use('/calendar', calendarRouter);
 BaseRouter.use('/chat', chatRouter);
 BaseRouter.use('/userpanel', userPanelRouter);
 BaseRouter.use('/', fileRouter);
+BaseRouter.use('/', avatarRouter);
 
 BaseRouter.get('*', (req, res) => {
   res.json({ msg: 'no end point' });

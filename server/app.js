@@ -25,6 +25,7 @@ app.use(cors);
 app.use(sessionParser);
 
 app.use('/api', BaseRouter);
+app.use('/api', BaseRouter);
 
 // app.use(errorHandler);
 
