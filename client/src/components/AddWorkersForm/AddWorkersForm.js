@@ -41,7 +41,7 @@ export default function AddWorkersForm({ setWorkers, workers }) {
     setForm(formInitialState);
   };
   return (
-    <div className="wrapper">
+    <div className="wrapperAdd">
       <form className="form" onSubmit={handleSubmit}>
         <div className="title">Добавить сотрудника</div>
         <div className="input-container ic1">
