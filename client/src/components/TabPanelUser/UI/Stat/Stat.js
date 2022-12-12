@@ -1,27 +1,19 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Year from './Year/Year';
+import './Stat.css';
+import Mounth from './Mounth/Mounth';
 
 export default function Stat() {
-  const [allWorkersInclTasks, setAllWorkersInclTasks] = useState([]);
-  const abortController = new AbortController();
-  useEffect(() => {
-    fetch('http://localhost:6622/api/userpanel/getinfoforstat', {
-      credentials: 'include',
-      signal: abortController.signal,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setAllWorkersInclTasks(data);
-      });
-  }, []);
+  const [statPage, setStatPage] = useState(true);
+  const [btnStyle, setBtnStyle] = useState(true);
 
   return (
-    <div>
-      {/* {allWorkersInclTasks.map((worker) => (
-        <div></div>
-        <div>{worker.name}</div>
-        <div>
-      ))} */}
+    <div className="stat">
+      <div className="statButtons">
+        <button id={btnStyle === true ? 'statBtnActive' : 'statBtnInactive'} className="statBtn leftBtn" type="button" onClick={() => { setStatPage(true); setBtnStyle(true); }}>Годовая статистика</button>
+        <button id={btnStyle === false ? 'statBtnActive' : 'statBtnInactive'} className="statBtn rightBtn" type="button" onClick={() => { setStatPage(false); setBtnStyle(false); }}>Месячная статистика</button>
+      </div>
+      {statPage === true ? <Year /> : <Mounth /> }
     </div>
   );
 }

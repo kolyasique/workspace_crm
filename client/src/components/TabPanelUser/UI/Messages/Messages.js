@@ -39,15 +39,23 @@ export default function Messages() {
   }, [recValue]);
   return (
     <div className="chatPage">
-      {showChat ? <Chat showMessages={showMessages} recValue={recValue} /> : <div className="chat" /> }
-      <div className="chatContacts">
-        {state === null ? '' : state.companyUsers.map((user) => (
-          <div key={user.id} className="contact" data-value={JSON.stringify(user)} onClick={handleClick}>
-            {user.second_name}
-            {' '}
-            {user.name}
-          </div>
-        ))}
+      {showChat ? <Chat showMessages={showMessages} recValue={recValue} /> : (
+        <div className="beforeChat">
+          {' '}
+          <span>Выберите, кому хотели бы написать </span>
+        </div>
+      ) }
+      <div className="rightSide">
+        <h3 className="h3">Сотрудники</h3>
+        <div className="chatContacts">
+          {state === null ? '' : state.companyUsers.map((user) => (
+            <div key={user.id} style={state.authUser.id === user.id ? { display: 'none' } : { display: 'flex' }} className="contact" data-value={JSON.stringify(user)} onClick={handleClick}>
+              {user.second_name}
+              {' '}
+              {user.name}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

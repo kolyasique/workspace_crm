@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 const userPanelRouter = require('express').Router();
 const bcrypt = require('bcrypt');
@@ -5,13 +6,14 @@ const bcrypt = require('bcrypt');
 const { Worker, Tasks, Client } = require('../../db/models');
 
 userPanelRouter.get('/gettasks', async (req, res) => {
-  const { id } = req.session.company;
+  const { id, company_id } = req.session.company;
   try {
-    const allTasks = await Tasks.findAll({ where: { worker_id: Number(id) } });
+    // { where: { worker_id: Number(id) } }
+    const allTasks = await Tasks.findAll({ where: { company_id: Number(company_id) } });
     const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
     console.log('ff');
     console.log(allTasks);
-    res.json({ allTasks, workers });
+    res.json({ allTasks, workers, id });
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: error.message });
@@ -39,18 +41,32 @@ userPanelRouter.get('/getclients', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
-
+// userPanelRouter.get('/getclientstasks', async (req, res) => {
+//   const { id } = req.session.company;
+//   try {
+//     const allTasks = await Tasks.findAll({ where: { worker_id: Number(id) } });
+//     const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
+//     console.log('ff');
+//     console.log(allTasks);
+//     res.json({ allTasks, workers });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).json({ msg: error.message });
+//   }
+// });
 userPanelRouter.post('/createtask', async (req, res) => {
   const {
     title, content, startDate, endDate, taskForUserId,
   } = req.body;
   const sessionId = req.session.company.id;
+  const sessionCompanyId = req.session.company.company_id;
+
   const taskType = (sessionId == taskForUserId ? 'personal' : 'ordered');
   console.log(taskType);
   try {
     console.log('taskId');
     const createTask = await Tasks.create({
-      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null,
+      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null, company_id: +sessionCompanyId,
     });
     // const success = { success: 'Задача создана!' };
     res.json({ createTask, sessionId });
@@ -58,7 +74,26 @@ userPanelRouter.post('/createtask', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
-
+userPanelRouter.post('/createtaskforclient', async (req, res) => {
+  const {
+    title, content, startDate, endDate, taskForUserId, client_id,
+  } = req.body;
+  console.log(req.body, '😉😉😉');
+  const sessionId = req.session.company.id;
+  const sessionCompanyId = req.session.company.company_id;
+  const taskType = (sessionId == taskForUserId ? 'personal' : 'ordered');
+  console.log(taskType);
+  try {
+    console.log('taskId');
+    const createTask = await Tasks.create({
+      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null, client_id, company_id: +sessionCompanyId,
+    });
+    // const success = { success: 'Задача создана!' };
+    res.json({ createTask, sessionId });
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+});
 userPanelRouter.get('/getinfoforstat', async (req, res) => {
   const { company_id } = req.session.company;
   try {
@@ -91,10 +126,20 @@ userPanelRouter.get('/getinfoforstat', async (req, res) => {
 
 userPanelRouter.post('/settaskdone', async (req, res) => {
   const { taskId } = req.body;
+  const checkRestTime = (dateOfEnd) => {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date1.getTime() - date2.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  };
+  let updateTaskStatus;
   try {
-    console.log(taskId);
-    const updateTaskStatus = await Tasks.update({ status: true }, { where: { id: taskId } });
-    console.log(updateTaskStatus);
+    const findTask = await Tasks.findOne({ where: { id: taskId } });
+    const thisTaskDateOfEnd = findTask.end;
+    if (checkRestTime(thisTaskDateOfEnd) < 0) {
+      updateTaskStatus = await Tasks.update({ status: false }, { where: { id: taskId } });
+    } else updateTaskStatus = await Tasks.update({ status: true }, { where: { id: taskId } });
     res.json(taskId);
   } catch (error) {
     res.status(400).json({ msg: error.message });
