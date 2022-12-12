@@ -12,10 +12,10 @@ const formInitialState = {
   patronymic: '',
   phone: '',
   email: '',
-  category_id: '',
+  select: '',
 };
 
-export default function AddWorkersForm({ setWorkers, workers }) {
+export default function AddWorkersForm({ setWorkers }) {
   const [form, setForm] = useState(formInitialState);
 
   const handleInput = (e) => {
@@ -88,7 +88,7 @@ export default function AddWorkersForm({ setWorkers, workers }) {
         <div className="select-container">
           <div className="form-group">
             <div className="select-wrapper">
-              <select className="select" name="select" onChange={handleInput} value={form.category_id}>
+              <select className="select" name="select" onChange={handleInput} value={form.select}>
                 <option value="">Категория сотрудника</option>
                 <option value={1}>Управляющий</option>
                 <option value={2}>Исполняющий</option>

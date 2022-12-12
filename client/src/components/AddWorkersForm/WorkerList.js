@@ -18,7 +18,7 @@ function WorkerList({ workers, setWorkers }) {
   };
 
   return (
-    <div className="mainpage usereducer">
+    <div className="mainpage client-list">
       {workers.length !== 0 ? (
 
         <ul>
@@ -26,7 +26,7 @@ function WorkerList({ workers, setWorkers }) {
           <>
             <h3>Список управляющих:</h3>
             { workers.filter((el) => el.category_id === 1).map((el) => (
-              <div key={el.id} className="oneWorker">
+              <div key={el.id} className="oneClient">
                 <li>
                   {`${el.second_name} `}
                   {`${el.name} `}
@@ -42,7 +42,7 @@ function WorkerList({ workers, setWorkers }) {
           <>
             <h3>Список исполнителей:</h3>
             { workers.filter((el) => el.category_id === 2).map((el) => (
-              <div key={el.id} className="oneWorker">
+              <div key={el.id} className="oneClient">
                 <li>
                   {`${el.second_name} `}
                   {`${el.name} `}

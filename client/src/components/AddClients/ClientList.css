@@ -1,0 +1,56 @@
+.oneClient{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 0;
+    background-color: #303245;
+    border-radius: 10px;
+    border: 0;
+    color: #eee;
+    font-size: 14px;
+    height: 62px;
+    outline: 0;
+    padding: 0 0 0 20px;
+   
+}
+
+.client-list {
+    background-color: #15172b;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 360px;
+    margin-top: 72px;
+}
+
+.client-list ul{
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+.client-list li {
+list-style: none;
+
+}
+
+.client-list h3 {
+color: white;
+}
+
+.client-list button {
+    background-color: rgba(252, 74, 74, 0.774);
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 16px;
+    height: 62px;
+    outline: 0;
+    text-align: center;
+    width: 120px;
+}
+
+

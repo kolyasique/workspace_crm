@@ -1,11 +1,10 @@
 .header {
     display: flex;
-    height: 8vh;
+    height: 82px;
     background: lightblue;
     justify-content: space-between;
     align-items: center;
     padding: 0 3rem;
-    margin-bottom: 2rem;
     border-bottom: 2px solid cadetblue;
   }
   
