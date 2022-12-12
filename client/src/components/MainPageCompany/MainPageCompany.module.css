@@ -5,9 +5,32 @@
     width: 100%;
     justify-content: space-evenly
 }
-.workerForm{
- width: 45%;
-}
-.workerList{
-    width: 45%;
-}
+
+.changeForm {
+    background-color: #08d;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    margin: 16px;
+    outline: 0;
+    text-align: center;
+    width: 120px;
+  }
+  
+  .changeForm:active {
+    background-color: #06b;
+  }
+
+  .btn-wrap {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+  }
+
+  .mainPageCompany{
+    background-color: rgb(164, 167, 150);
+  }

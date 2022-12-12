@@ -56,14 +56,6 @@ export default function Navbar() {
         </>
       )}
 
-      {/* {user
-      && (
-        <>
-          <Link to="/profile"><button type="button" className={cl.logoutBtn}>Profile</button></Link>
-          <button className={cl.logoutBtn} type="button" onClick={handleLogout}>SignOut</button>
-        </>
-      )} */}
-
       {user?.company_id !== undefined && (
         <>
           <img className={cl.navlogo} src={logoWS} alt="workspace" onClick={() => navigate('/workerpage')} />
