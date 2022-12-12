@@ -13,9 +13,9 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
-    dateNow, convertDate1,
+    dateNow, convertDate1, mainOrProfile, setMainOrProfile
   } = useContext(UserContext);
-  const [mainOrProfile, setMainOrProfile] = useState(true);
+  
   const { user } = useSelector((store) => store.userStore);
   console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:17 =>>>>> Navbar =>>>>> user', user);
 

@@ -10,6 +10,7 @@ export default function UserContextProvider({ children }) {
   const [allWorkers, setAllWorkers] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [taskStatus, setTaskStatus] = useState({});
+  const [mainOrProfile, setMainOrProfile] = useState(true);
 
   //   const checkDateNow = new Date();
   useEffect(() => {
@@ -99,6 +100,8 @@ export default function UserContextProvider({ children }) {
     setAllWorkers,
     taskStatus,
     setTaskStatus,
+    mainOrProfile,
+    setMainOrProfile,
   }));
 
   return (
