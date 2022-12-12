@@ -32,7 +32,7 @@ export default function Profile() {
         showToast({ message: 'Данные изменены', type: 'success' });
       }
     } catch (error) {
-      console.log(error);
+      console.log('======>>>', error);
       showToast({ message: 'Не получилось', type: 'error' });
     }
   };
@@ -55,7 +55,7 @@ export default function Profile() {
 
         <div className="form-input">
           <label className="form-label ">password</label>
-          <input type="password" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
+          <input type="password" defaultValue="dsfsdfdsfdsf" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
         </div>
 
         <div className="form-input">

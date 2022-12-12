@@ -3,7 +3,7 @@ const uploadRouter = require('express').Router();
 const { Document } = require('../../db/models');
 const fileMiddleware = require('../middlewares/file');
 
-uploadRouter.post('/upload', fileMiddleware.single('file'), async (req, res) => {
+uploadRouter.post('/upload', fileMiddleware.single('avatar'), async (req, res) => {
   try {
     console.log(req.body);
     const newForm = JSON.parse(req.body.form);
