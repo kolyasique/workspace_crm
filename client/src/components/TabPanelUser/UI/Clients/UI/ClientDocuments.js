@@ -8,11 +8,6 @@ export default function ClientDocuments({ client }) {
     image: '',
   });
 
-  const uploudImg = (e) => {
-    setImg(e.target.files[0]);
-    console.log(e.target.files[0]);
-  };
-
   const handleSubmit = async (e) => {
     try {
       // e.preventDefault();
@@ -40,11 +35,15 @@ export default function ClientDocuments({ client }) {
       showToast({ message: 'Не получилось', type: 'error' });
     }
   };
+  const uploudImg = (e) => {
+    setImg(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
 
   return (
     <div>
-      <input type="file" onChange={uploudImg} />
-      <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить документ</button>
+      <input type="file" name="avatar" onChange={uploudImg} />
+      <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить,,, документ</button>
     </div>
   );
 }
