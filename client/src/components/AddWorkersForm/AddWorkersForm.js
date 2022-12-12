@@ -89,7 +89,7 @@ export default function AddWorkersForm({ setWorkers, workers }) {
           <div className="form-group">
             <div className="select-wrapper">
               <select className="select" name="select" onChange={handleInput} value={form.category_id}>
-                <option selected value="">Категория сотрудника</option>
+                <option value="">Категория сотрудника</option>
                 <option value={1}>Управляющий</option>
                 <option value={2}>Исполняющий</option>
               </select>

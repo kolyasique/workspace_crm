@@ -118,7 +118,6 @@ export default function TaskList() {
   }
   function createdDate(date) {
     const newDate = new Date(date);
-    console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:115 =>>>>> createdDate =>>>>> newDate', newDate);
     const oldMonth = newDate.getMonth();
     // const newDate2 = newDate.toLocaleString('ru');
     const dayDate = newDate.getDate();
