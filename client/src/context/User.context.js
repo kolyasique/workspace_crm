@@ -65,13 +65,12 @@ export default function UserContextProvider({ children }) {
     return rusMonth;
   }
   function convertDate1(dataR) {
+    const newDate = new Date();
+    const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
     return `${dataR.getDate()} ${
       rusufucateMonth(dataR.getMonth() + 1)} ${
-      dataR.getFullYear()} | ${
-      dataR.getHours()}:${
-      dataR.getMinutes()}`;
+      dataR.getFullYear()} | ${time}`;
   }
-  console.log(convertDate1(dataT));
 
   function convertDate2(str) {
     let data = new Date(str);
