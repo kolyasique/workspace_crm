@@ -50,21 +50,22 @@ export default function Navbar() {
         </>
       )}
 
-      {user
+      {/* {user
       && (
         <>
           <Link to="/profile"><button type="button" className={cl.logoutBtn}>Profile</button></Link>
           <button className={cl.logoutBtn} type="button" onClick={handleLogout}>SignOut</button>
         </>
-      )}
+      )} */}
 
       {user?.company_id !== undefined && (
         <>
-          <img className={cl.navlogo} src={logoWS} alt="workspace" />
+          <img className={cl.navlogo} src={logoWS} alt="workspace" onClick={() => navigate('/workerpage')} />
           <div />
           <div>
             {dateNow === null ? (`${convertDate1(new Date())}`) : (`${convertDate1(new Date(dateNow))}`)}
           </div>
+          <Link to="/profile"><button type="button" className={cl.logoutBtn}>Профиль</button></Link>
           <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
         </>
       )}
