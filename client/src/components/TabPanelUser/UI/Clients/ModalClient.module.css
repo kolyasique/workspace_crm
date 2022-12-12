@@ -1,0 +1,40 @@
+.myModal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background: rgba(0,0,0,0.5);
+
+}
+
+.myModalContent {
+    padding: 25px;
+    width: 45%;
+    height: 40%;
+    background: white;
+    border-radius: 5px;
+    min-width: 250px;
+
+}
+.myModal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.threeP{
+	margin-left: 100px;
+}
+.myModalForm{
+    display:flex;
+    flex-direction: column;
+}
+.formName{
+    text-align: center;
+}
+.formLabel{
+    font-size: 12px;
+    color: rgb(91, 91, 91);
+    text-align: center;
+}

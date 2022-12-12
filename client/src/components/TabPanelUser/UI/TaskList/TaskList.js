@@ -9,16 +9,21 @@ import Modal from '../Modal/Modal';
 import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
-  const { dateNow, setDateNow, converterDate1 } = useContext(UserContext);
-  const [tasks, setTasks] = useState([]);
-  const [allWorkers, setAllWorkers] = useState([]);
+  const {
+    dateNow, setDateNow, converterDate1, tasks, setTasks,
+  } = useContext(UserContext);
+
+  const {
+    allWorkers, setAllWorkers, taskStatus, setTaskStatus,
+  } = useContext(UserContext);
   const [disabledBtn, setDisabledBtn] = useState({});
-  const [taskStatus, setTaskStatus] = useState({});
+  // const {taskStatus, setTaskStatus} = useContext()
   const [done, setDone] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
+  const [userId, setUserId] = useState(null);
   // const [dateNow, setDateNow] = useState(null);
 
   const getProgressStatus = (progressStatus) => {
@@ -48,11 +53,11 @@ export default function TaskList() {
       .then((data) => {
         setTasks(data.allTasks);
         setAllWorkers(data.workers);
+        setUserId(data.id);
       });
   }, []);
 
   const handleChange = (e) => {
-    console.log(e.target.value, 'Это е таргет велью');
     const taskId = e.target.id;
     const taskProgressStatus = getProgressStatus(e.target.value);
     const taskToUpdate = { [taskId]: taskProgressStatus };
@@ -96,8 +101,6 @@ export default function TaskList() {
       .catch(console.error);
   };
 
-  console.log(allWorkers);
-
   useEffect(() => {
     setFilteredTasks(tasks);
   }, [tasks]);
@@ -115,6 +118,7 @@ export default function TaskList() {
   }
   function createdDate(date) {
     const newDate = new Date(date);
+    console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:115 =>>>>> createdDate =>>>>> newDate', newDate);
     const oldMonth = newDate.getMonth();
     // const newDate2 = newDate.toLocaleString('ru');
     const dayDate = newDate.getDate();
@@ -160,6 +164,8 @@ export default function TaskList() {
         break;
       default: console.log('Что-то не так с твоим месяцем!');
     }
+    // const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
+    // ${time}
     const creationDate = `${String(dayDate)} ${month} ${dateFullYear}`;
     return creationDate;
   }
@@ -198,7 +204,6 @@ export default function TaskList() {
     const newTaskArr = [...tasks];
     const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(e.target.value.toLowerCase()));
     setFind({ ...find, query: e.target.value });
-    console.log(findTasks, 'dotaskfilter findtask');
     switch (e.target.id) {
       case 'clear':
         return setFilteredTasks(tasks);
@@ -212,7 +217,24 @@ export default function TaskList() {
         return setFilteredTasks(tasks);
     }
   }
+
+  function setSliderValueFromBase(progress) {
+    switch (progress) {
+      case 'Начало':
+        return 0;
+      case 'Принята':
+        return 25;
+      case 'Выполняется':
+        return 50;
+      case 'Согласование':
+        return 75;
+      case 'Завершить':
+        return 100;
+      default: return 0;
+    }
+  }
   console.log(find.query, '++_+_+_+_+_+_');
+
   // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
   // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
   // console.log('FindTASK', findTasks);
@@ -240,7 +262,7 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           {/* filteredTasks findTasks (214) */}
-          {filteredTasks.map((task) => {
+          {filteredTasks?.filter((taskF) => taskF.worker_id === userId).map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
             if (done[task.id] === true || task.status === true) {
               return (
@@ -272,7 +294,7 @@ export default function TaskList() {
                   </div>
                   <div className="taskTitle">{task.title}</div>
                   {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
-                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : (<>Начните</>) }</button>
+                  <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : task.progress_status }</button>
                 </div>
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
@@ -283,7 +305,7 @@ export default function TaskList() {
                   disabled={disabledSlider[task.id]}
                   step={25}
                   id={task.id}
-                  value={0}
+                  value={setSliderValueFromBase(task.progress_status)}
                   handleChange={handleChange}
                   min={0}
                   max={100}

@@ -3,10 +3,13 @@
     flex-direction: column;
 margin: 10px;
 width: 95%;
-height: 350px;
-max-height: 350px;
+height: 100%;
+max-height: 500px;
 overflow-y: scroll;
 border-radius: 5px;
+background-color: rgb(61, 61, 60);
+
+border: 1px solid lightblue;
 }
 .clientPanel{
     background-color: aqua;
@@ -14,7 +17,70 @@ border-radius: 5px;
 .clientItem{
     margin: 5px;
     height:fit-content;
+    background-color: aliceblue;
     box-shadow: 0 0 7px rgba(21, 21, 21, 0.5);
     padding: 5px;
+    border-radius: 5px;
+    border: 1px solid lightblue;
 
+}
+.clientInfoHead{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+.clientName{
+    text-align: center;
+}
+.clientInn{
+    font-size: 8px;
+    color: rgb(74, 74, 74);
+}
+.clientPartnershipAge{
+    background-color: aquamarine;
+    padding: 3px;
+    font-size: 12px;
+}
+.clientsTasksListDiv{
+    background-color: lightcyan;
+    padding: 3px;
+    border-radius: 3px;
+    margin: 3px;
+    border: 1px solid lightblue;
+}
+.taskListTitle{
+    text-align: center;
+    font-size: 10px;
+    color: rgb(71, 71, 71);
+}
+.oneClientTask{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(251, 251, 251);
+    border-radius: 3px;
+    border-bottom: 1px solid darkgray;
+    box-shadow: 0 0 3px rgba(144, 144, 144, 0.857);
+    margin: 3px;
+}
+.executorTaskStatus{
+    display: flex;
+    flex-direction: row;
+}
+.oneFailedClientTask{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 239, 239);
+    border-radius: 3px;
+    margin: 3px;
+    box-shadow: 0 0 7px rgba(255, 0, 0, 0.857);
+}
+.clientTaskTitle{
+    text-align: center;
+}
+.clientTaskExecutor{
+    font-size: 10px;
+    color: rgb(51, 51, 51)
+}
+.executorProgressStatus progress{
+    width: 100px;
 }

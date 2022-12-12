@@ -1,0 +1,67 @@
+.stat {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 100%;
+    width: 100%;
+}
+.statButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    border-bottom: solid 1px black;
+}
+.year {
+    display: flex;
+    height: 90%;
+    width: 100%;
+}
+.yearEffHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    height: 10%;
+    width: 100%;
+    border-bottom: solid 1px black;
+}
+.yearEff {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border-right: solid 1px;
+}
+.yearStatHeader {
+    display: flex;
+    justify-content: center;
+    height: 10%;
+    width: 100%;
+    border-bottom: solid 1px black;
+    align-items: center;
+}
+.yearStat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    border-right: solid 1px;
+}
+.statBtn {
+    width: 50%;
+    height: 100%;
+    border: none;
+    transition: 0.5s;
+    font-size: medium;
+}
+.statBtn:hover {
+    font-size: large;
+}
+.leftBtn {
+    border-right: solid 1px;
+}
+#statBtnActive {
+    background-color: #deeef0;
+}

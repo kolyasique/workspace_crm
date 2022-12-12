@@ -7,6 +7,9 @@ export const UserContext = React.createContext();
 
 export default function UserContextProvider({ children }) {
   const [dateNow, setDateNow] = useState(null);
+  const [allWorkers, setAllWorkers] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [taskStatus, setTaskStatus] = useState({});
 
   //   const checkDateNow = new Date();
   useEffect(() => {
@@ -62,13 +65,12 @@ export default function UserContextProvider({ children }) {
     return rusMonth;
   }
   function convertDate1(dataR) {
+    const newDate = new Date();
+    const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
     return `${dataR.getDate()} ${
       rusufucateMonth(dataR.getMonth() + 1)} ${
-      dataR.getFullYear()} | ${
-      dataR.getHours()}:${
-      dataR.getMinutes()}`;
+      dataR.getFullYear()} | ${time}`;
   }
-  console.log(convertDate1(dataT));
 
   function convertDate2(str) {
     let data = new Date(str);
@@ -91,6 +93,12 @@ export default function UserContextProvider({ children }) {
     dateNow,
     setDateNow,
     convertDate1,
+    tasks,
+    setTasks,
+    allWorkers,
+    setAllWorkers,
+    taskStatus,
+    setTaskStatus,
   }));
 
   return (
