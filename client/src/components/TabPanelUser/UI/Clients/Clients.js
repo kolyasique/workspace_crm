@@ -18,38 +18,8 @@ export default function Clients() {
     tasks, setTasks, allWorkers, taskStatus, setTaskStatus,
   } = useContext(UserContext);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
-  const abortController = new AbortController();
-
-  const handleSubmit = async (e) => {
-    try {
-      // e.preventDefault();
-      const { id } = e.target;
-      const data = new FormData();
-      data.append('file', img);
-      data.append('form', JSON.stringify(form));
-      data.append('client_id', id);
-      const url = 'http://localhost:6622/api/upload';
-      const res = await fetch(url, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-      });
-      setForm({
-        text: '',
-        image: '',
-      });
-      console.log(form);
-      if (res.status === 200) {
-        showToast({ message: 'Файл загружен', type: 'success' });
-      }
-    } catch (error) {
-      console.log(error);
-      showToast({ message: 'Не получилось', type: 'error' });
-    }
-  };
-
   const [findClient, setFindClient] = useState({ query: '' });
-
+  const abortController = new AbortController();
 
   const findClients = clients.filter((el) => (el.name.toLowerCase() + String(el.inn) + el.email + el.adress.toLowerCase()).includes(findClient.query.toLowerCase()));
   // const handeleInput = (e) => {

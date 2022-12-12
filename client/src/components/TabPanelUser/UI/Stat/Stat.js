@@ -1,4 +1,5 @@
-
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
@@ -54,7 +55,6 @@ const options = {
   },
 
 };
-
 
 export default function Stat() {
   const [statPage, setStatPage] = useState(true);
