@@ -223,10 +223,10 @@ export default function TaskList() {
         return (setFilteredTasks(tasks), setFilter('actual'));
     }
   }
-  useEffect(() => {
-    const e = { e: { target: { filter } } };
-    doTaskFilter(e);
-  }, [filteredTasks]);
+  // useEffect(() => {
+  //   const e = { e: { target: { filter } } };
+  //   doTaskFilter(e);
+  // }, [filteredTasks]);
 
   function setSliderValueFromBase(progress) {
     switch (progress) {
