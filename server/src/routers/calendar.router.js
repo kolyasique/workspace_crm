@@ -16,11 +16,12 @@ calendarRouter.get('/', async (req, res) => {
 calendarRouter.post('/', async (req, res) => {
   try {
     const workerId = req.session.company.id;
+    const { company_id } = req.session.company;
     const {
       title, start, end, content,
     } = req.body;
     await Tasks.create({
-      title, content, start, end, worker_id: workerId, creator_id: workerId, task_type: 'personal',
+      title, content, start, end, worker_id: workerId, creator_id: workerId, task_type: 'personal', company_id,
     });
     res.status(200);
   } catch (error) {

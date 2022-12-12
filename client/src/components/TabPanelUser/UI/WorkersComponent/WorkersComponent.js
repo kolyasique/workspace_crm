@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import cl from './WorkersComponent.module.css';
+import { MainContext } from '../../../../context/Main.context';
 
 export default function WorkersComponent() {
   const [companyWorkers, setCompanyWorkers] = useState([]);
-
+  const { state } = useContext(MainContext);
   const abortController = new AbortController();
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/getworkers', {
@@ -31,7 +32,12 @@ export default function WorkersComponent() {
           <div className={cl.workerSeconName}>{worker.patronymic}</div>
           <div className={cl.workerPhone}>{worker.phone}</div>
           <div className={cl.workerSeconName}><a href={`mailto:${worker.email}`}>{worker.email}</a></div>
-          <button type="button">Написать</button>
+          {
+          worker.id === state.authUser.id ? (
+            null
+          ) : (<button type="button">Написать</button>)
+          }
+
         </div>
       ))}
 

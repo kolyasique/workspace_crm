@@ -14,6 +14,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { dateNow, convertDate1 } = useContext(UserContext);
   const { user } = useSelector((store) => store.userStore);
+  console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:17 =>>>>> Navbar =>>>>> user', user);
 
   const handleLogout = useCallback(() => {
     fetch(
@@ -35,15 +36,20 @@ export default function Navbar() {
   return (
 
     <div className={cl.header}>
-      <img className={cl.navlogo} src={logoWS} alt="workspace" />
-      <div />
-      {user ? (
-        <div>
-          {dateNow === null ? (`${convertDate1(new Date())}`) : (`${convertDate1(new Date(dateNow))}`)}
-        </div>
-      ) : (
-        <Link to="/login"><button className={cl.logoutBtn} type="button">Вход</button></Link>
+      {user === null && (
+        <>
+          <img className={cl.navlogo} src={logoWS} alt="workspace" onClick={() => navigate('/')} />
+          <Link to="/login"><button className={cl.logoutBtn} type="button">Вход</button></Link>
+        </>
       )}
+      {(user?.company_id === undefined && user) && (
+        <>
+          <img className={cl.navlogo} src={logoWS} alt="workspace" />
+          <div />
+          <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
+        </>
+      )}
+
       {user
       && (
         <>
@@ -52,6 +58,16 @@ export default function Navbar() {
         </>
       )}
 
+      {user?.company_id !== undefined && (
+        <>
+          <img className={cl.navlogo} src={logoWS} alt="workspace" />
+          <div />
+          <div>
+            {dateNow === null ? (`${convertDate1(new Date())}`) : (`${convertDate1(new Date(dateNow))}`)}
+          </div>
+          <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
+        </>
+      )}
     </div>
   );
 }

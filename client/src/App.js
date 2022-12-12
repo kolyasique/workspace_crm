@@ -56,9 +56,11 @@ function App() {
           {user
             ? (
               <Routes>
+              <Route path="/" element={<StartPage />} />
               <Route path="/adminpage" element={<MainPageCompany />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/workerpage" element={<SocketContextProvider><MainPageUser /></SocketContextProvider>} />
+              <Route path="/login" element={<Login />} />
               </Routes>
             ) : (
               <Routes>
