@@ -33,20 +33,23 @@
       width: 90%;
     }
     .buttonSubmit {
-      font-weight: bold;
-      color: #ffffff;
-      width: 50%;
-      margin-top: 10px;
-      /* margin-left: 80px; */
-      height: 30px;
-      border-radius: 5px;
-      border: none;
-      background-color: rgba(98, 10, 10, 0.427);
-      box-shadow: 0 8px 16px 0 rgba(183, 99, 99, 0.2), 0 6px 20px 0 rgba(175, 17, 17, 0.19);
+    	background: none;
+	border: 2px solid #00D4C6;
+    width: 30%;
+	text-decoration: none;
+	color: #00D4C6;
+	font-size: 16px;
+	text-transform: uppercase;
+	padding: 10px 25px;
+	border-radius: 5px;
+	font-weight: bold;
+	transition: .4s;
+    text-align: center;
+      margin-bottom: 15px;
   }
   .buttonSubmit:hover {
-      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-      background-color: rgba(158, 158, 158, 0.724);
+      background-color: #00D4C6;
+      color:#ffffff;
       transition: .2s ease-in-out;
   }
   .form-control {

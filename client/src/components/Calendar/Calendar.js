@@ -17,6 +17,9 @@ const locales = {
   'ru-UA': ru,
 };
 
+const initialState = {
+  title: '', content: '', start: '', end: '',
+};
 const localizer = dateFnsLocalizer({
   format,
   parse,
@@ -26,9 +29,7 @@ const localizer = dateFnsLocalizer({
 });
 
 function CalendarComponent() {
-  const [newEvent, setNewEvent] = useState({
-    title: '', content: '', start: '', end: '',
-  });
+  const [newEvent, setNewEvent] = useState(initialState);
 
   const [allEvents, setAllEvents] = useState([]);
 
@@ -52,8 +53,10 @@ function CalendarComponent() {
         ((d1 <= d2) && (d2 <= d3)) || ((d1 <= d4) && (d4 <= d3))
       ) {
         alert('Наложение задач');
+        setNewEvent(initialState);
         break;
       }
+      setNewEvent(initialState);
     }
 
     const { start } = newEvent;
