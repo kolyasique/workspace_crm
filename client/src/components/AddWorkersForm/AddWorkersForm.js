@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
+import './AddWorkersForm.css';
 
 const formInitialState = {
   login: '',
@@ -40,56 +41,63 @@ export default function AddWorkersForm({ setWorkers, workers }) {
     setForm(formInitialState);
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div> addworkersForm</div>
-
-        <div className="form-input">
-          <label className="form-label ">login</label>
-          <input type="text" className="form-control" value={form.login} name="login" placeholder="Логин сотрудника" onChange={handleInput} />
+    <div className="wrapper">
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="title">Добавить сотрудника</div>
+        <div className="input-container ic1">
+          <input id="login" type="text" className="input" value={form.login} name="login" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="login" className="placeholder">Логин</label>
         </div>
 
-        <div className="form-input">
-          <label className="form-label ">password</label>
-          <input type="password" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
+        <div className="input-container ic2">
+          <input id="pass" type="password" className="input" value={form.password} name="password" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="pass" className="placeholder">Пароль</label>
         </div>
 
-        <div className="form-input">
-          <label className="form-label ">Имя</label>
-          <input type="text" className="form-control" value={form.name} name="name" placeholder="имя" onChange={handleInput} />
+        <div className="input-container ic2">
+          <input id="firstName" type="text" className="input" value={form.name} name="name" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="firstName" className="placeholder">Имя</label>
         </div>
 
-        <div className="form-input">
-          <label className="form-label ">фамилия</label>
-          <input type="text" className="form-control" value={form.second_name} name="second_name" placeholder="фамилия" onChange={handleInput} />
+        <div className="input-container ic2">
+          <input id="secondName" type="text" className="input" value={form.second_name} name="second_name" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="secondName" className="placeholder">Фамилия</label>
         </div>
 
-        <div className="form-input">
-          <label className="form-label ">Отчество</label>
-          <input type="text" className="form-control" value={form.patronymic} name="patronymic" placeholder="отчество" onChange={handleInput} />
+        <div className="input-container ic2">
+          <input id="thirdName" type="text" className="input" value={form.patronymic} name="patronymic" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="thirdName" className="placeholder">Отчество</label>
         </div>
 
-        <div className="form-input">
-          <label className="form-label ">email</label>
-          <input type="text" className="form-control" value={form.email} name="email" placeholder="email" onChange={handleInput} />
+        <div className="input-container ic2">
+          <input id="email" type="text" className="input" value={form.email} name="email" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="email" className="placeholder">email</label>
         </div>
 
-        <div className="form-input">
-          <label className="form-label ">телефон</label>
-          <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
+        <div className="input-container ic2">
+          <input id="phone" type="text" className="input" value={form.phone} name="phone" placeholder=" " onChange={handleInput} />
+          <div className="cut" />
+          <label htmlFor="phone" className="placeholder">Телефон</label>
         </div>
+        <div className="select-container">
+          <div className="form-group">
+            <div className="select-wrapper">
+              <select className="select" name="select" onChange={handleInput} value={form.category_id}>
+                <option selected value="">Категория сотрудника</option>
+                <option value={1}>Управляющий</option>
+                <option value={2}>Исполняющий</option>
+              </select>
+            </div>
+          </div>
 
-        <div className="form-input">
-          <label className="form-label ">Должность</label>
-          {/* <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} /> */}
-          <select name="select" onChange={handleInput} value={form.category_id}>
-            <option selected disabled value="">Категория сотрудника</option>
-            <option value={1}>Управляющий</option>
-            <option value={2}>Исполняющий</option>
-          </select>
         </div>
-
-        <button type="submit" className="buttonSubmit">Submit</button>
+        <button type="submit" className="submit">Добавить</button>
       </form>
     </div>
   );

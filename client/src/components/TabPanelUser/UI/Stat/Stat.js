@@ -6,6 +6,7 @@ import Mounth from './Mounth/Mounth';
 export default function Stat() {
   const [statPage, setStatPage] = useState(true);
   const [btnStyle, setBtnStyle] = useState(true);
+
   return (
     <div className="stat">
       <div className="statButtons">
