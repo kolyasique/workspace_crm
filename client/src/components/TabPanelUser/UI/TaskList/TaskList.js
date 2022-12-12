@@ -8,7 +8,6 @@ import './TaskList.css';
 import Modal from '../Modal/Modal';
 import { UserContext } from '../../../../context/User.context';
 
-
 export default function TaskList() {
   const {
     dateNow, setDateNow, converterDate1, tasks, setTasks,
@@ -165,8 +164,9 @@ export default function TaskList() {
         break;
       default: console.log('Что-то не так с твоим месяцем!');
     }
-    const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
-    const creationDate = `${time} ${String(dayDate)} ${month} ${dateFullYear}`;
+    // const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
+    // ${time}
+    const creationDate = `${String(dayDate)} ${month} ${dateFullYear}`;
     return creationDate;
   }
   function checkRestTime(dateOfEnd) {
@@ -217,7 +217,6 @@ export default function TaskList() {
         return setFilteredTasks(tasks);
     }
   }
-
 
   function setSliderValueFromBase(progress) {
     switch (progress) {
