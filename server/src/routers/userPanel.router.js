@@ -6,10 +6,10 @@ const bcrypt = require('bcrypt');
 const { Worker, Tasks, Client } = require('../../db/models');
 
 userPanelRouter.get('/gettasks', async (req, res) => {
-  const { id } = req.session.company;
+  const { id, company_id } = req.session.company;
   try {
     // { where: { worker_id: Number(id) } }
-    const allTasks = await Tasks.findAll();
+    const allTasks = await Tasks.findAll({ where: { company_id: Number(company_id) } });
     const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
     console.log('ff');
     console.log(allTasks);
@@ -59,12 +59,14 @@ userPanelRouter.post('/createtask', async (req, res) => {
     title, content, startDate, endDate, taskForUserId,
   } = req.body;
   const sessionId = req.session.company.id;
+  const sessionCompanyId = req.session.company.company_id;
+
   const taskType = (sessionId == taskForUserId ? 'personal' : 'ordered');
   console.log(taskType);
   try {
     console.log('taskId');
     const createTask = await Tasks.create({
-      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null,
+      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null, company_id: +sessionCompanyId,
     });
     // const success = { success: 'Задача создана!' };
     res.json({ createTask, sessionId });
@@ -78,12 +80,13 @@ userPanelRouter.post('/createtaskforclient', async (req, res) => {
   } = req.body;
   console.log(req.body, '😉😉😉');
   const sessionId = req.session.company.id;
+  const sessionCompanyId = req.session.company.company_id;
   const taskType = (sessionId == taskForUserId ? 'personal' : 'ordered');
   console.log(taskType);
   try {
     console.log('taskId');
     const createTask = await Tasks.create({
-      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null, client_id,
+      task_type: taskType, title, content, start: startDate, end: endDate, progress_status: 'Начало', status: null, creator_id: +sessionId, worker_id: +taskForUserId, order_id: null, client_id, company_id: +sessionCompanyId,
     });
     // const success = { success: 'Задача создана!' };
     res.json({ createTask, sessionId });

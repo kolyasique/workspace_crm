@@ -262,7 +262,7 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           {/* filteredTasks findTasks (214) */}
-          {filteredTasks.filter((taskF) => taskF.worker_id === userId).map((task) => {
+          {filteredTasks?.filter((taskF) => taskF.worker_id === userId).map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
             if (done[task.id] === true || task.status === true) {
               return (
