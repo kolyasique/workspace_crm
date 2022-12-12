@@ -12,6 +12,8 @@ import {
 } from 'chart.js';
 // eslint-disable-next-line import/no-unresolved
 import { Bar } from 'react-chartjs-2';
+import Year from './Year/Year';
+import Mounth from './Mounth/Mounth';
 
 ChartJS.register(
   BarElement,
