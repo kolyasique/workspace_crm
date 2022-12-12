@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import './StartPage.css';
 // import AuthForm from '../AuthForm/AuthForm';
 // import AlignItemsList from '../TabPanelUser/UI/Chat/Chat';
@@ -13,10 +13,10 @@ export default function StartPage() {
       <div className="description1">
         <h1>Легче - не тяжелее!</h1>
         <p> Управлять задачами, ослеживать производительность сотрудников и быть в курсе статуса каждого клиента - теперь легко! Ничего лишнего, только добрый запас чая </p>
-        <Link to="/reg"><button className="shop" type="button">Зарегистрироваться</button></Link>
+        <Link to="/reg"><button className="shop" type="button">Get started for free!</button></Link>
         {/* <AlignItemsList /> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

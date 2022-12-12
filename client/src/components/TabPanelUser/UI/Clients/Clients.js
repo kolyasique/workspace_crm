@@ -124,15 +124,15 @@ export default function Clients() {
   return (
     <div>
       <div className="clientPanel">
-        <input type="text" id="searchfilter" value={findClient.query} onChange={(e) => { setFindClient({ query: e.target.value }); }} placeholder="Поиск клиента (по инн или названию)" />
+        <input type="text" className="searchClientInput" id="searchfilter" value={findClient.query} onChange={(e) => { setFindClient({ query: e.target.value }); }} placeholder="Поиск ИНН | e-mail | Название" />
       </div>
       <div className="clientListDiv">
         {findClients.map((client) => (
           <div key={client.id} className="clientItem">
             <div className="clientInfo">
               <div className="clientInfoHead">
-                <div className="clientInn">{client.inn}</div>
                 <div className="clientName">{client.name}</div>
+                <div className="clientInn">{client.inn}</div>
                 <div className="clientPartnershipAge">
                   {`С нами уже: ${getUserDays(client.createdAt)} дня`}
                 </div>
@@ -169,10 +169,11 @@ export default function Clients() {
             {/* <input type="file" onChange={uploudImg} />
           <button type="submit" id={client.id}
           onClick={handleSubmit}>Загрузить документ</button> */}
-            <button type="button" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
-            <button type="button" id={client.id}>Взаимодействие</button>
-            <button type="button" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>
-            <button type="button" id={client.id}>Удалить</button>
+            <div className="clientButtonBar">
+              <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
+              <button type="button" className="clientButton" id={client.id}>Взаимодействие</button>
+              <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>
+            </div>
           </div>
         ))}
       </div>
