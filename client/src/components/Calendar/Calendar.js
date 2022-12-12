@@ -26,7 +26,10 @@ const localizer = dateFnsLocalizer({
 });
 
 function CalendarComponent() {
-  const [newEvent, setNewEvent] = useState({ title: '', start: '', end: '' });
+  const [newEvent, setNewEvent] = useState({
+    title: '', content: '', start: '', end: '',
+  });
+
   const [allEvents, setAllEvents] = useState([]);
 
   const abortController = new AbortController();
@@ -53,10 +56,13 @@ function CalendarComponent() {
       }
     }
 
-    const start = newEvent.start.toDateString();
-    const end = newEvent.end.toDateString();
-    const { title } = newEvent;
-    const date = { title, start, end };
+    const { start } = newEvent;
+    const { end } = newEvent;
+    const { title, content } = newEvent;
+    const date = {
+      title, content, start, end,
+    };
+    console.log('🚀🚀🚀🚀 =>>>>> file: Calendar.js:63 =>>>>> handleAddEvent =>>>>> date', date);
     const url = 'http://localhost:6622/api/calendar';
     fetch(url, {
       method: 'POST',
@@ -76,13 +82,48 @@ function CalendarComponent() {
 
   return (
     <div className="Calendar">
-      <h2>Календарь</h2>
-      <h3>Добавить личную задачу</h3>
-      <div>
-        <input type="text" placeholder="Добавить задачу" style={{ width: '20%', marginRight: '10px' }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-        <DatePicker placeholderText="Начальная дата" style={{ marginRight: '10px' }} selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
-        <DatePicker placeholderText="Конечная дата" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
-        <button type="button" style={{ marginTop: '10px' }} onClick={handleAddEvent}>
+      <div className="wrapper">
+        <input type="text" placeholder="Добавить задачу" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+        <input type="text" placeholder="Описание задачи" value={newEvent.content} onChange={(e) => setNewEvent({ ...newEvent, content: e.target.value })} />
+        <DatePicker
+          placeholderText="Начальная дата"
+          showTimeSelect
+          dateFormat="MMMM d, yyyy h:mm aa"
+          timeFormat="HH:mm"
+          selected={newEvent.start}
+          onChange={(start) => setNewEvent({ ...newEvent, start })}
+        />
+
+        {/* () => {
+  const [startDate, setStartDate] = useState(
+    setHours(setMinutes(new Date(), 30), 16)
+  );
+  return (
+    <DatePicker
+      selected={startDate}
+      onChange={(date) => setStartDate(date)}
+      showTimeSelect
+      timeFormat="HH:mm"
+      injectTimes={[
+        setHours(setMinutes(new Date(), 1), 0),
+        setHours(setMinutes(new Date(), 5), 12),
+        setHours(setMinutes(new Date(), 59), 23),
+      ]}
+      dateFormat="MMMM d, yyyy h:mm aa"
+    />
+  );
+}; */}
+
+        <DatePicker
+          className="datepicker"
+          showTimeSelect
+          dateFormat="MMMM d, yyyy h:mm aa"
+          timeFormat="HH:mm"
+          placeholderText="Конечная дата"
+          selected={newEvent.end}
+          onChange={(end) => setNewEvent({ ...newEvent, end })}
+        />
+        <button type="button" onClick={handleAddEvent}>
           Добавить задачу
         </button>
       </div>

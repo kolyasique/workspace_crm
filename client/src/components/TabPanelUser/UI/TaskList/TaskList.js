@@ -8,6 +8,7 @@ import './TaskList.css';
 import Modal from '../Modal/Modal';
 import { UserContext } from '../../../../context/User.context';
 
+
 export default function TaskList() {
   const {
     dateNow, setDateNow, converterDate1, tasks, setTasks,
@@ -58,7 +59,6 @@ export default function TaskList() {
   }, []);
 
   const handleChange = (e) => {
-    console.log(e.target.value, 'Это е таргет велью');
     const taskId = e.target.id;
     const taskProgressStatus = getProgressStatus(e.target.value);
     const taskToUpdate = { [taskId]: taskProgressStatus };
@@ -102,8 +102,6 @@ export default function TaskList() {
       .catch(console.error);
   };
 
-  console.log(allWorkers);
-
   useEffect(() => {
     setFilteredTasks(tasks);
   }, [tasks]);
@@ -121,6 +119,7 @@ export default function TaskList() {
   }
   function createdDate(date) {
     const newDate = new Date(date);
+    console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:115 =>>>>> createdDate =>>>>> newDate', newDate);
     const oldMonth = newDate.getMonth();
     // const newDate2 = newDate.toLocaleString('ru');
     const dayDate = newDate.getDate();
@@ -166,7 +165,8 @@ export default function TaskList() {
         break;
       default: console.log('Что-то не так с твоим месяцем!');
     }
-    const creationDate = `${String(dayDate)} ${month} ${dateFullYear}`;
+    const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
+    const creationDate = `${time} ${String(dayDate)} ${month} ${dateFullYear}`;
     return creationDate;
   }
   function checkRestTime(dateOfEnd) {
@@ -204,7 +204,6 @@ export default function TaskList() {
     const newTaskArr = [...tasks];
     const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(e.target.value.toLowerCase()));
     setFind({ ...find, query: e.target.value });
-    console.log(findTasks, 'dotaskfilter findtask');
     switch (e.target.id) {
       case 'clear':
         return setFilteredTasks(tasks);
@@ -218,6 +217,7 @@ export default function TaskList() {
         return setFilteredTasks(tasks);
     }
   }
+
 
   function setSliderValueFromBase(progress) {
     switch (progress) {
@@ -235,6 +235,7 @@ export default function TaskList() {
     }
   }
   console.log(find.query, '++_+_+_+_+_+_');
+
   // const findTasks = tasks.filter((el) => el.title.toLowerCase().includes(find.query.toLowerCase()));
   // console.log('🚀🚀🚀🚀 =>>>>> file: TaskList.js:122 =>>>>> tasks', tasks);
   // console.log('FindTASK', findTasks);
