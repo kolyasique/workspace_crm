@@ -44,7 +44,13 @@ export default function Navbar() {
       ) : (
         <Link to="/login"><button className={cl.logoutBtn} type="button">Вход</button></Link>
       )}
-      {user && <button className={cl.logoutBtn} type="button" onClick={handleLogout}>SignOut</button> }
+      {user
+      && (
+        <>
+          <Link to="/profile"><button type="button" className={cl.logoutBtn}>Profile</button></Link>
+          <button className={cl.logoutBtn} type="button" onClick={handleLogout}>SignOut</button>
+        </>
+      )}
 
     </div>
   );

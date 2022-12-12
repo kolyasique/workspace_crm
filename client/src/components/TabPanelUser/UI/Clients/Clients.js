@@ -18,7 +18,7 @@ export default function Clients() {
       // e.preventDefault();
       const { id } = e.target;
       const data = new FormData();
-      data.append('avatar', img);
+      data.append('file', img);
       data.append('form', JSON.stringify(form));
       data.append('client_id', id);
       const url = 'http://localhost:6622/api/upload';
