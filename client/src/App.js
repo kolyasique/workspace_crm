@@ -57,7 +57,7 @@ function App() {
             ? (
               <Routes>
               <Route path="/adminpage" element={<MainPageCompany />} />
-              <Route path="/profile" element={<Profile/>} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/workerpage" element={<SocketContextProvider><MainPageUser /></SocketContextProvider>} />
               </Routes>
             ) : (
