@@ -13,9 +13,12 @@
   }
   
   .navlogo {
-    width: 15%;
+    width: auto;
     height: auto;
     padding: 10px;
+
+    max-height: 80px;
+
   }
   
   .navlogout {

@@ -120,7 +120,7 @@ export default function Clients() {
     [taskStatus],
   );
 
-  console.log(taskStatus);
+  console.log(tasks, 'ТАСКИ');
   return (
     <div>
       <div className="clientPanel">
