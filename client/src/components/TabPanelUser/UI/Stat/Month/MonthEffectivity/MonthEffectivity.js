@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -7,6 +7,7 @@ import {
 } from 'chart.js';
 // eslint-disable-next-line import/no-unresolved
 import { Doughnut } from 'react-chartjs-2';
+import { MainContext } from '../../../../../../context/Main.context';
 
 ChartJS.register(
   ArcElement,
@@ -14,7 +15,16 @@ ChartJS.register(
   Legend,
 );
 
-export default function MounthEffectivity() {
+export default function MonthEffectivity() {
+  const { tasks } = useContext(MainContext);
+
+  function amount(arr, status) {
+    const month = `0${String(((new Date()).getMonth() + 1))}`.slice(-2);
+    const first = arr.filter((el) => el.status === status);
+    const second = first.filter((el) => el.start.substring(5, 7) === month);
+    return second.length;
+  }
+
   const textCenter = {
     id: 'textCenter',
     beforeDatasetDraw(chart) {
@@ -23,7 +33,7 @@ export default function MounthEffectivity() {
       ctx.font = '25px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(
-        `${((data.datasets[0].data[1] / (data.datasets[0].data[1] + data.datasets[0].data[2])) * 100).toFixed(2)}%`,
+        `${((data.datasets[0].data[1] / (Math.round(data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
         chart.getDatasetMeta(0).data[0].x,
         chart.getDatasetMeta(0).data[0].y,
       );
@@ -34,7 +44,7 @@ export default function MounthEffectivity() {
     datasets: [
       {
         label: 'Количество',
-        data: [13, 12, 7],
+        data: [amount(tasks, null), amount(tasks, true), amount(tasks, false)],
         backgroundColor: ['rgba(255, 255, 0, 0.3)', 'rgba(51, 204, 0, 0.3)', 'rgba(222, 0, 0, 0.3)'],
         borderColor: ['rgb(255, 255, 0)', 'rgb(51, 204, 0)', 'rgb(222, 0, 0)'],
         borderWidth: 1,
@@ -54,7 +64,7 @@ export default function MounthEffectivity() {
       },
       title: {
         display: true,
-        text: ['Выполненные: 12', 'Просроченные: 7', 'Открытые: 13'],
+        text: [`Выполненные: ${amount(tasks, true)}`, `Просроченные: ${amount(tasks, false)}`, `Открытые: ${amount(tasks, null)}`],
         font: {
           size: '18',
           weight: 'normal',

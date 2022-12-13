@@ -17,9 +17,6 @@ export default function Navbar() {
     dateNow, convertDate1, mainOrProfile, setMainOrProfile,
   } = useContext(UserContext);
 
-  console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:18 =>>>>> Navbar =>>>>> mainOrProfile', mainOrProfile);
-
-
   const { user } = useSelector((store) => store.userStore);
 
   const handleLogout = useCallback(() => {

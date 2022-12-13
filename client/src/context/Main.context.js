@@ -6,6 +6,22 @@ export const MainContext = React.createContext();
 
 export default function MainContextProvider({ children }) {
   const [state, setState] = useState(null);
+  const [tasks, setTasks] = useState(null);
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    fetch('http://localhost:6622/api/stat/tasks', {
+      credentials: 'include',
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((res) => setTasks(res))
+      .catch(console.log);
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -23,7 +39,7 @@ export default function MainContextProvider({ children }) {
     };
   }, []);
 
-  const value = useMemo(() => ({ state }), [state]);
+  const value = useMemo(() => ({ state, tasks }), [state, tasks]);
 
   return (
     <MainContext.Provider value={value}>
