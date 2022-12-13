@@ -90,7 +90,6 @@ export default function TaskList() {
     const taskId = { taskId: [e.target.id] };
     // const taskValue = { taskValue: [e.target.value] };
     // const taskToUpdate = { [taskId]: taskProgressStatus };
-    console.log(taskId);
     const url = 'http://localhost:6622/api/userpanel/settaskclosed';
     fetch(url, {
       method: 'POST',
@@ -121,14 +120,12 @@ export default function TaskList() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, 'це дата статуса');
         setDone({ ...done, [data]: true });
         // setFilteredTasks((state) => state.filter((el) => el.id !== +e.target.id));
         // setTasks((state) => state.filter((el) => el.id !== +e.target.id));
       })
       .catch(console.error);
   };
-  console.log(filteredTasks, 'ФИЛЬТР');
 
   useEffect(() => {
     setFilteredTasks(tasks);
@@ -238,12 +235,12 @@ export default function TaskList() {
       case 'personal':
         return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal')), setFilter('personal'));
       case 'ordered':
-        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered')), setFilter('ordered'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered' && +el.worker_id === +userId)), setFilter('ordered'));
         // && el.status === null
       case 'searchfilter':
         return (setFilteredTasks(findTasks), setFilter('searchfilter'));
-      // case 'actual':
-      //   return (setFilteredTasks(findTasks.filter((el) => el.status === null)), setFilter('actual'));
+      case 'control':
+        return (setFilteredTasks(findTasks.filter((el) => +el.creator_id === +userId && +el.worker_id !== +userId)), setFilter('control'));
       // case 'successfull':
       //   // (state) => state.filter((el) => el.id !== +e.target.id)
       //   return (setFilteredTasks(findTasks.filter((el) => el.status === true)), setFilter('successfull'));
@@ -273,7 +270,6 @@ export default function TaskList() {
       default: return 0;
     }
   }
-  console.log(filteredTasks, 'filteredTasks');
   return (
     <div className="taskContainer">
       <div className="taskTools">
@@ -283,7 +279,8 @@ export default function TaskList() {
           <button type="button" className="filterMyTasksBtn" id="failed" onClick={(e) => doTaskFilter(e)}>Неуспешные</button>
         </div> */}
         <button type="button" className="filterMyTasksBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Свои задачи</button>
-        <button type="button" className="filterMyTaskFromAnotherBtn" id="ordered" onClick={(e) => doTaskFilter(e)}>Поставленные</button>
+        <button type="button" className="filterMyTaskFromAnotherBtn" id="ordered" onClick={(e) => doTaskFilter(e)}>От сотрудников</button>
+        <button type="button" className="filterMyTaskFromAnotherBtn" id="control" onClick={(e) => doTaskFilter(e)}>Контроль</button>
         <button type="button" className="clearFilterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
 
         <input type="text" id="searchfilter" value={find.query} onChange={(e) => doTaskFilter(e)} placeholder="найти задание" />
@@ -303,7 +300,8 @@ export default function TaskList() {
       <div className="taskContainer2">
         <div className="toDoTasks">
           {/* filteredTasks findTasks (214) */}
-          {filteredTasks?.filter((taskF) => taskF.worker_id === userId).map((task) => {
+          {/* .filter((taskF) => taskF.worker_id === userId) */}
+          {filteredTasks?.map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
             if ((done[task.id] === true || task.status === true) || (done[task.id] === false || task.status === false)) {
               return (
