@@ -17,8 +17,10 @@ export default function Navbar() {
     dateNow, convertDate1, mainOrProfile, setMainOrProfile,
   } = useContext(UserContext);
 
+  console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:18 =>>>>> Navbar =>>>>> mainOrProfile', mainOrProfile);
+
+
   const { user } = useSelector((store) => store.userStore);
-  console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:17 =>>>>> Navbar =>>>>> user', user);
 
   const handleLogout = useCallback(() => {
     fetch(
@@ -53,7 +55,14 @@ export default function Navbar() {
         <>
           <img className={cl.navlogo} src={logoWS} alt="workspace" />
           <div />
-          <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
+          <div className={cl.menuBtns}>
+            {mainOrProfile ? (
+              <button type="button" className={cl.logoutBtn} onClick={handleButtonChange}>Клиенты</button>
+            ) : (
+              <button type="button" className={cl.logoutBtn} onClick={handleButtonChange}>Сотрудники</button>
+            )}
+            <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
+          </div>
         </>
       )}
 
