@@ -20,6 +20,7 @@ import LoginAdmin from './components/LoginAdmin/LoginAdmin';
 import MainPageUser from './components/MainPageUser/MainPageUser';
 import 'react-toastify/dist/ReactToastify.css';
 import SocketContextProvider from './context/Socket.context';
+import UserContextProvider from './context/User.context';
 import Profile from './components/Profile/Profile';
 
 function App() {

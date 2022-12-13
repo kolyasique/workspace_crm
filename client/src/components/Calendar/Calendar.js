@@ -86,18 +86,20 @@ function CalendarComponent() {
   return (
     <div className="Calendar">
       <div className="wrapper">
-        <input type="text" placeholder="Добавить задачу" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-        <input type="text" placeholder="Описание задачи" value={newEvent.content} onChange={(e) => setNewEvent({ ...newEvent, content: e.target.value })} />
-        <DatePicker
-          placeholderText="Начальная дата"
-          showTimeSelect
-          dateFormat="MMMM d, yyyy h:mm aa"
-          timeFormat="HH:mm"
-          selected={newEvent.start}
-          onChange={(start) => setNewEvent({ ...newEvent, start })}
-        />
+        <input type="text" className="inputCalendar" placeholder="Добавить задачу" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+        <input type="text" className="inputCalendar" placeholder="Описание задачи" value={newEvent.content} onChange={(e) => setNewEvent({ ...newEvent, content: e.target.value })} />
+        <div className="datePickers">
+          <DatePicker
+            className="inputCalendar2"
+            placeholderText="Начальная дата"
+            showTimeSelect
+            dateFormat="MMMM d, yyyy h:mm aa"
+            timeFormat="HH:mm"
+            selected={newEvent.start}
+            onChange={(start) => setNewEvent({ ...newEvent, start })}
+          />
 
-        {/* () => {
+          {/* () => {
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(new Date(), 30), 16)
   );
@@ -117,17 +119,18 @@ function CalendarComponent() {
   );
 }; */}
 
-        <DatePicker
-          className="datepicker"
-          showTimeSelect
-          dateFormat="MMMM d, yyyy h:mm aa"
-          timeFormat="HH:mm"
-          placeholderText="Конечная дата"
-          selected={newEvent.end}
-          onChange={(end) => setNewEvent({ ...newEvent, end })}
-        />
-        <button type="button" onClick={handleAddEvent}>
-          Добавить задачу
+          <DatePicker
+            className="inputCalendar2"
+            showTimeSelect
+            dateFormat="MMMM d, yyyy h:mm aa"
+            timeFormat="HH:mm"
+            placeholderText="Конечная дата"
+            selected={newEvent.end}
+            onChange={(end) => setNewEvent({ ...newEvent, end })}
+          />
+        </div>
+        <button className="calendarButton" type="button" onClick={handleAddEvent}>
+          ➕
         </button>
       </div>
       <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: '50px' }} />

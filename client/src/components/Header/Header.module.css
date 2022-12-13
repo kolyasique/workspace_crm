@@ -13,9 +13,12 @@
   }
   
   .navlogo {
-    width: 15%;
+    width: auto;
     height: auto;
     padding: 10px;
+
+    max-height: 80px;
+
   }
   
   .navlogout {
@@ -31,7 +34,7 @@
   .logoutBtn {
     background: none;
      border: 2px solid #314797; 
-      width: 100px;
+      width: 120px;
     text-decoration: none;
     color: #314797;
     font-size: 14px;

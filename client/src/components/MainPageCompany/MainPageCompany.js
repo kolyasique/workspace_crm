@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../context/User.context';
 import AddCleintsForm from '../AddClients/AddClientsForm';
 import ClientList from '../AddClients/ClientList';
 import AddWorkersForm from '../AddWorkersForm/AddWorkersForm';
-// import File from '../File/File';
 import WorkerList from '../AddWorkersForm/WorkerList';
 import cl from './MainPageCompany.module.css';
 
 export default function MainPageCompany() {
-  // const [component, setComponent] = useState(<Workers/>);
   const [workers, setWorkers] = useState([]);
   const [clients, setClients] = useState([]);
-  const [buttonWorker, setButtonWorker] = useState(true);
-  const [buttonClient, setButtonClient] = useState(false);
+  const {
+    mainOrProfile,
+  } = useContext(UserContext);
+  console.log('🚀🚀🚀🚀 =>>>>> file: MainPageCompany.js:15 =>>>>> MainPageCompany =>>>>> mainOrProfile', mainOrProfile);
   const abortController = new AbortController();
 
   useEffect(() => {
@@ -35,30 +36,26 @@ export default function MainPageCompany() {
   return (
     <div className={cl.mainPageCompany}>
       <div className={cl.workerPanel}>
-        {(buttonWorker) && (
+        {mainOrProfile ? (
           <>
             <div className={cl.btnWrap}>
-              <button type="button" className={cl.changeForm} onClick={() => { setButtonClient(!buttonClient); setButtonWorker(!buttonWorker); }}>Клиенты</button>
               <div className={cl.workerForm}><AddWorkersForm setWorkers={setWorkers} /></div>
             </div>
             <div className={cl.workerList}>
               <WorkerList setWorkers={setWorkers} workers={workers} />
             </div>
           </>
-        )}
-        {(buttonClient) && (
+        ) : (
           <>
             <div className={cl.btnWrap}>
-              <button type="button" className={cl.changeForm} onClick={() => { setButtonWorker(!buttonWorker); setButtonClient(!buttonClient); }}>Сотрудники</button>
               <div className={cl.workerForm}><AddCleintsForm setClients={setClients} /></div>
             </div>
             <div className={cl.workerList}>
               <ClientList setClients={setClients} clients={clients} />
             </div>
-
           </>
         )}
-        {/* <div className="File"><File /></div> */}
+
       </div>
     </div>
   );

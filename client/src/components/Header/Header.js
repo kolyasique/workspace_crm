@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useCallback, useContext } from 'react';
@@ -17,7 +18,6 @@ export default function Navbar() {
   } = useContext(UserContext);
 
   const { user } = useSelector((store) => store.userStore);
-  console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:17 =>>>>> Navbar =>>>>> user', user);
 
   const handleLogout = useCallback(() => {
     fetch(
@@ -52,7 +52,14 @@ export default function Navbar() {
         <>
           <img className={cl.navlogo} src={logoWS} alt="workspace" />
           <div />
-          <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
+          <div className={cl.menuBtns}>
+            {mainOrProfile ? (
+              <button type="button" className={cl.logoutBtn} onClick={handleButtonChange}>Клиенты</button>
+            ) : (
+              <button type="button" className={cl.logoutBtn} onClick={handleButtonChange}>Сотрудники</button>
+            )}
+            <button className={cl.logoutBtn} type="button" onClick={handleLogout}>Выйти</button>
+          </div>
         </>
       )}
 

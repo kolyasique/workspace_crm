@@ -1,0 +1,57 @@
+.formDiv{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff21;
+    border-radius: 5px;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formInput{
+  display: flex;
+  width: 75%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.form-control{
+  width: 250px;
+}
+
+.fileImput{
+}
+
+.buttonSubmit{
+  margin-top: 20px;
+}
+.profileAvatar{
+  width: 100px; /* задаете свои размеры */
+  height: 100px;
+  overflow: hidden;
+  background: #fff;
+  padding: 5px; /* создание отступов */
+  border-radius: 50%;
+  /* не забываем о кроссбраузерности */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border: #aaa 1px solid;
+  box-shadow: 0px 1px 1px 1px #bbb; /* тень */
+  -moz-box-shadow: 0px 1px 1px 1px #bbb;
+  -webkit-box-shadow: 0px 1px 1px 1px #bbb;
+}
+.profileAvatar img{
+  display: block;
+  width:100%;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+.imgProfile{
+  width: 100px;
+  height: 100px;
+ }
