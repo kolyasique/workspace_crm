@@ -5,6 +5,17 @@ const bcrypt = require('bcrypt');
 
 const { Worker, Tasks, Client } = require('../../db/models');
 
+userPanelRouter.get('/getuserinfo', async (req, res) => {
+  const { id } = req.session.company;
+  try {
+    const findUser = await Worker.findOne({ where: { id } });
+    res.json(findUser);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: error.message });
+  }
+});
+
 userPanelRouter.get('/gettasks', async (req, res) => {
   const { id, company_id } = req.session.company;
   try {
