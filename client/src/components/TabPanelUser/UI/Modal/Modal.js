@@ -54,9 +54,10 @@ function Modal({
       .then((data) => {
         console.log(data.createTask);
         console.log(data.sessionId, formTask.taskForUserId);
-        if (+data.sessionId === +formTask.taskForUserId) {
-          setTasks([...tasks, data.createTask]);
-        }
+        // if (+data.sessionId === +formTask.taskForUserId) {
+
+        // }
+        setTasks([...tasks, data.createTask]);
       })
       .catch(console.error);
     setFormTask(initialvalue);

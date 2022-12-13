@@ -301,7 +301,7 @@ export default function TaskList() {
         <div className="toDoTasks">
           {/* filteredTasks findTasks (214) */}
           {/* .filter((taskF) => taskF.worker_id === userId) */}
-          {filteredTasks?.map((task) => {
+          {filteredTasks?.filter((taskF) => taskF.worker_id === userId || taskF.creator_id === userId).map((task) => {
             // const sliderValue = getProgressStatus(task?.progress_status);
             if ((done[task.id] === true || task.status === true) || (done[task.id] === false || task.status === false)) {
               return (
@@ -312,7 +312,11 @@ export default function TaskList() {
                     </div>
                     <div className="taskTitle">{task.title}</div>
                     <div className="taskStatus">
-                      { (task.task_type === 'ordered' ? ((done[task.id] === true || task.status === true) ? 'Выполнено' : 'Просрочено')
+                      { (task.task_type === 'ordered' ? (+userId === +task.creator_id ? (
+                        (done[task.id] === true || task.status === true) ? (<button type="button" id={task.id} value={true} className="taskStatusBtn" onClick={handleClose}> Закрыть </button>) : (<button type="button" id={task.id} value={false} className="failedTaskStatusBtn" onClick={handleClose}> Закрыть </button>)
+                      ) : (
+                        (done[task.id] === true || task.status === true) ? 'Выполнено' : 'Просрочено'
+                      ))
                         : ((done[task.id] === true || task.status === true) ? (<button type="button" id={task.id} value={true} className="taskStatusBtn" onClick={handleClose}> Закрыть </button>)
                           : (<button type="button" className="failedTaskStatusBtn" id={task.id} value={false} onClick={handleClose}> Закрыть </button>)))}
                     </div>
@@ -340,17 +344,20 @@ export default function TaskList() {
                 <div className="taskItemLowerDiv">
                   <div className="taskContent">{task?.content}</div>
                 </div>
-
-                <SliderComponent
-                  width="70%"
-                  disabled={disabledSlider[task.id]}
-                  step={25}
-                  id={task.id}
-                  value={setSliderValueFromBase(task.progress_status)}
-                  handleChange={handleChange}
-                  min={0}
-                  max={100}
-                />
+                { (task?.creator_id === userId && task?.worker_id !== userId) ? (
+                  null
+                ) : (
+                  <SliderComponent
+                    width="70%"
+                    disabled={disabledSlider[task.id]}
+                    step={25}
+                    id={task.id}
+                    value={setSliderValueFromBase(task.progress_status)}
+                    handleChange={handleChange}
+                    min={0}
+                    max={100}
+                  />
+                )}
                 <div className="taskDates">
                   <div className="startAt">
                     <label> Начало</label>
