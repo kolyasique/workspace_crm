@@ -18,12 +18,20 @@ ChartJS.register(
 export default function YearEffectivity() {
   const { tasks } = useContext(MainContext);
 
+  const year = new Date().getFullYear();
+
   function amount(arr, status) {
-    const year = new Date().getFullYear();
     const first = arr.filter((el) => el.start.substring(0, 4) === String(year));
     const second = first.filter((el) => el.status === status);
     return second.length;
   }
+
+  function getStat() {
+    const completed = tasks.filter((el) => el.status === true || false);
+    const result = completed.filter((el) => el.start.substring(0, 4) === String(year));
+    return result.length;
+  }
+
   const textCenter = {
     id: 'textCenter',
     beforeDatasetDraw(chart) {
@@ -33,7 +41,8 @@ export default function YearEffectivity() {
       //   ctx.fillStyle = 'red';
       ctx.textAlign = 'center';
       ctx.fillText(
-        `${((data.datasets[0].data[1] / (Math.round(data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
+        getStat() === 0 ? 'Нет данных'
+          : `${((data.datasets[0].data[1] / (Math.round(data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
         chart.getDatasetMeta(0).data[0].x,
         chart.getDatasetMeta(0).data[0].y,
       );

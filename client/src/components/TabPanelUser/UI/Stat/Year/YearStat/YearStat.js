@@ -24,10 +24,10 @@ ChartJS.register(
 export default function YearStat() {
   const { tasks } = useContext(MainContext);
 
-  function amount(arr, mounth, status) {
+  function amount(arr, month, status) {
     const year = new Date().getFullYear();
     const first = arr.filter((el) => el.start.substring(0, 4) === String(year));
-    const second = first.filter((el) => el.start.substring(5, 7) === mounth);
+    const second = first.filter((el) => el.start.substring(5, 7) === month);
     const result = second.filter((el) => el.status === status);
     return result.length;
   }

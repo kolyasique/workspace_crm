@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { UserContext } from '../../context/User.context';

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 import React, {
   useRef, useEffect, useContext, useState,
@@ -12,6 +13,7 @@ export default function Chat({ recValue, showMessages }) {
   const { socket } = useContext(SocketContext);
   const [status, setStatus] = useState('Не в сети');
   const test = useRef();
+  const [list, setList] = useState('123');
 
   const addMessage = (newMessage, auth) => {
     const div = document.createElement('div');
@@ -29,14 +31,11 @@ export default function Chat({ recValue, showMessages }) {
   };
 
   useEffect(() => {
-    socket.onopen = () => {
-      socket.send(JSON.stringify({ type: 'open', payload: { chatWithUser: recValue.id } }));
-    };
-
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
 
       const { type, payload } = message;
+      console.log({ type });
 
       switch (type) {
         case 'online':
@@ -52,6 +51,16 @@ export default function Chat({ recValue, showMessages }) {
           console.log('rabotaet case offline');
           setStatus('Не в сети');
           break;
+        case 'new_connection':
+          console.log('new_connection');
+          console.log({ type, payload });
+          setList(payload);
+          break;
+        case 'all_connections':
+          console.log('all_connections');
+          console.log({ type, payload });
+          setList(payload);
+          break;
 
         default:
           break;
@@ -60,6 +69,9 @@ export default function Chat({ recValue, showMessages }) {
     socket.onclose = () => {
       setStatus('Не в сети');
       console.log('rabotaet onclose');
+    };
+    socket.onerror = (error) => {
+      console.log('socekt', error);
     };
 
     return () => {
@@ -76,6 +88,7 @@ export default function Chat({ recValue, showMessages }) {
     }));
     chatForm.current.reset();
   };
+  console.log('PROVERKA', list);
   return (
     <div className="chat" key={recValue.id}>
       <h3 className="chatWith">

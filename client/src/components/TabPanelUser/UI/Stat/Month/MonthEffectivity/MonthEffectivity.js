@@ -18,11 +18,18 @@ ChartJS.register(
 export default function MonthEffectivity() {
   const { tasks } = useContext(MainContext);
 
+  const month = `0${String(((new Date()).getMonth() + 1))}`.slice(-2);
+
   function amount(arr, status) {
-    const month = `0${String(((new Date()).getMonth() + 1))}`.slice(-2);
     const first = arr.filter((el) => el.status === status);
     const second = first.filter((el) => el.start.substring(5, 7) === month);
     return second.length;
+  }
+
+  function getStat() {
+    const completed = tasks.filter((el) => el.status === true || false);
+    const result = completed.filter((el) => el.start.substring(0, 4) === month);
+    return result.length;
   }
 
   const textCenter = {
@@ -33,7 +40,8 @@ export default function MonthEffectivity() {
       ctx.font = '25px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(
-        `${((data.datasets[0].data[1] / (Math.round(data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
+        getStat() === 0 ? 'Нет данных'
+          : `${((data.datasets[0].data[1] / (Math.round(data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
         chart.getDatasetMeta(0).data[0].x,
         chart.getDatasetMeta(0).data[0].y,
       );
