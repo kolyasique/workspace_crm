@@ -1,12 +1,24 @@
+/* eslint-disable camelcase */
 const avatarRouter = require('express').Router();
 const bcrypt = require('bcrypt');
 const { Worker } = require('../../db/models');
 const avatarMiddleware = require('../middlewares/avatar');
 
+function chistkaObject(object) {
+  delete object.password;
+  delete object.createdAt;
+  delete object.updatedAt;
+
+  return object;
+}
 avatarRouter.get('/profile', async (req, res) => {
   try {
     const workerId = req.session.company.id;
     const infoWorker = await Worker.findOne({ where: { id: workerId } });
+    console.log(infoWorker, 'infoWorker');
+    delete infoWorker.dataValues.password;
+    delete infoWorker.dataValues.createdAt;
+    delete infoWorker.dataValues.updatedAt;
     res.json(infoWorker);
   } catch (error) {
     console.log(error);
@@ -32,6 +44,21 @@ avatarRouter.post('/avatar', avatarMiddleware.single('avatar'), async (req, res)
     console.log('=====', error);
     res.sendStatus(404);
   }
+});
+
+avatarRouter.post('/updworkerinfo', async (req, res) => {
+  const { id } = req.session.company;
+  const {
+    login, name, second_name, patronymic, email, phone,
+  } = req.body;
+  const updateUser = await Worker.update({
+    login, name, second_name, patronymic, email, phone,
+  }, { where: { id } });
+  const findUpdatedUser = await Worker.findOne({ where: { id } });
+  delete findUpdatedUser.dataValues.password;
+  delete findUpdatedUser.dataValues.createdAt;
+  delete findUpdatedUser.dataValues.updatedAt;
+  res.json(findUpdatedUser);
 });
 
 module.exports = avatarRouter;

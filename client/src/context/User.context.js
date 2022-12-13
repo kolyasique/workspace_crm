@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React, {
   useState, useEffect, useMemo,
@@ -14,6 +15,7 @@ export default function UserContextProvider({ children }) {
   // const [userInfo, setUserInfo] = useState(null);
 
   //   const checkDateNow = new Date();
+
 
   // const abortController = new AbortController();
   // useEffect(() => {
@@ -117,10 +119,9 @@ export default function UserContextProvider({ children }) {
     setTaskStatus,
     mainOrProfile,
     setMainOrProfile,
-    userInfo,
-    setUserInfo,
+    // userInfo,
+    // setUserInfo,
   }));
-
 
   return (
     <UserContext.Provider value={value}>
