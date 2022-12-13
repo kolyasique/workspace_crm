@@ -14,6 +14,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import Year from './Year/Year';
 import Mounth from './Mounth/Mounth';
+import './Stat.css';
 
 ChartJS.register(
   BarElement,
