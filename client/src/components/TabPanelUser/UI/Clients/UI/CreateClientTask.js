@@ -45,9 +45,9 @@ export default function CreateClientTask({ client }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (+data.sessionId === +formClientTask.taskForUserId) {
-          setTasks([...tasks, data.createTask]);
-        }
+        // if (+data.sessionId === +formClientTask.taskForUserId) {
+        setTasks([...tasks, data.createTask]);
+        // }
       })
       .catch(console.error);
     setClientFormTask(initialvalue);
@@ -60,14 +60,23 @@ export default function CreateClientTask({ client }) {
 
   return (
     <div>
+      <div>
+        Добавить задачу по клиенту:
+        {' '}
+        {client.name}
+      </div>
       <form className={cl.myModalForm} id={client.id} onSubmit={handleSubmit}>
+        <label className="form-label ">Добавить название</label>
         <input type="text" value={formClientTask.title} name="title" placeholder="Название" onChange={handleInput} />
+        <label className="form-label ">Добавить описание</label>
         <textarea value={formClientTask.content} name="content" placeholder="описание" onChange={handleInput} />
+        <label className="form-label ">Установить дату начала</label>
         <input type="datetime-local" value={formClientTask.startDate} name="startDate" placeholder="Дата начала" onChange={handleInput} />
+        <label className="form-label ">Установить дедлайн</label>
         <input type="datetime-local" value={formClientTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
-        <label className="form-label ">Должность</label>
+        <label className="form-label ">Добавить исполнителя</label>
         <select name="taskForUserId" value={formClientTask.taskForUserId} placeholder="кому" onChange={handleInput}>
-          <option selected disabled value="">Исполнитель задачи</option>
+          <option selected disabled value="">Выбрать сотрудника</option>
           {workersForList.map((worker) => (
             <option value={worker.id}>
               {worker.second_name}

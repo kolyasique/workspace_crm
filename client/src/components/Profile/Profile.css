@@ -1,0 +1,31 @@
+.formDiv{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff21;
+    border-radius: 5px;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formInput{
+  display: flex;
+  width: 75%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.form-control{
+  width: 250px;
+}
+
+.fileImput{
+}
+
+.buttonSubmit{
+  margin-top: 20px;
+}

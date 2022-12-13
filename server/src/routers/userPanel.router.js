@@ -9,7 +9,7 @@ userPanelRouter.get('/gettasks', async (req, res) => {
   const { id, company_id } = req.session.company;
   try {
     // { where: { worker_id: Number(id) } }
-    const allTasks = await Tasks.findAll({ where: { company_id: Number(company_id) } });
+    const allTasks = await Tasks.findAll({ where: { company_id: Number(company_id), closed_by: null } });
     const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
     console.log('ff');
     console.log(allTasks);
@@ -145,12 +145,25 @@ userPanelRouter.post('/settaskdone', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
+
 userPanelRouter.post('/changetaskprogress', async (req, res) => {
   try {
     const taskId = Number(Object.keys(req.body)[0]);
     const taskProgress = Object.values(req.body)[0];
     const updateTaskProcess = await Tasks.update({ progress_status: taskProgress }, { where: { id: taskId } });
     res.json(taskId);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+});
+
+userPanelRouter.post('/settaskclosed', async (req, res) => {
+  try {
+    const { taskId } = req.body;
+    const { id } = req.session.company;
+    console.log(req.body.taskId);
+    const setTaskClosedBy = await Tasks.update({ closed_by: id }, { where: { id: taskId } });
+    res.json({ taskId, id });
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
