@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { showToast } from '../../lib/toasti';
+import './Profile.css';
 
 export default function Profile() {
   const formInitialState = {
@@ -11,6 +12,15 @@ export default function Profile() {
   };
   const [img, setImg] = useState(null);
   const [form, setForm] = useState(formInitialState);
+
+  // useEffect(() => {
+  //   fetch('http://localhost:6622/api/profile', {
+  //     method: 'GET',
+  //     credentials: 'include',
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // }, []);
 
   const handleInput = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,6 +35,9 @@ export default function Profile() {
       const res = await fetch(url, {
         method: 'POST',
         credentials: 'include',
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
         body: data,
       });
       setForm(formInitialState);
@@ -43,29 +56,31 @@ export default function Profile() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div> Profile</div>
-        <input type="file" onChange={uploudImg} />
+    <div className="container">
+      <form className="formDiv" onSubmit={handleSubmit}>
 
-        <div className="form-input">
+        <div className="formInput">
           <label className="form-label ">login</label>
           <input type="text" className="form-control" value={form.login} name="login" placeholder="Логин сотрудника" onChange={handleInput} />
         </div>
 
-        <div className="form-input">
+        <div className="formInput">
           <label className="form-label ">password</label>
           <input type="password" defaultValue="dsfsdfdsfdsf" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
         </div>
 
-        <div className="form-input">
+        <div className="formInput">
           <label className="form-label ">email</label>
-          <input type="text" className="form-control" value={form.email} name="email" placeholder="email" onChange={handleInput} />
+          <input type="email" className="form-control" value={form.email} name="email" placeholder="email" onChange={handleInput} />
         </div>
 
-        <div className="form-input">
+        <div className="formInput">
           <label className="form-label ">телефон</label>
           <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
+        </div>
+        <div className="formInput">
+          <label className="form-label ">Загрузить Аватар</label>
+          <input type="file" onChange={uploudImg} />
         </div>
 
         <button type="submit" className="buttonSubmit">Submit</button>

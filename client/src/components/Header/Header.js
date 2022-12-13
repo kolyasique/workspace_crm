@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/User.context';
@@ -16,6 +16,7 @@ export default function Navbar() {
   const {
     dateNow, convertDate1, mainOrProfile, setMainOrProfile,
   } = useContext(UserContext);
+
   const { user } = useSelector((store) => store.userStore);
   console.log('🚀🚀🚀🚀 =>>>>> file: Header.js:17 =>>>>> Navbar =>>>>> user', user);
 
