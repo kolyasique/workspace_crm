@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-boolean-value */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
@@ -19,6 +21,7 @@ export default function TaskList() {
   const [disabledBtn, setDisabledBtn] = useState({});
   // const {taskStatus, setTaskStatus} = useContext()
   const [done, setDone] = useState({});
+  const [closed, setClosed] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
@@ -83,6 +86,28 @@ export default function TaskList() {
     // }}, [taskStatus]);
   };
 
+  const handleClose = (e) => {
+    const taskId = { taskId: [e.target.id] };
+    // const taskValue = { taskValue: [e.target.value] };
+    // const taskToUpdate = { [taskId]: taskProgressStatus };
+    console.log(taskId);
+    const url = 'http://localhost:6622/api/userpanel/settaskclosed';
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskId),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setClosed({ ...closed, [data.taskId]: data.id });
+        setFilteredTasks((state) => state.filter((el) => el.id !== +e.target.id));
+        setTasks((state) => state.filter((el) => el.id !== +e.target.id));
+      });
+  };
+
   const handleClick = (e) => {
     const taskId = { taskId: [e.target.id] };
     const url = 'http://localhost:6622/api/userpanel/settaskdone';
@@ -98,7 +123,8 @@ export default function TaskList() {
       .then((data) => {
         console.log(data, 'це дата статуса');
         setDone({ ...done, [data]: true });
-        setFilteredTasks((state) => state.filter((el) => el.id !== +e.target.id));
+        // setFilteredTasks((state) => state.filter((el) => el.id !== +e.target.id));
+        // setTasks((state) => state.filter((el) => el.id !== +e.target.id));
       })
       .catch(console.error);
   };
@@ -210,20 +236,21 @@ export default function TaskList() {
       case 'clear':
         return (setFilteredTasks(tasks), setFilter('clear'));
       case 'personal':
-        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal' && el.status === null)), setFilter('personal'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal')), setFilter('personal'));
       case 'ordered':
-        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered' && el.status === null)), setFilter('ordered'));
+        return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered')), setFilter('ordered'));
+        // && el.status === null
       case 'searchfilter':
         return (setFilteredTasks(findTasks), setFilter('searchfilter'));
-      case 'actual':
-        return (setFilteredTasks(findTasks.filter((el) => el.status === null)), setFilter('actual'));
-      case 'successfull':
-        // (state) => state.filter((el) => el.id !== +e.target.id)
-        return (setFilteredTasks(findTasks.filter((el) => el.status === true)), setFilter('successfull'));
-      case 'failed':
-        return (setFilteredTasks(findTasks.filter((el) => el.status === false)), setFilter('failed'));
+      // case 'actual':
+      //   return (setFilteredTasks(findTasks.filter((el) => el.status === null)), setFilter('actual'));
+      // case 'successfull':
+      //   // (state) => state.filter((el) => el.id !== +e.target.id)
+      //   return (setFilteredTasks(findTasks.filter((el) => el.status === true)), setFilter('successfull'));
+      // case 'failed':
+      //   return (setFilteredTasks(findTasks.filter((el) => el.status === false)), setFilter('failed'));
       default:
-        return (setFilteredTasks(tasks), setFilter('actual'));
+        return (setFilteredTasks(tasks), setFilter('clear'));
     }
   }
   // useEffect(() => {
@@ -246,15 +273,15 @@ export default function TaskList() {
       default: return 0;
     }
   }
-
+  console.log(filteredTasks, 'filteredTasks');
   return (
     <div className="taskContainer">
       <div className="taskTools">
-        <div>
+        {/* <div>
           <button type="button" className="filterMyTasksBtn" id="actual" onClick={(e) => doTaskFilter(e)}>Актуальные</button>
           <button type="button" className="filterMyTasksBtn" id="successfull" onClick={(e) => doTaskFilter(e)}>Успешные</button>
           <button type="button" className="filterMyTasksBtn" id="failed" onClick={(e) => doTaskFilter(e)}>Неуспешные</button>
-        </div>
+        </div> */}
         <button type="button" className="filterMyTasksBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Свои задачи</button>
         <button type="button" className="filterMyTaskFromAnotherBtn" id="ordered" onClick={(e) => doTaskFilter(e)}>Поставленные</button>
         <button type="button" className="clearFilterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
@@ -263,12 +290,13 @@ export default function TaskList() {
         {/* setFind({ ...find, query: e.target.value }) */}
 
         <button
+          className="addTaskBtn"
           type="button"
           onClick={() => {
             setModalVisible(true);
           }}
         >
-          Добавить задачу
+          ➕
 
         </button>
       </div>
@@ -286,7 +314,9 @@ export default function TaskList() {
                     </div>
                     <div className="taskTitle">{task.title}</div>
                     <div className="taskStatus">
-                      { (done[task.id] === true || task.status === true) ? 'Выполнено' : 'Просрочено'}
+                      { (task.task_type === 'ordered' ? ((done[task.id] === true || task.status === true) ? 'Выполнено' : 'Просрочено')
+                        : ((done[task.id] === true || task.status === true) ? (<button type="button" id={task.id} value={true} className="taskStatusBtn" onClick={handleClose}> Закрыть </button>)
+                          : (<button type="button" className="failedTaskStatusBtn" id={task.id} value={false} onClick={handleClose}> Закрыть </button>)))}
                     </div>
                   </div>
                   <div className="taskItemLowerDiv">
@@ -300,7 +330,7 @@ export default function TaskList() {
             // {done[task.id] === true || task.status === true ? (
             //   <div></div>) : (
             //     <div></div>)}
-              <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'taskItem'}>
+              <div key={task.id} className={(checkRestTime(task.end) > 0 ? ((done[task.id] === true) || (task.status === true) ? 'doneTaskItem' : 'taskItem') : ('failedTaskItem'))}>
                 <div className="taskItemUpperDiv">
                   <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
                     {task.task_type === 'personal' ? ('Личная') : (`${setCreator(task.creator_id)}`)}
