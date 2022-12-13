@@ -44,7 +44,8 @@ export default function Login() {
         dispatch({ type: 'USER_SIGNIN', payload: res });
       })
       .catch(console.error);
-    navigate('/workerpage');
+    if (admSignup) { navigate('/workerpage'); } else { navigate('/adminpage'); }
+
     setLoginForm(formInitialState);
   };
 

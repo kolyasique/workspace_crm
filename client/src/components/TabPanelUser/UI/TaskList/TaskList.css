@@ -2,9 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     margin: 0;
     /* background-color: rgb(222, 229, 227); */
-    justify-content: space-around;
+    width: 100%;
+    height: 100%;
 }
 .taskContainer2{
     position: relative;
@@ -13,35 +15,37 @@
     /* top: 0; */
     /* bottom: 0; */
     display: flex;
+    align-items: flex-start;
     flex-direction: row;
-    align-items: center;
     margin: 0;
     width: 100%;
+    height: 100%;
     background-color: rgb(222 229 227 / 0%);
-    /* justify-content: space-around; */
+    justify-content: space-around;
     padding: 10px;
 }
 .taskTools{
     display: flex;
-    /* position: revert; */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 95px;
-    margin: 0;
-    background: #eaedef;
-    /* z-index: 5; */
+    flex-direction: row;
+    min-height: 50px;
     align-items: center;
-    justify-content: center;
+    width: 100%;
+    height: 80px;
+    justify-content: space-evenly;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgb(0 0 0 / 10%)
 }
 .toDoTasks{
+    background: linear-gradient(rgba(1, 3, 56, .8), rgba(1, 3, 56, .4)) no-repeat;
     display: flex;
+    overflow-y: scroll;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    width: 95%;
     height: 100%;
     border-radius: 5px;
+    border: 1px solid lightblue;
    
 }
 .taskInProcess{
@@ -64,13 +68,94 @@
     border-radius: 5px;
     box-shadow: 0 0 3px rgba(21, 21, 21, 0.5);
 }
+.doneTaskItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 255);
+    width: 90%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 7px rgba(2, 116, 38, 0.684);
+}
+.failedTaskItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(255, 243, 243);
+    width: 90%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 7px rgba(255, 0, 0, 0.736);
+}
 .taskItemUpperDiv{
     display: flex;
     flex-direction: row;
+    justify-content: space-between
 }
 .taskItemLowerDiv{
     display: flex;
     flex-direction: row;
+    justify-content: center
+}
+.taskStatus{
+    display: flex;
+flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+background-color: rgb(228, 228, 228);
+padding: 3px;
+width: 80px;
+border-radius: 3px;
+font-size: 12px;
+color: #4a4a4a;
+}
+.taskStatusBtn{
+    display: flex;
+    flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 0px;
+    background-color: rgb(255, 255, 255);
+    padding: 3px;
+    width: 80px;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+    color: #000000;
+    box-shadow: 0 0 7px rgba(33, 126, 39, 0.5);
+}
+.taskStatusBtn:disabled{
+    display: flex;
+flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: 0px;
+    text-align: center;
+background-color: rgb(228, 228, 228);
+padding: 3px;
+width: 80px;
+border-radius: 3px;
+font-size: 12px;
+color: #4a4a4a;
+box-shadow: none;
+}
+.failedTaskStatusBtn{
+    display: flex;
+    flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 0px;
+    background-color: rgb(255, 255, 255);
+    padding: 3px;
+    width: 80px;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+    color: #000000;
+    box-shadow: 0 0 7px rgba(121, 5, 5, 0.5);
 }
 .taskType{
     display: flex;
@@ -81,12 +166,182 @@
 .taskTitle{
     display: flex;
     align-items: center;
-    width: 80%;
+    justify-content: space-around;
+    width: 70%;
     flex-direction: row;
-    font-size: 24px;
-    font-weight: 300;
+    font-size: 20px;
+    font-weight: 400;
 }
 .taskContent{
     display: flex;
     align-items: center;
+    background-color: rgb(226, 226, 226);
+    width: 70%;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.taskDates{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+.createdAt{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.createdAt label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.startAt{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.startAt label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.endAt{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.endAt label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.restTime{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.restTime label{
+    font-size: 10px;
+    text-align: center;
+    color: #4a4a4a;
+}
+.activeButtonEnd{
+font-size: large;
+}
+.unActiveButtonEnd{
+font-size: small;
+}
+.finishTask{
+    width: 50px;
+}
+.personalClass{
+display: flex;
+flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+background-color: aquamarine;
+padding: 3px;
+border-radius: 3px;
+font-size: 12px;
+color: #000000;
+}
+.orderedClass{
+    display: flex;
+    flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    background-color: rgb(250, 183, 47);
+    padding: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #000000;
+}
+.statusBtnPlace{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+}
+.filterMyTasksBtn{
+    display: flex;
+    flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 0px;
+        text-align: center;
+    background-color: rgb(228, 228, 228);
+    padding: 3px;
+    width: 80px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #4a4a4a;
+    box-shadow: none;
+}
+.filterMyTaskFromAnotherBtn{
+    display: flex;
+    flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 0px;
+        text-align: center;
+    background-color: rgb(228, 228, 228);
+    padding: 3px;
+    width: 80px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #4a4a4a;
+    box-shadow: none;
+}
+.clearFilterBtn{
+    display: flex;
+    flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 0px;
+        text-align: center;
+    background-color: rgb(228, 228, 228);
+    padding: 3px;
+    width: 80px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #4a4a4a;
+    box-shadow: none;
+}
+
+#searchfilter{
+    background-color: #fdfdfd;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 0;
+    color: rgb(57, 52, 143);
+    font-size: 14px;
+    margin: 10px;
+    height: 40px;
+    outline: 0;
+    padding: 2px 20px 0;
+    width: 40%;
+    box-shadow: 0 0 3px rgb(39 42 120 / 50%);
+}
+.addTaskBtn{
+        display: flex;
+        justify-content: center;
+        width: 30px;
+    height: 30px;
+        /* vertical-align: middle; */
+        text-decoration: none;
+        text-align:left;
+        border: .5em solid rgba(0,0,0,0);
+        border-radius: 100%;
+        background: rgb(245,245,245) linear-gradient(rgb(245,245,245), rgb(188,192,193)) 50% 50% / calc(1.5em + .5em*2) calc(1.5em + .5em*2);
+        box-shadow:
+         inset 0 -3px 10px rgba(255,255,255,1),
+         inset 0 3px 10px rgba(0,0,0,.4),
+         0 2px 4px rgba(0,0,0,.9);
+      
 }

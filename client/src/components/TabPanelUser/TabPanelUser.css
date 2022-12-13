@@ -4,45 +4,62 @@
     flex-direction: row;
     background-color: aliceblue;
     width: 90%;
-    height: 100%;
+    height: 90%;
+
+
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 .leftMenu{
     display: flex;
     flex-direction: column;
-    width: 30%;
-    justify-content: space-evenly;
-    border-right: 1px solid #c3c3c3;
+    width: 20%;
+    /* height: 550px; */
+    /* justify-content: space-evenly;
+    /* border-right: 1px solid #c3c3c3; */
+    background: white;
+border-radius: 3px;
+    box-shadow: 3px 4px 8px rgb(0 0 0 / 10%);
+
 }
 .rightComponents{
     display: flex;
+    position: relative;
     flex-direction: column;
-    width: 70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 80%;
     justify-content: flex-start;
     /* background-color: rgb(239, 239, 239); */
 }
 .activeButton{
-color: #2985a4;
+    color: #000000;
     width: 100%;
-    height: 20%;
+    height: 60px;
     border: 0px;
-    padding: 10px;
-    border-radius: 3px;
-    font-size: 20px;
+    border: 1.5px solid #314797;
+    /* border: 1px solid #314797; */
+    border-radius: 0;
+    font-size: 16px;
     text-align: left;
-    background: #eaedef;
+    font-weight: 600;
+    background: #dfe1fd56;
     transition: .1s ease-in-out;
 }
 .unActiveButton{
-    color: #504d4d;
+    color: #314797;
     width: 100%;
-    height: 20%;
+    height: 60px;
     border: 0px;
     padding: 10px;
     border-radius: 3px;
-    font-size: 20px;
-    text-align: left;
-    background: transparent;
+    font-size: 16px;
+        text-align: left;
+        font-weight: 300;
+       background-color: white;
     transition: .1s ease-in-out;
+}
+.unActiveButton:hover{
+    scale: 1.01;
+    background-color: #dfe1fd56;
 }

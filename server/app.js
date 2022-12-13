@@ -32,17 +32,17 @@ app.use('/api', BaseRouter);
 //   console.error('====>>>>', err.stack);
 //   res.status(500).send('Something broke!');
 // });
-
+app.locals.usersMap = new Map();
 const server = http.createServer(app);
 
 server.on('upgrade', (req, socket, head) => {
   sessionParser(req, {}, () => {
     if (!req.session.company) {
       socket.write('net sessii');
-      socket.end();
+      socket.destroy();
     }
     wss.handleUpgrade(req, socket, head, (ws) => {
-      wss.emit('connection', ws, req);
+      wss.emit('connection', ws, req, app.locals.usersMap);
     });
   });
 });

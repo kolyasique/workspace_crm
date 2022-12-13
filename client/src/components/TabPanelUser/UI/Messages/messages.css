@@ -1,0 +1,152 @@
+.chatPage {
+    width: 100%;
+    height: 100%;
+}
+.chat {
+    width: 70%;
+    height: 100%;
+}
+.beforeChat {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.beforeChat>span {
+  font-size:large;
+}
+.chatbox {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column-reverse;
+    /* background-color: white; */
+    overflow: auto;
+}
+
+.chatform {
+    display: flex;
+    width: 100%;
+    height: 10%;
+    min-width: 250px;
+}
+.chatform > input {
+    /* width: 80%; */
+    /* border: solid 1px 0 0 0 black; */
+    background-color: #fdfdfd;
+    text-align: center;
+    font-size: 16px;
+    
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 0;
+    color: rgb(57, 52, 143);
+    font-size: 14px;
+    margin: 10px;
+    height: 40px;
+    outline: 0;
+    padding: 2px 20px 0;
+    width: 80%;
+    box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
+}
+.chatform > button {
+    width: 20%;
+}
+.chatPage {
+    display: flex;
+    flex-direction: row;
+}
+.chatContacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+    background: white;
+}
+.contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;;
+    width: 100%;
+    background: #FAFAFA;
+    height: 10%;
+    transition: 0,5s;
+    border-bottom: 1px solid #c3c3c3;
+}
+.contact:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}
+.chatbox-textstart {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    background:#f6f6f6;
+    margin: 2.5% 0 2.5% 5%;
+    border-radius: 15px;
+    padding: 3%;
+  }
+  
+  .chatbox-textend {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    background:#e3effd;
+    margin: 2.5% 5% 2.5% 0;
+    border-radius: 15px;
+    padding: 1%;
+  }
+  
+  .chatbox-textend > .chatbox-date {
+    align-self: flex-end;
+  }
+  .chatbox-textend > .chatbox-text {
+    align-self: flex-end;
+  }
+  
+  .chatbox-date {
+    font-size: 0.8rem;
+    margin-bottom: 1%;
+  }
+  
+  .chatbox-text {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    word-break: break-word;
+  }
+  .chatWith {
+    height: 6%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+    background-color:#dfe1fd56;
+  }
+  .chatStatus {
+    display: flex;
+    justify-content: center;
+    height: 4%;
+    background-color:#dfe1fd56;
+    font-size: small;
+  }
+  .h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#dfe1fd56;
+    height: 10%;
+    margin: 0;
+    width: 100%;
+    border-left: 1px solid #c3c3c3;
+  }
+  .rightSide {
+    height: 100%;
+    width: 30%;
+  }

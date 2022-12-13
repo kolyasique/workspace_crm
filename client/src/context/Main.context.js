@@ -1,28 +1,45 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useMemo } from 'react';
 
 export const MainContext = React.createContext();
 
 export default function MainContextProvider({ children }) {
   const [state, setState] = useState(null);
-
+  const [tasks, setTasks] = useState(null);
   useEffect(() => {
     const abortController = new AbortController();
 
-    fetch('http://localhost:6622/api/chat', {
+    fetch('http://localhost:6622/api/stat/tasks', {
       credentials: 'include',
       signal: abortController.signal,
     })
       .then((res) => res.json())
-      .then((res) => setState(res))
+      .then((res) => setTasks(res))
       .catch(console.log);
-    console.log(state);
 
     return () => {
       abortController.abort();
     };
   }, []);
 
-  const value = useMemo(() => ({ state }), [state]);
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    fetch('http://localhost:6622/api/chat/user', {
+      credentials: 'include',
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((res) => setState(res))
+      .catch(console.log);
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
+  const value = useMemo(() => ({ state, tasks }), [state, tasks]);
 
   return (
     <MainContext.Provider value={value}>

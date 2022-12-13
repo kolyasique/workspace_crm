@@ -9,6 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      avatar: {
+        allowNull: true,
+        type: Sequelize.TEXT,
+      },
       login: {
         type: Sequelize.TEXT,
       },

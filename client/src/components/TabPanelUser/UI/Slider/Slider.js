@@ -2,19 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 function SliderComponent({
-  value, handleChange, min, max, step, marks,
+  value, handleChange, min, max, step, id, key, disabled,
 }) {
   return (
     <Container>
       <Slider
+        disabled={disabled}
+        key={key}
         type="range"
+        id={id}
         defaultValue={value}
         onChange={handleChange}
         min={min}
         max={max}
-        dots
         step={step}
-        marks={marks}
       />
     </Container>
   );
@@ -29,13 +30,13 @@ const Container = styled.div`
 
 const Slider = styled.input`
   -webkit-appearance: none;
-  width: 100%;
+  width: 70%;
   height: 4px;
   border-radius: 4px;
   background-color: #e1e5e9;
   outline: none;
   opacity: 1;
-  --webkit-transition: 0.2s;
+  --webkit-transition: 0.5s;
   transition: opacity 0.2s;
   ::-webkit-slider-thumb {
     -webkit-appearance: none;

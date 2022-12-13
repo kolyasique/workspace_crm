@@ -3,9 +3,10 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-indent */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import './App.css';
 import Header from './components/Header/Header';
@@ -17,6 +18,11 @@ import Login from './components/Login/Login';
 import AuthForm from './components/AuthForm/AuthForm';
 import LoginAdmin from './components/LoginAdmin/LoginAdmin';
 import MainPageUser from './components/MainPageUser/MainPageUser';
+import 'react-toastify/dist/ReactToastify.css';
+import SocketContextProvider from './context/Socket.context';
+import UserContextProvider from './context/User.context';
+import Profile from './components/Profile/Profile';
+import ProfileContextProvider from './context/Profile.context';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,8 +58,11 @@ function App() {
           {user
             ? (
               <Routes>
+              <Route path="/" element={<StartPage />} />
               <Route path="/adminpage" element={<MainPageCompany />} />
-              <Route path="/workerpage" element={<MainPageUser />} />
+              <Route path="/profile" element={<ProfileContextProvider><Profile /></ProfileContextProvider>} />
+              <Route path="/workerpage" element={<SocketContextProvider><MainPageUser /></SocketContextProvider>} />
+              <Route path="/login" element={<Login />} />
               </Routes>
             ) : (
               <Routes>
@@ -62,6 +71,7 @@ function App() {
               <Route path="/reg" element={<AuthForm />} />
               </Routes>
             )}
+            <ToastContainer />
         </div>
       )
   );

@@ -6,14 +6,22 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class Worker extends Model {
-    static associate({ Work_category, Company, Tasks}) {
+    static associate({
+      Work_category, Company, Tasks, Message,
+    }) {
       Worker.belongsTo(Work_category, { foreignKey: 'category_id' });
       Worker.belongsTo(Company, { foreignKey: 'company_id' });
       Worker.hasMany(Tasks, { foreignKey: 'creator_id' });
       Worker.hasMany(Tasks, { foreignKey: 'worker_id' });
+      Worker.hasMany(Message, { foreignKey: 'user_from', as: 'sender' });
+      Worker.hasMany(Message, { foreignKey: 'user_to', as: 'receiver' });
     }
   }
   Worker.init({
+    avatar: {
+      allowNull: true,
+      type: DataTypes.TEXT,
+    },
     login: {
       type: DataTypes.TEXT,
     },

@@ -1,4 +1,3 @@
-"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -25,7 +24,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       progress_status: {
-        defaultValue: 'Создана',
+        defaultValue: 'Новая',
         type: Sequelize.TEXT,
       },
       status: {
@@ -59,6 +58,28 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      client_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Clients',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
+      company_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Companies',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
+      closed_by: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -70,6 +91,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Tasks");
+    await queryInterface.dropTable('Tasks');
   },
 };

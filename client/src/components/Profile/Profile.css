@@ -1,0 +1,46 @@
+/* .formDivProfile{
+ 
+} */
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* .containerChanges{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #aaa;
+  width: 50%;
+  height: 450px;
+} */
+
+.formInput{
+  display: flex;
+  width: 75%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.form-control{
+  width: 250px;
+}
+
+.fileImput{
+}
+
+.buttonSubmit{
+  margin-top: 20px;
+}
+
+ .profileDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center
+ }
+ .formData{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+ }

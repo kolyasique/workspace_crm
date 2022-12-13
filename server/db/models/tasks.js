@@ -4,10 +4,14 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class Tasks extends Model {
-    static associate({ Worker, Order }) {
+    static associate({
+      Worker, Order, Client, Company,
+    }) {
       Tasks.belongsTo(Worker, { foreignKey: 'worker_id', as: 'executor' });
       Tasks.belongsTo(Worker, { foreignKey: 'creator_id', as: 'creator' });
       Tasks.belongsTo(Order, { foreignKey: 'order_id' });
+      Tasks.belongsTo(Client, { foreignKey: 'client_id' });
+      Tasks.belongsTo(Company, { foreignKey: 'company_id' });
     }
   }
   Tasks.init({
@@ -27,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
     },
     progress_status: {
-      defaultValue: 'Создана',
+      defaultValue: 'Новая',
       type: DataTypes.TEXT,
     },
     status: {
@@ -60,6 +64,28 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
       onDelete: 'CASCADE',
+    },
+    client_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Clients',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
+    company_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Company',
+        key: 'id',
+      },
+      onDelete: 'CASCADE',
+    },
+    closed_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   }, {
     sequelize,
