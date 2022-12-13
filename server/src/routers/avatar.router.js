@@ -61,4 +61,34 @@ avatarRouter.post('/updworkerinfo', async (req, res) => {
   res.json(findUpdatedUser);
 });
 
+avatarRouter.post('/updworkerpassword', async (req, res) => {
+  const { id } = req.session.company;
+  const { oldpassword, password, repassword } = req.body;
+  console.log(password, repassword);
+
+  try {
+    const userForPswUpdate = await Worker.findOne({ where: { id } });
+    const comparePassword = await bcrypt.compare(oldpassword, userForPswUpdate.password);
+    if (comparePassword) {
+      const newHashedPassword = await bcrypt.hash(password, 10);
+      const updateUserPsw = await Worker.update({ password: newHashedPassword }, { where: { id } });
+      return res.json({ changed: true });
+    }
+    if (!comparePassword) {
+      return res.json({ changed: false });
+    }
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+  // const updateUser = await Worker.update({
+  //   login, name, second_name, patronymic, email, phone,
+  // }, { where: { id } });
+  // const findUpdatedUser = await Worker.findOne({ where: { id } });
+  // delete findUpdatedUser.dataValues.password;
+  // delete findUpdatedUser.dataValues.createdAt;
+  // delete findUpdatedUser.dataValues.updatedAt;
+  res.json({ id: 'ddg' });
+});
+// updworkerpassword
+
 module.exports = avatarRouter;
