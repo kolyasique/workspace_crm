@@ -3,6 +3,17 @@ const bcrypt = require('bcrypt');
 const { Worker } = require('../../db/models');
 const avatarMiddleware = require('../middlewares/avatar');
 
+// avatarRouter.get('/profile', async (req, res) => {
+//   try {
+//     const workerId = req.session.company.id;
+//     const infoWorker = await Worker.findOne({ where: { id: workerId } });
+//     res.json(infoWorker);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).json({ msg: error.message });
+//   }
+// });
+
 avatarRouter.post('/avatar', avatarMiddleware.single('avatar'), async (req, res) => {
   try {
     const newForm = JSON.parse(req.body.form);
