@@ -40,6 +40,7 @@
   
   .input {
     background-color: #303245;
+    background-color: #b1b5d7;
     border-radius: 10px;
     border: 0;
     box-sizing: border-box;
@@ -49,11 +50,13 @@
     outline: 0;
     padding: 2px 20px 0;
     width: 100%;
+    z-index: 2;
   }
   
   .cut {
-    background-color: #15172b;
-    border-radius: 10px;
+    /* background-color: #15172b; */
+    background-color: #a0a8ed;
+    border-radius: 5px;
     height: 20px;
     left: 20px;
     position: absolute;
@@ -61,6 +64,7 @@
     transform: translateY(0);
     transition: transform 200ms;
     width: 76px;
+    z-index: 1;
   }
   
   .cut-short {
@@ -94,7 +98,8 @@
   }
   
   .input:focus ~ .placeholder {
-    color: #dc2f55;
+    color: #921b0e;
+    z-index: 3;
   }
   
   .submit {
