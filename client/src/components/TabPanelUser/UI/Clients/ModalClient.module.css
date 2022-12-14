@@ -9,18 +9,17 @@
 
 }
 
-.myModalContent {
+.myModalContent{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 25px;
+    padding: 15px;
     width: 45%;
-    height: 40%;
-    background: white;
+    height: 55%;
+    background: #fff;
     border-radius: 5px;
     min-width: 250px;
-
+    align-items: center;
+    justify-content: space-around
 }
 .myModal.active {
     display: flex;

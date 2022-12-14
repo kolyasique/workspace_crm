@@ -50,11 +50,10 @@ export default function ClientHistory({ client }) {
   console.log(history, 'Это должно быть все задачи в компании');
   return (
     <div className={cl.historyTasks}>
-      {history.filter((task) => task.client_id === client.id && task.closed_by !== null).map((filtTask) => (
-        <div className={cl.oneTaskinHistory}>
-          <div className={cl.oneTaskinHistoryUp}>
-            <div>{filtTask.title}</div>
-          </div>
+      {history.filter((task) => task.client_id === client.id && task.closed_by !== null).sort((a, b) => checkPastTime(a.updatedAt) - checkPastTime(b.updatedAt)).map((filtTask) => (
+        <div className={filtTask.status !== false ? cl.oneTaskinHistory : cl.oneTaskinHistoryFailed}>
+          <div className={cl.oneTaskinHistoryTitle}>{filtTask.title}</div>
+
           <div className={cl.oneTaskinHistoryDown}>
             <div>
               {checkPastTime(filtTask.updatedAt) < 1 ? (
