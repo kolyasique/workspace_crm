@@ -51,7 +51,7 @@ export default function ChangeAvatar() {
 
     <div className="containerChanges">
       {userInfo.avatar === null ? (
-        <div className="profileAvatar"><img className="imgProfile" src="http://localhost:6622/images/avatar/2022-12-13T15:57:25.638Z-nullAvatar.jpeg" alt="аватарка" /></div>
+        <div className="profileAvatar"><img className="imgProfile" src="https://www.meme-arsenal.com/memes/31ce45559a80470ce5aadd5ef3983555.jpg" alt="авaтарка" /></div>
 
       ) : (
         <div className="profileAvatar"><img className="imgProfile" src={`http://localhost:6622/${userInfo.avatar}`} alt="аватарка" /></div>
