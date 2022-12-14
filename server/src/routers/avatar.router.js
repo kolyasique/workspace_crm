@@ -4,13 +4,6 @@ const bcrypt = require('bcrypt');
 const { Worker } = require('../../db/models');
 const avatarMiddleware = require('../middlewares/avatar');
 
-function chistkaObject(object) {
-  delete object.password;
-  delete object.createdAt;
-  delete object.updatedAt;
-
-  return object;
-}
 avatarRouter.get('/profile', async (req, res) => {
   try {
     const workerId = req.session.company.id;
