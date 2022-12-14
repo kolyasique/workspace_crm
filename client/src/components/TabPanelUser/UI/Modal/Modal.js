@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -64,17 +65,21 @@ function Modal({
     setVisible(false);
   };
 
+  function today() {
+    const todayOK = new Date().toLocaleDateString('ru');
+    return todayOK;
+  }
   return (
     <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
       <div className={cl.myModalContent} onClick={(e) => e.stopPropagation()}>
         <p>Добавить задачу</p>
         <form className={cl.myModalForm} onSubmit={handleSubmit}>
-          <input type="text" value={formTask.title} name="title" placeholder="Название" onChange={handleInput} />
-          <textarea value={formTask.content} name="content" placeholder="описание" onChange={handleInput} />
-          <input type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" onChange={handleInput} />
-          <input type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
+          <input type="text" value={formTask.title} name="title" placeholder="Название" maxLength="30" onChange={handleInput} required />
+          <textarea value={formTask.content} name="content" placeholder="Описание" onChange={handleInput} />
+          <input type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" min="2022-12-13T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
+          <input type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" min="2022-12-13T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
           <label className="form-label ">Должность</label>
-          <select name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput}>
+          <select name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput} required>
             <option selected disabled value="">Исполнитель задачи</option>
             {workersForList.map((worker) => (
               <option value={worker.id}>
