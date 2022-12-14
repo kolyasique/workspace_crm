@@ -37,7 +37,7 @@ export default function AddCleintsForm({ setClients }) {
     setForm(formInitialState);
   };
   return (
-    <div className="wrapperAdd">
+    <div className="wrapperAddClient">
       <form className="form" onSubmit={handleSubmit}>
         <div className="title">Добавить клиента</div>
         <div className="input-container ic1">
