@@ -13,6 +13,8 @@ export default function UserContextProvider({ children }) {
   const [taskStatus, setTaskStatus] = useState({});
   const [mainOrProfile, setMainOrProfile] = useState(true);
 
+  // const [history, setHistory] = useState([]);
+  // const [clients, setClients] = useState([]);
   // const [userInfo, setUserInfo] = useState(null);
 
   //   const checkDateNow = new Date();
@@ -120,7 +122,10 @@ export default function UserContextProvider({ children }) {
     setTaskStatus,
     mainOrProfile,
     setMainOrProfile,
-
+    history,
+    setHistory,
+    clients,
+    setClients,
     // userInfo,
     // setUserInfo,
 

@@ -1,7 +1,6 @@
-
-  
   .form {
-    background-color: #15172b;
+    /* background-color: #15172b; */
+    background-color: #ffffff21;
     border-radius: 20px;
     box-sizing: border-box;
     padding: 20px;
@@ -117,3 +116,6 @@
     background-color: #06b;
   }
 
+  /* .wrapperAddClient{
+    background-color: #15172b;
+  } */

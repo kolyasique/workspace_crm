@@ -12,7 +12,7 @@ export default function StartPage() {
     <div>
       <div className="description1">
         <h1>Легче - не тяжелее!</h1>
-        <p> Управлять задачами, ослеживать производительность сотрудников и быть в курсе статуса каждого клиента - теперь легко! Ничего лишнего, только добрый запас чая </p>
+        <p> WorkSpace4U - рабочее пространство, где управлять задачами, ослеживать производительность сотрудников и контролировать задачи по каждому клиенту - легко! </p>
         <Link to="/reg"><button className="shop" type="button">Get started for free!</button></Link>
         {/* <AlignItemsList /> */}
       </div>

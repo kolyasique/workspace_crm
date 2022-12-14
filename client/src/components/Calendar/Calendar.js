@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 // import { setDefaultOptions } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import './Calendar.css';
+import { showToast } from '../../lib/toasti';
 
 // setDefaultOptions({ locale: ru });
 
@@ -77,7 +78,7 @@ function CalendarComponent() {
       .then((res) => res.json())
       .then((res) => {
         if (res.msg === 'не все поля заполнены') {
-          alert('Заполните все поля');
+          showToast({ message: 'Заполните все поля!', type: 'warning' });
         }
       })
       .catch(console.error);

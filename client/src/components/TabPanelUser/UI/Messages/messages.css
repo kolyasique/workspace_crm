@@ -59,27 +59,73 @@
     flex-direction: row;
 }
 .chatContacts {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: 90%;
     box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+    background: white; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 100%; */
+    height: 90%;
+    padding: 10px;
+    box-shadow: 0px 8px 10px rgb(0 0 0 / 20%);
     background: white;
 }
 .contact {
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: center;;
     width: 100%;
     background: #FAFAFA;
     height: 10%;
     transition: 0,5s;
-    border-bottom: 1px solid #c3c3c3;
+    border-bottom: 1px solid #ad4646; */
+    display: flex;
+    color: #314797;
+    width: 100%;
+    height: 40px;
+    border: 0px;
+    /* padding: 10px; */
+    border-radius: 3px;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 400;
+    padding: 10px;
+    background-color: white;
+    transition: .1s ease-in-out;
+    justify-content: flex-start;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
 }
 .contact:hover {
-    transform: scale(1.01);
-    cursor: pointer;
+    /* transform: scale(1.01);
+    cursor: pointer; */
+    scale: 1.01;
+    background-color: #dfe1fd56;
+}
+.activeContact{
+  display: flex;
+  color: black;
+  /* padding: 10px; */
+  border-radius: 3px;
+  font-size: 18px;
+  text-align: left;
+  width: 99%;
+    height: 40px;
+  padding: 10px;
+  border: 1.5px solid #314797;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 600;
+    background: #dfe1fd56;
+    transition: .1s ease-in-out;
 }
 .chatbox-textstart {
     align-self: flex-start;

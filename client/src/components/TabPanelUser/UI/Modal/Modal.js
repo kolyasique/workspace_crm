@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -64,18 +65,24 @@ function Modal({
     setVisible(false);
   };
 
+  function today() {
+    const todayOK = new Date().toLocaleDateString('ru');
+    return todayOK;
+  }
   return (
     <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
       <div className={cl.myModalContent} onClick={(e) => e.stopPropagation()}>
-        <p>Добавить задачу</p>
         <form className={cl.myModalForm} onSubmit={handleSubmit}>
-          <input type="text" value={formTask.title} name="title" placeholder="Название" onChange={handleInput} />
-          <textarea value={formTask.content} name="content" placeholder="описание" onChange={handleInput} />
-          <input type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" onChange={handleInput} />
-          <input type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
-          <label className="form-label ">Должность</label>
-          <select name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput}>
-            <option selected disabled value="">Исполнитель задачи</option>
+          <p className={cl.pForModal}>Добавить задачу</p>
+          <input className={cl.myModalInput} type="text" value={formTask.title} name="title" placeholder="Название" maxLength="30" onChange={handleInput} required />
+          <textarea className={cl.myModalInputTextArea} value={formTask.content} name="content" placeholder="Описание" maxLength="150" onChange={handleInput} />
+          <label className={cl.myModalLabel}>Дата начала</label>
+          <input className={cl.myModalInputData} type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" min="2022-12-13T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
+          <label className={cl.myModalLabel}>Дата окончания</label>
+          <input className={cl.myModalInputData} type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" min="2022-12-13T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
+          <label className={cl.myModalLabel}>Исполнитель задачи</label>
+          <select className={cl.myModalInput} name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput} required>
+            <option selected disabled value="">Сотрудники</option>
             {workersForList.map((worker) => (
               <option value={worker.id}>
                 {worker.second_name}
@@ -86,7 +93,7 @@ function Modal({
               </option>
             ))}
           </select>
-          <button type="submit"> Добавить </button>
+          <button className={cl.myModalSubmit} type="submit"> Добавить </button>
         </form>
         {children}
         {/* <ModalTimer timeLeft={timeLeft} />

@@ -21,7 +21,7 @@ export default function WorkersComponent() {
         <div className={cl.workerDiv}>
           <div>
             {worker.avatar === null ? (
-              <div className={cl.circleAvatar}><img className={cl.img} src="http://localhost:6622/images/avatar/2022-12-13T15:57:25.638Z-nullAvatar.jpeg" alt="аватарка" /></div>
+              <div className={cl.circleAvatar}><img className={cl.img} src="https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png" alt="аватарка" /></div>
             ) : (
               // <div className={cl.circleAvatar}><p>{worker.avatar}</p></div>
               <div className={cl.circleAvatar}><img className={cl.img} src={`http://localhost:6622/${worker.avatar}`} alt="аватарка" /></div>
