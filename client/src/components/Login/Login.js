@@ -6,14 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 import './toggle.css';
+import { showToast } from '../../lib/toasti';
 
 const formInitialState = {
   login: '',
   password: '',
+  inn: '',
 };
 
+// const useInput = (initialValue) => {
+//   const [value, useValue] = useState(initialValue);
+//   const [isDirty, setDirty] = useState(false);
+//   const onChange = (e) => {
+//     setValue(e.target.value);
+//   };
+
+//   const onBlur = (e) => {
+//     setDirty(true);
+//   };
+
+//   return {
+//     value,
+//     onChange,
+//     onBlur,
+//   };
+// };
+
 export default function Login() {
-  const [loginForm, setLoginForm] = useState([]);
+  // const login = useInput('');
+  // const inn = useInput('');
+  // const pass = useInput('');
+  const [loginForm, setLoginForm] = useState(formInitialState);
   const [admSignup, setAdmSignup] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,7 +59,10 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.msg === 'Wrong login') { alert('Неверный логин'); navigate('/login'); } else if (res.msg === 'Wrong pass') { alert('Неверный пароль'); navigate('/login'); } else { dispatch({ type: 'USER_SIGNIN', payload: res }); }
+        if (res.msg === 'Wrong login') { showToast({ message: 'Неверные данные!', type: 'error' }); navigate('/login'); } else if (res.msg === 'Wrong pass') { showToast({ message: 'Вы ввели неверный пароль!!', type: 'error' }); navigate('/login'); } else if (res.msg === 'не все поля заполнены') {
+          showToast({ message: 'Заполните все поля!', type: 'warning' });
+          navigate('/login');
+        } else { dispatch({ type: 'USER_SIGNIN', payload: res }); }
       })
       .catch(console.error);
     if (admSignup) { navigate('/workerpage'); } else { navigate('/adminpage'); }
@@ -48,12 +74,9 @@ export default function Login() {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
   return (
-    // {`mb-3 ${isSignup ? 'visible' : 'invisible'}`}
     <div className="loginFormDiv">
       <form className="loginForm" onSubmit={handleSubmit}>
-        {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
-          {/* <img className="log8o" src={log8o} alt="VB" /> */}
           <p className="inftext">Вход</p>
         </div>
         {!admSignup ? (

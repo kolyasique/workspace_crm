@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { showToast } from '../../lib/toasti';
 
 import './AuthForm.css';
 import './toggle.css';
@@ -33,14 +34,14 @@ export default function AuthForm() {
       },
       body: JSON.stringify(form),
     })
+      .then((res) => res.json())
       .then((res) => {
-        if (res.status === 200) {
-          return res.json();
+        if (res.msg === 'не все поля заполнены') {
+          showToast({ message: 'Заполните все поля!', type: 'warning' });
+          navigate('/reg');
+        } else {
+          dispatch({ type: 'USER_SIGNIN', payload: res });
         }
-        throw new Error('Something went wrong');
-      })
-      .then((res) => {
-        dispatch({ type: 'USER_SIGNIN', payload: res });
       })
       .catch(console.error);
     navigate('/adminpage');
