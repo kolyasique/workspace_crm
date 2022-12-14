@@ -47,8 +47,10 @@ border: 1px solid lightblue;
     color: rgb(74, 74, 74);
 }
 .clientPartnershipAge{
-    background-color: aquamarine;
+    background-color: rgb(234, 234, 234);
     padding: 3px;
+    border-radius: 3px;
+    border: 0.5px solid lightblue;
     font-size: 12px;
 }
 .clientsTasksListDiv{

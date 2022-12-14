@@ -9,11 +9,11 @@ import { UserContext } from '../../../../context/User.context';
 
 export default function Clients() {
   const [component, setComponent] = useState(null);
-  const [clients, setClients] = useState([]);
+  
   const [clientTasks, setClientTasks] = useState([]);
   const [progressValue, setProgressValue] = useState({});
   const {
-    tasks, setTasks, allWorkers, taskStatus, setTaskStatus,
+    tasks, setTasks, allWorkers, taskStatus, setTaskStatus, clients , setClients
   } = useContext(UserContext);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
   const [findClient, setFindClient] = useState({ query: '' });
