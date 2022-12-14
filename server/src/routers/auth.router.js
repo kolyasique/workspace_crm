@@ -41,7 +41,7 @@ router.post('/signinworker', async (req, res) => {
     // attributes: ['id', 'name', 'login', 'email', 'password']
 
     if (!findWorker) {
-      return res.status(401).json({ msg: 'Try again' });
+      return res.json({ msg: 'Wrong login' });
     }
     const comparePassword = await bcrypt.compare(password, findWorker.password);
     if (comparePassword) {
@@ -50,6 +50,9 @@ router.post('/signinworker', async (req, res) => {
       delete findWorker.updatedAt;
       req.session.company = findWorker;
       return res.json(findWorker);
+    }
+    if (!comparePassword && findWorker) {
+      return res.json({ msg: 'Wrong pass' });
     }
   } catch (error) {
     return res.status(400).json({ msg: error.message });
@@ -60,9 +63,8 @@ router.post('/signinadmin', async (req, res) => {
     const { password, inn } = req.body;
 
     const findCompany = await Company.findOne({ where: { inn } });
-    // attributes: ['id', 'name', 'login', 'email', 'password']
     if (!findCompany) {
-      return res.status(401).json({ msg: 'Try again' });
+      return res.json({ msg: 'Wrong login' });
     }
     const comparePassword = await bcrypt.compare(password, findCompany.password);
     if (comparePassword) {
@@ -71,6 +73,9 @@ router.post('/signinadmin', async (req, res) => {
       delete findCompany.updatedAt;
       req.session.company = findCompany;
       return res.json(findCompany);
+    }
+    if (!comparePassword && findCompany) {
+      return res.json({ msg: 'Wrong pass' });
     }
   } catch (error) {
     return res.status(400).json({ msg: error.message });

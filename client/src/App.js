@@ -22,6 +22,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SocketContextProvider from './context/Socket.context';
 import UserContextProvider from './context/User.context';
 import Profile from './components/Profile/Profile';
+import ProfileContextProvider from './context/Profile.context';
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function App() {
   return (
     loading ? (
     <div className="spinner-container">
-    <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
+    <img className="spinner" src="https://i.gifer.com/AGNS.gif" alt="spinner" />
     </div>
     )
       : (
@@ -59,7 +60,7 @@ function App() {
               <Routes>
               <Route path="/" element={<StartPage />} />
               <Route path="/adminpage" element={<MainPageCompany />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<ProfileContextProvider><Profile /></ProfileContextProvider>} />
               <Route path="/workerpage" element={<SocketContextProvider><MainPageUser /></SocketContextProvider>} />
               <Route path="/login" element={<Login />} />
               </Routes>

@@ -53,7 +53,7 @@ export default function AuthForm() {
   };
 
   return (
-    <div className="formDiv">
+    <div className="formDivAuth">
       <form className="authform" onSubmit={handleSubmit}>
         {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">

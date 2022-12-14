@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './Clients.css';
 import CreateClientTask from './UI/CreateClientTask';
 import ClientDocuments from './UI/ClientDocuments';
+import ClientHistory from './UI/ClientHistory';
 import ModalClient from './ModalClient';
 import { UserContext } from '../../../../context/User.context';
 
@@ -171,7 +172,7 @@ export default function Clients() {
           onClick={handleSubmit}>Загрузить документ</button> */}
             <div className="clientButtonBar">
               <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
-              <button type="button" className="clientButton" id={client.id}>Взаимодействие</button>
+              <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientHistory client={client} />); }}> История</button>
               <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>
             </div>
           </div>

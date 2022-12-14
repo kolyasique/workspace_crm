@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React, {
   useState, useEffect, useMemo,
@@ -11,6 +12,25 @@ export default function UserContextProvider({ children }) {
   const [tasks, setTasks] = useState([]);
   const [taskStatus, setTaskStatus] = useState({});
   const [mainOrProfile, setMainOrProfile] = useState(true);
+
+
+  // const [userInfo, setUserInfo] = useState(null);
+
+  //   const checkDateNow = new Date();
+
+  // const abortController = new AbortController();
+
+  // useEffect(() => {
+  //   fetch('http://localhost:6622/api/userpanel/getuserinfo', {
+  //     credentials: 'include',
+  //     signal: abortController.signal,
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setUserInfo(data);
+  //     });
+  //   console.log(userInfo);
+  // }, [mainOrProfile]);
 
   useEffect(() => {
     const interval = setInterval(() => { setDateNow(Date.now()); }, 60000);
@@ -101,6 +121,10 @@ export default function UserContextProvider({ children }) {
     setTaskStatus,
     mainOrProfile,
     setMainOrProfile,
+
+    // userInfo,
+    // setUserInfo,
+
   }));
 
   return (

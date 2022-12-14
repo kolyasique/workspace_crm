@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { showToast } from '../../../../../lib/toasti';
 
-import cl from './UIclasses.module.css';
+import cl from './ClientDocuments.module.css';
 
 export default function ClientDocuments({ client }) {
   const [img, setImg] = useState(null);
