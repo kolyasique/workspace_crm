@@ -56,9 +56,7 @@ export default function AuthForm() {
   return (
     <div className="formDivAuth">
       <form className="authform" onSubmit={handleSubmit}>
-        {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
-          {/* <img className="log8o" src={log8o} alt="VB" /> */}
           <p className="inftext">Зарегистрируйте компанию</p>
         </div>
         <div className="form-input">
@@ -84,19 +82,11 @@ export default function AuthForm() {
           <label className="form-label">ИНН организации</label>
           <input type="number" className="form-control" value={form.inn} name="inn" onChange={handleInput} />
         </div>
-        <div className="form-input">
+        <div className="form-input tel">
           <label className="form-label">Телефон</label>
+          <input type="tel" name="phone" placeholder="Телефон" pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" minLength="18" maxLength="18" />
           <input type="text" className="form-control" value={form.phone} name="phone" onChange={handleInput} />
         </div>
-
-        {/* <div className="toggle-switch">
-          <p>Зареги</p>
-          <div>
-            <input className="toggle" type="checkbox" id="toggle" onClick={handleFormChange} checked={!isSignup} />
-            <label className="toggle-label" htmlFor="toggle" />
-          </div>
-          <p>Sign In</p>
-        </div> */}
 
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>

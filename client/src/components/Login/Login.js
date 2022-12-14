@@ -14,28 +14,7 @@ const formInitialState = {
   inn: '',
 };
 
-// const useInput = (initialValue) => {
-//   const [value, useValue] = useState(initialValue);
-//   const [isDirty, setDirty] = useState(false);
-//   const onChange = (e) => {
-//     setValue(e.target.value);
-//   };
-
-//   const onBlur = (e) => {
-//     setDirty(true);
-//   };
-
-//   return {
-//     value,
-//     onChange,
-//     onBlur,
-//   };
-// };
-
 export default function Login() {
-  // const login = useInput('');
-  // const inn = useInput('');
-  // const pass = useInput('');
   const [loginForm, setLoginForm] = useState(formInitialState);
   const [admSignup, setAdmSignup] = useState(false);
   const navigate = useNavigate();
@@ -82,18 +61,18 @@ export default function Login() {
         {!admSignup ? (
           <div className="form-input1">
             <label className="form-label">ИНН организации</label>
-            <input type="text" className="form-control" value={loginForm.inn} name="inn" onChange={handleInput} />
+            <input type="text" className="form-control" value={loginForm.inn} name="inn" onChange={handleInput} required />
           </div>
         ) : (
           <div className="form-input1">
             <label className="form-label">Логин пользователя</label>
-            <input type="text" className="form-control" value={loginForm.login} name="login" onChange={handleInput} />
+            <input type="text" className="form-control" value={loginForm.login} name="login" onChange={handleInput} required />
           </div>
         )}
 
         <div className="form-input1">
           <label className="form-label">Password</label>
-          <input type="password" className="form-control" value={loginForm.password} name="password" onChange={handleInput} />
+          <input type="password" className="form-control" value={loginForm.password} name="password" onChange={handleInput} required />
         </div>
 
         <div className="toggle1-switch">

@@ -120,3 +120,8 @@
       align-items: center;
       
     }
+
+    .tel {
+      input:invalid:not(:placeholder-shown) {border-color: red;}
+input:valid:not(:placeholder-shown) {border-color: green;}
+    }
