@@ -48,7 +48,7 @@ function App() {
   return (
     loading ? (
     <div className="spinner-container">
-    <img className="spinner" src="https://i.pinimg.com/originals/e2/eb/9e/e2eb9e845ff87fb8fac15f72359efb10.gif" alt="spinner" />
+    <img className="spinner" src="https://i.gifer.com/AGNS.gif" alt="spinner" />
     </div>
     )
       : (

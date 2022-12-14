@@ -34,14 +34,9 @@ export default function Login() {
       },
       body: JSON.stringify(loginForm),
     })
+      .then((res) => res.json())
       .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        throw new Error('Something went wrong');
-      })
-      .then((res) => {
-        dispatch({ type: 'USER_SIGNIN', payload: res });
+        if (res.msg === 'Wrong login') { alert('Неверный логин'); navigate('/login'); } else if (res.msg === 'Wrong pass') { alert('Неверный пароль'); navigate('/login'); } else { dispatch({ type: 'USER_SIGNIN', payload: res }); }
       })
       .catch(console.error);
     if (admSignup) { navigate('/workerpage'); } else { navigate('/adminpage'); }

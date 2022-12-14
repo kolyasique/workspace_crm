@@ -30,7 +30,6 @@ const localizer = dateFnsLocalizer({
 
 function CalendarComponent() {
   const [newEvent, setNewEvent] = useState(initialState);
-
   const [allEvents, setAllEvents] = useState([]);
 
   const abortController = new AbortController();
@@ -44,20 +43,20 @@ function CalendarComponent() {
   }, []);
 
   async function handleAddEvent() {
-    for (let i = 0; i < allEvents.length; i += 1) {
-      const d1 = new Date(allEvents[i].start);
-      const d2 = new Date(newEvent.start);
-      const d3 = new Date(allEvents[i].end);
-      const d4 = new Date(newEvent.end);
-      if (
-        ((d1 <= d2) && (d2 <= d3)) || ((d1 <= d4) && (d4 <= d3))
-      ) {
-        alert('Наложение задач');
-        setNewEvent(initialState);
-        break;
-      }
-      setNewEvent(initialState);
-    }
+    // for (let i = 0; i < allEvents.length; i += 1) {
+    //   const d1 = new Date(allEvents[i].start);
+    //   const d2 = new Date(newEvent.start);
+    //   const d3 = new Date(allEvents[i].end);
+    //   const d4 = new Date(newEvent.end);
+    //   if (
+    //     ((d1 <= d2) && (d2 <= d3)) || ((d1 <= d4) && (d4 <= d3))
+    //   ) {
+    //     alert('Наложение задач');
+    //     setNewEvent(initialState);
+    //     break;
+    //   }
+    //   setNewEvent(initialState);
+    // }
 
     const { start } = newEvent;
     const { end } = newEvent;
@@ -65,7 +64,6 @@ function CalendarComponent() {
     const date = {
       title, content, start, end,
     };
-    console.log('🚀🚀🚀🚀 =>>>>> file: Calendar.js:63 =>>>>> handleAddEvent =>>>>> date', date);
     const url = 'http://localhost:6622/api/calendar';
     fetch(url, {
       method: 'POST',
@@ -75,12 +73,15 @@ function CalendarComponent() {
       credentials: 'include',
       body: JSON.stringify(date),
     })
+      .then((res) => res.json())
       .then((res) => {
-        if (res.status === 200) return res.json();
-        throw new Error('Something went wrong');
+        if (res.msg === 'не все поля заполнены') {
+          alert('Заполните все поля');
+        }
       })
       .catch(console.error);
     setAllEvents([...allEvents, newEvent]);
+    setNewEvent(initialState);
   }
 
   return (
@@ -98,27 +99,6 @@ function CalendarComponent() {
             selected={newEvent.start}
             onChange={(start) => setNewEvent({ ...newEvent, start })}
           />
-
-          {/* () => {
-  const [startDate, setStartDate] = useState(
-    setHours(setMinutes(new Date(), 30), 16)
-  );
-  return (
-    <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      showTimeSelect
-      timeFormat="HH:mm"
-      injectTimes={[
-        setHours(setMinutes(new Date(), 1), 0),
-        setHours(setMinutes(new Date(), 5), 12),
-        setHours(setMinutes(new Date(), 59), 23),
-      ]}
-      dateFormat="MMMM d, yyyy h:mm aa"
-    />
-  );
-}; */}
-
           <DatePicker
             className="inputCalendar2"
             showTimeSelect

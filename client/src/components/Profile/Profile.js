@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { UserContext } from '../../context/User.context';
+import React, { useEffect, useState } from 'react';
 import { showToast } from '../../lib/toasti';
 import './Profile.css';
 
