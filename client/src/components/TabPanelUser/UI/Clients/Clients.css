@@ -26,7 +26,7 @@ border: 1px solid lightblue;
     flex-direction: column;
     justify-content: space-between;
     background-color: azure;
-    width: 95%;
+    width: 90%;
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
@@ -92,10 +92,17 @@ border: 1px solid lightblue;
     text-align: center;
 }
 .clientTaskExecutor{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 2px;
+    margin-right: 2px;
     font-size: 10px;
     color: rgb(51, 51, 51)
 }
 .executorProgressStatus progress{
+    display: flex;
+    flex-direction: column;
     width: 100px;
 }
 .searchClientInput{
