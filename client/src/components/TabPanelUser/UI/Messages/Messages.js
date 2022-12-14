@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
 import { MainContext } from '../../../../context/Main.context';
@@ -15,7 +16,6 @@ export default function Messages() {
   const [userList, setUserList] = useState(userListContext);
 
   const [activeSobesednik, setActiveSobesednik] = useState();
-
 
   const handleClick = (e) => {
     const data = e.target.dataset.value;
