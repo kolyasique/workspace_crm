@@ -323,7 +323,7 @@ color: #000000;
          inset 0 3px 10px rgba(0,0,0,.4),
          0 2px 4px rgba(0,0,0,.9);
 }
-.addTaskBtn:{
+.addTaskBtn{
     display: flex;
     justify-content: center;
     width: 30px;
