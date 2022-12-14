@@ -22,13 +22,15 @@ border: 1px solid lightblue;
     box-shadow: 0px 4px 10px rgb(0 0 0 / 10%);
 }
 .clientItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: azure;
+    width: 95%;
     margin: 5px;
-    height:fit-content;
-    background-color: aliceblue;
-    box-shadow: 0 0 7px rgba(21, 21, 21, 0.5);
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid lightblue;
+    box-shadow: 0 0 3px rgb(21 21 21 / 50%);
 
 }
 .clientInfoHead{
@@ -134,4 +136,55 @@ border: 1px solid lightblue;
     font-weight: 300;
     transition: .4s;
     text-align: center;
+}
+
+.taskContainerClient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    /* background-color: rgb(222, 229, 227); */
+    width: 100%;
+    height: 100%;
+}
+.taskContainerClient2{
+    position: relative;
+    /* left: 0; */
+    /* right: 0; */
+    /* top: 0; */
+    /* bottom: 0; */
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(222 229 227 / 0%);
+    justify-content: space-around;
+    padding: 10px;
+    overflow: auto;
+}
+.taskContainerClientTools{
+    display: flex;
+    flex-direction: row;
+    min-height: 50px;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    justify-content: space-evenly;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgb(0 0 0 / 10%)
+}
+.clientContainerAll{
+    background: linear-gradient(rgba(1, 3, 56, .8), rgba(1, 3, 56, .4)) no-repeat;
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid lightblue;
 }
