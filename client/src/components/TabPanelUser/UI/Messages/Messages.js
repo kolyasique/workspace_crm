@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useContext, useState, useEffect } from 'react';
 import { MainContext } from '../../../../context/Main.context';
 import Chat from './Chat/Chat';
@@ -8,12 +9,14 @@ export default function Messages() {
   const { state } = useContext(MainContext);
   const [showChat, setShowChat] = useState(false);
   const [showMessages, setShowMessages] = useState([]);
+  const [activeSobesednik, setActiveSobesednik] = useState();
 
   const handleClick = (e) => {
     const data = e.target.dataset.value;
     const value = JSON.parse(data);
     setRecValue(value);
     setShowChat(true);
+    setActiveSobesednik(e.target.id);
   };
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function Messages() {
         <h3 className="h3">Сотрудники</h3>
         <div className="chatContacts">
           {state === null ? '' : state.companyUsers.map((user) => (
-            <div key={user.id} style={state.authUser.id === user.id ? { display: 'none' } : { display: 'flex' }} className="contact" data-value={JSON.stringify(user)} onClick={handleClick}>
+            <div key={user.id} id={user.id} style={state.authUser.id === user.id ? { display: 'none' } : { display: 'flex' }} className={activeSobesednik == user.id ? 'activeContact' : 'contact'} data-value={JSON.stringify(user)} onClick={handleClick}>
               {user.second_name}
               {' '}
               {user.name}
