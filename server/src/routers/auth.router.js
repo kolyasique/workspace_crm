@@ -15,19 +15,19 @@ router.post('/signup', async (req, res) => {
       password, email, name, inn, login, phone,
     } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const createCompany = await Company.create({
-      login, password: hashedPassword, name, email, phone, inn,
-    });
-
-    console.log(createCompany, 'Это криейт компани');
-
-    const newCompany = createCompany.get();
-    delete newCompany.password;
-    delete newCompany.createdAt;
-    delete newCompany.updatedAt;
-    req.session.company = newCompany;
-    console.log(newCompany, 'ЭТО В ДЖСОН УХОДИТ');
-    return res.json(newCompany);
+    if (!password || !email || !name || !inn || !login || !phone) {
+      res.send({ msg: 'не все поля заполнены' });
+    } else {
+      const createCompany = await Company.create({
+        login, password: hashedPassword, name, email, phone, inn,
+      });
+      const newCompany = createCompany.get();
+      delete newCompany.password;
+      delete newCompany.createdAt;
+      delete newCompany.updatedAt;
+      req.session.company = newCompany;
+      return res.json(newCompany);
+    }
   } catch (error) {
     return res.status(400).json({ msg: error.message });
   }
@@ -43,16 +43,20 @@ router.post('/signinworker', async (req, res) => {
     if (!findWorker) {
       return res.json({ msg: 'Wrong login' });
     }
-    const comparePassword = await bcrypt.compare(password, findWorker.password);
-    if (comparePassword) {
-      delete findWorker.password;
-      delete findWorker.createdAt;
-      delete findWorker.updatedAt;
-      req.session.company = findWorker;
-      return res.json(findWorker);
-    }
-    if (!comparePassword && findWorker) {
-      return res.json({ msg: 'Wrong pass' });
+    if (!password || !login) {
+      res.send({ msg: 'не все поля заполнены' });
+    } else {
+      const comparePassword = await bcrypt.compare(password, findWorker.password);
+      if (comparePassword) {
+        delete findWorker.password;
+        delete findWorker.createdAt;
+        delete findWorker.updatedAt;
+        req.session.company = findWorker;
+        return res.json(findWorker);
+      }
+      if (!comparePassword && findWorker) {
+        return res.json({ msg: 'Wrong pass' });
+      }
     }
   } catch (error) {
     return res.status(400).json({ msg: error.message });
@@ -61,21 +65,26 @@ router.post('/signinworker', async (req, res) => {
 router.post('/signinadmin', async (req, res) => {
   try {
     const { password, inn } = req.body;
+    console.log('🚀🚀🚀🚀 =>>>>> file: auth.router.js:68 =>>>>> router.post =>>>>> req.body', req.body)
 
     const findCompany = await Company.findOne({ where: { inn } });
     if (!findCompany) {
       return res.json({ msg: 'Wrong login' });
     }
-    const comparePassword = await bcrypt.compare(password, findCompany.password);
-    if (comparePassword) {
-      delete findCompany.password;
-      delete findCompany.createdAt;
-      delete findCompany.updatedAt;
-      req.session.company = findCompany;
-      return res.json(findCompany);
-    }
-    if (!comparePassword && findCompany) {
-      return res.json({ msg: 'Wrong pass' });
+    if (!password || !inn) {
+      res.send({ msg: 'не все поля заполнены' });
+    } else {
+      const comparePassword = await bcrypt.compare(password, findCompany.password);
+      if (comparePassword) {
+        delete findCompany.password;
+        delete findCompany.createdAt;
+        delete findCompany.updatedAt;
+        req.session.company = findCompany;
+        return res.json(findCompany);
+      }
+      if (!comparePassword && findCompany) {
+        return res.json({ msg: 'Wrong pass' });
+      }
     }
   } catch (error) {
     return res.status(400).json({ msg: error.message });
