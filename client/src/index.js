@@ -19,6 +19,5 @@ root.render(
         </Provider>
       </UserContextProvider>
     </BrowserRouter>
-    ,
   </StyledEngineProvider>,
 );

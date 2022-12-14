@@ -4,13 +4,6 @@ const bcrypt = require('bcrypt');
 const { Worker } = require('../../db/models');
 const avatarMiddleware = require('../middlewares/avatar');
 
-function chistkaObject(object) {
-  delete object.password;
-  delete object.createdAt;
-  delete object.updatedAt;
-
-  return object;
-}
 avatarRouter.get('/profile', async (req, res) => {
   try {
     const workerId = req.session.company.id;
@@ -60,5 +53,35 @@ avatarRouter.post('/updworkerinfo', async (req, res) => {
   delete findUpdatedUser.dataValues.updatedAt;
   res.json(findUpdatedUser);
 });
+
+avatarRouter.post('/updworkerpassword', async (req, res) => {
+  const { id } = req.session.company;
+  const { oldpassword, password, repassword } = req.body;
+  console.log(password, repassword);
+
+  try {
+    const userForPswUpdate = await Worker.findOne({ where: { id } });
+    const comparePassword = await bcrypt.compare(oldpassword, userForPswUpdate.password);
+    if (comparePassword) {
+      const newHashedPassword = await bcrypt.hash(password, 10);
+      const updateUserPsw = await Worker.update({ password: newHashedPassword }, { where: { id } });
+      return res.json({ changed: true });
+    }
+    if (!comparePassword) {
+      return res.json({ changed: false });
+    }
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+  // const updateUser = await Worker.update({
+  //   login, name, second_name, patronymic, email, phone,
+  // }, { where: { id } });
+  // const findUpdatedUser = await Worker.findOne({ where: { id } });
+  // delete findUpdatedUser.dataValues.password;
+  // delete findUpdatedUser.dataValues.createdAt;
+  // delete findUpdatedUser.dataValues.updatedAt;
+  res.json({ id: 'ddg' });
+});
+// updworkerpassword
 
 module.exports = avatarRouter;

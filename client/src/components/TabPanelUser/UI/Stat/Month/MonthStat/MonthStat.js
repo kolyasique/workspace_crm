@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { } from 'react';
 import {
   Chart as ChartJS,
   BarElement,
@@ -10,7 +10,6 @@ import {
 } from 'chart.js';
 // eslint-disable-next-line import/no-unresolved
 import { Bar } from 'react-chartjs-2';
-import { MainContext } from '../../../../../../context/Main.context';
 
 ChartJS.register(
   BarElement,
@@ -21,9 +20,7 @@ ChartJS.register(
   Title,
 );
 
-export default function MonthStat() {
-  const { tasks } = useContext(MainContext);
-
+export default function MonthStat({ tasks }) {
   function amount(arr, status) {
     const month = `0${String(((new Date()).getMonth() + 1))}`.slice(-2);
     const first = arr.filter((el) => el.status === status);
@@ -37,8 +34,40 @@ export default function MonthStat() {
     return second.length;
   }
 
+  function actualMonth() {
+    const month = `0${String(((new Date()).getMonth() + 1))}`.slice(-2);
+
+    switch (month) {
+      case '01':
+        return 'Январь';
+      case '02':
+        return 'Февраль';
+      case '03':
+        return 'Март';
+      case '04':
+        return 'Апрель';
+      case '05':
+        return 'Май';
+      case '06':
+        return 'Июнь';
+      case '07':
+        return 'Июль';
+      case '08':
+        return 'Август';
+      case '09':
+        return 'Сентябрь';
+      case '10':
+        return 'Октябрь';
+      case '11':
+        return 'Ноябрь';
+      case '12':
+        return 'Декабрь';
+      default:
+        return month;
+    }
+  }
   const data = {
-    labels: ['Март'],
+    labels: [actualMonth()],
     datasets: [
       {
         label: 'Новая',
@@ -92,8 +121,6 @@ export default function MonthStat() {
   const options = {
     indexAxis: 'y',
   };
-
-  console.log('result', amountProgress(tasks, 'Принята'));
 
   return (
     <div className="yearStat">

@@ -179,4 +179,14 @@ userPanelRouter.post('/settaskclosed', async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 });
+userPanelRouter.get('/gethistory', async (req, res) => {
+  try {
+    console.log('😉 😉 😉 v v 😉 😉 😉 😉 v v 😉 😉 v v 😉 ');
+    const { company_id } = req.session.company;
+    const findAllTasksInCompany = await Tasks.findAll({ where: { company_id } });
+    res.json(findAllTasksInCompany);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+});
 module.exports = userPanelRouter;
