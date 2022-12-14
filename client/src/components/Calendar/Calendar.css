@@ -114,3 +114,37 @@ height: 30px;
     flex-direction: column;
 
 }
+
+.redBord {
+    background-color: #fdfdfd;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 0;
+    color: rgb(57, 52, 143);
+    font-size: 12px;
+    margin: 10px;
+    height: 30px;
+    outline: 0;
+    padding: 2px 20px 0;
+    width: 35%;
+    box-shadow: 0 0 10px rgba(221, 4, 4, 0.822);
+}
+
+.redBordDate{
+    background-color: #fdfdfd;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 0;
+    color: rgb(57, 52, 143);
+    font-size: 12px;
+    margin: 10px;
+    height: 20px;
+    outline: 0;
+    padding: 2px 20px 0;
+    width: 80%;
+    box-shadow: 0 0 10px rgba(221, 4, 4, 0.822);
+}

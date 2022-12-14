@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../../context/Profile.context';
+
 import { showToast } from '../../lib/toasti';
 import './Profile.css';
 import ChangeAvatar from './UI/ChangeAvatar';
