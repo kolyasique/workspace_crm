@@ -58,10 +58,9 @@ wss.on('connection', (ws, req, usersMap, wsClientMap) => {
             if (user.id !== connection.user.id) {
               connection.ws.send(JSON.stringify({ type: 'new_connection', payload: user.id }));
             }
+            connection.ws.send(JSON.stringify({ type: 'all_connections', payload: userArray }));
           },
         );
-        ws.send(JSON.stringify({ type: 'all_connections', payload: userArray }));
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', userArray);
 
         break;
 
@@ -70,8 +69,15 @@ wss.on('connection', (ws, req, usersMap, wsClientMap) => {
     }
   });
   ws.on('close', (msg) => {
+    const userArray = [];
     wsClientMap.delete(company.id);
-    console.log('CLOSED');
+    wsClientMap.forEach(
+      (connection) => {
+        userArray.push(connection.user.id);
+        connection.ws.send(JSON.stringify({ type: 'some_close', payload: userArray }));
+      },
+    );
+
     const message = JSON.parse(msg);
     usersMap.delete(company.id);
     const receiver = usersMap.get(+message.chatWithUser);

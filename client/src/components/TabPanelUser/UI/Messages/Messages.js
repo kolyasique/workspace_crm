@@ -1,15 +1,21 @@
-/* eslint-disable eqeqeq */
+/* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
 import { MainContext } from '../../../../context/Main.context';
+import { SocketContext } from '../../../../context/Socket.context';
 import Chat from './Chat/Chat';
 import './messages.css';
 
 export default function Messages() {
   const [recValue, setRecValue] = useState({});
-  const { state } = useContext(MainContext);
+  // eslint-disable-next-line no-unused-vars
+  const { state, userListContext } = useContext(MainContext);
   const [showChat, setShowChat] = useState(false);
   const [showMessages, setShowMessages] = useState([]);
+  const { socket } = useContext(SocketContext);
+  const [userList, setUserList] = useState(userListContext);
+
   const [activeSobesednik, setActiveSobesednik] = useState();
+
 
   const handleClick = (e) => {
     const data = e.target.dataset.value;
@@ -21,28 +27,57 @@ export default function Messages() {
 
   useEffect(() => {
     const abortController = new AbortController();
-    const userFromId = recValue.id;
 
     fetch('http://localhost:6622/api/chat/message', {
       credentials: 'include',
       signal: abortController.signal,
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userFromId }),
     })
       .then((res) => res.json())
+      .then((res) => res.reverse())
       .then((res) => setShowMessages(res))
       .catch(console.log);
 
     return () => {
       abortController.abort();
     };
-  }, [recValue]);
+  }, []);
+
+  useEffect(() => {
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+
+      const { type, payload } = message;
+      console.log({ type });
+
+      switch (type) {
+        case 'message':
+          setShowMessages((showMessages) => [payload, ...showMessages]);
+          break;
+        case 'new_connection':
+          setUserList((userList) => [...userList, payload]);
+          break;
+        case 'all_connections':
+          setUserList((userList) => [...userList, ...payload]);
+          break;
+        case 'some_close':
+          setUserList(payload);
+          break;
+
+        default:
+          break;
+      }
+    };
+    socket.onclose = () => {
+      console.log('rabotaet onclose');
+    };
+    socket.onerror = (error) => {
+      console.log('socket', error);
+    };
+  }, []);
+
   return (
     <div className="chatPage">
-      {showChat ? <Chat showMessages={showMessages} recValue={recValue} /> : (
+      {showChat ? <Chat showMessages={showMessages} recValue={recValue} userList={userList} /> : (
         <div className="beforeChat">
           {' '}
           <span>Выберите, кому хотели бы написать </span>

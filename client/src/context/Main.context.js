@@ -1,11 +1,17 @@
+/* eslint-disable no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, {
+  useEffect, useState, useMemo, useContext,
+} from 'react';
+import { SocketContext } from './Socket.context';
 
 export const MainContext = React.createContext();
 
 export default function MainContextProvider({ children }) {
   const [state, setState] = useState(null);
+  const [userListContext, setUserListContext] = useState([]);
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -23,7 +29,31 @@ export default function MainContextProvider({ children }) {
     };
   }, []);
 
-  const value = useMemo(() => ({ state }), [state]);
+  useEffect(() => {
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+
+      const { type, payload } = message;
+
+      switch (type) {
+        case 'new_connection':
+          console.log('new_connection');
+          console.log({ type, payload });
+          setUserListContext((userListContext) => [...userListContext, payload]);
+          break;
+        case 'all_connections':
+          console.log('all_connections');
+          console.log({ type, payload });
+          setUserListContext((userListContext) => [...userListContext, ...payload]);
+          break;
+
+        default:
+          break;
+      }
+    };
+  }, []);
+
+  const value = useMemo(() => ({ state, userListContext }), [state, userListContext]);
 
   return (
     <MainContext.Provider value={value}>

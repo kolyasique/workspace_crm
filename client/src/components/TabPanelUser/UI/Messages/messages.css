@@ -23,6 +23,7 @@
     flex-direction: column-reverse;
     /* background-color: white; */
     overflow: auto;
+    overscroll-behavior: contain;
 }
 
 .chatform {

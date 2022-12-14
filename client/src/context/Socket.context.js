@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
@@ -9,14 +10,18 @@ export default function SocketContextProvider({ children }) {
   const { user } = useSelector((store) => store.userStore);
 
   socket.onopen = () => {
-    console.log('onopen');
-
     socket.send(JSON.stringify({ type: 'open', payload: user }));
   };
+  socket.onclose = () => {
+    console.log('rabotaet onclose s contexta');
+  };
+  useEffect(() => () => {
+    socket.close();
+  }, []);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, user }}>
       {children}
     </SocketContext.Provider>
   );
