@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React, {
   useState, useEffect, useMemo,
@@ -15,7 +16,8 @@ export default function UserContextProvider({ children }) {
 
   //   const checkDateNow = new Date();
 
-  const abortController = new AbortController();
+  // const abortController = new AbortController();
+
   // useEffect(() => {
   //   fetch('http://localhost:6622/api/userpanel/getuserinfo', {
   //     credentials: 'include',
@@ -120,7 +122,6 @@ export default function UserContextProvider({ children }) {
     // userInfo,
     // setUserInfo,
   }));
-
 
   return (
     <UserContext.Provider value={value}>

@@ -42,7 +42,7 @@ export default function AddWorkersForm({ setWorkers }) {
   };
   return (
     <div className="wrapperAdd">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="formWorkers" onSubmit={handleSubmit}>
         <div className="title">Добавить сотрудника</div>
         <div className="input-container ic1">
           <input id="login" type="text" className="input" value={form.login} name="login" placeholder=" " onChange={handleInput} />

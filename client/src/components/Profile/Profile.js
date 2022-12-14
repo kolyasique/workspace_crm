@@ -1,68 +1,88 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-lone-blocks */
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from 'react';
+import { ProfileContext } from '../../context/Profile.context';
+
 import { showToast } from '../../lib/toasti';
 import './Profile.css';
+import ChangeAvatar from './UI/ChangeAvatar';
+import ChangePasswordForm from './UI/ChangePasswordForm';
+import ChangePersonalData from './UI/ChangePersonalData';
 
 export default function Profile() {
-  const [userInfo, setUserInfo] = useState({});
-  const [userAvatar, setUserAvatar] = useState({
-    path: `${userInfo.avatar}`,
-  });
-  const formInitialState = {
-    avatar: `${userInfo?.avatar}`,
-    login: `${userInfo?.login}`,
-    password: '',
-    phone: `${userInfo?.phone}`,
-    email: `${userInfo?.email}`,
-  };
+  const [component, setComponent] = useState(<ChangeAvatar />);
+  const [activeButton, setActiveButton] = useState('1');
+  const {
+    form, setForm, userInfo, setUserInfo, userAvatar, setUserAvatar, img, setImg,
+  } = useContext(ProfileContext);
 
-  const [img, setImg] = useState(null);
-  const [form, setForm] = useState(formInitialState);
-  // const { user } = useSelector((store) => store.userStore);
+  // const formInitialState = {
+  //   second_name: userInfo.second_name,
+  //   name: userInfo?.name,
+  //   patronymic: userInfo?.patronymic,
+  //   login: userInfo?.login,
+  //   phone: userInfo?.phone,
+  //   email: userInfo?.email,
+  // };
 
-  console.log(userInfo, 'user user uis info');
+  // ; setForm(formInitialState);
+  // const handleInput = (e) => {
+  //   setForm({ ...form, [e.target.name]: e.target.value });
+  // };
+  // const handleSubmit = (e) => {
+  //   // try {
+  //   e.preventDefault();
+  //   const data = new FormData();
+  //   data.append('avatar', img);
+  //   // data.append('form', JSON.stringify(form));
+  //   const url = 'http://localhost:6622/api/avatar';
+  //   fetch(url, {
+  //     method: 'POST',
+  //     credentials: 'include',
+  //     // headers: {
+  //     //   'content-type': 'multipart/form-data',
+  //     // },
+  //     body: data,
+  //   })
+  //     .then((res) => res.json())
+  //     .then((newdata) => {
+  //       console.log(newdata);
+  //       setUserInfo({
+  //         avatar: newdata.findThisUser.avatar,
+  //       });
+  //       showToast({ message: 'Файл загружен', type: 'success' });
+  //     });
+  // };
+  // const handleSubmit1 = (e) => {
+  //   // try {
+  //   e.preventDefault();
+  //   // data.append('form', JSON.stringify(form));
+  //   const url = 'http://localhost:6622/api/updworkerinfo';
+  //   fetch(url, {
+  //     method: 'POST',
+  //     credentials: 'include',
+  //     // headers: {
+  //     //   'content-type': 'multipart/form-data',
+  //     // },
+  //     body: JSON.stringify(form),
+  //   })
+  //     .then((res) => res.json());
+  // .then((newdata) => {
+  //   console.log(newdata);
+  //   setUserInfo({
+  //     avatar: newdata.findThisUser.avatar,
+  //   });
+  //   showToast({ message: 'Файл загружен', type: 'success' });
+  // });
 
-  useEffect(() => {
-    fetch('http://localhost:6622/api/profile', {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((res) => res.json())
-      .then((data) => setUserInfo(data));
-  }, []);
+  // if (res.status === 200) {
+  //   showToast({ message: 'Данные изменены', type: 'success' });
+  //   setUserInfo({ avatar: data.avatar });
+  // }
 
-  const handleInput = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = (e) => {
-    // try {
-    e.preventDefault();
-    const data = new FormData();
-    data.append('avatar', img);
-    // data.append('form', JSON.stringify(form));
-    const url = 'http://localhost:6622/api/avatar';
-    fetch(url, {
-      method: 'POST',
-      credentials: 'include',
-      // headers: {
-      //   'content-type': 'multipart/form-data',
-      // },
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((newdata) => {
-        console.log(newdata);
-        setUserInfo({
-          avatar: newdata.findThisUser.avatar,
-        });
-        showToast({ message: 'Файл загружен', type: 'success' });
-      });
-    // if (res.status === 200) {
-    //   showToast({ message: 'Данные изменены', type: 'success' });
-    //   setUserInfo({ avatar: data.avatar });
-    // }
-
-    // .then((data) => { console.log(data); });
-  };
+  // .then((data) => { console.log(data); });
+  // };
   // setUserInfo({ avatar: data1.avatar });
   // setForm(formInitialState);
   //     if (res.status === 200) {
@@ -78,10 +98,10 @@ export default function Profile() {
   //   console.log('forma');
   // };
 
-  const uploudImg = (e) => {
-    setImg(e.target.files[0]);
-    console.log(e.target.files[0]);
-  };
+  // const uploudImg = (e) => {
+  //   setImg(e.target.files[0]);
+  //   console.log(e.target.files[0]);
+  // };
 
   // const avatarPath = () => {
   //   if (userAvatar.path === undefined) {
@@ -89,45 +109,23 @@ export default function Profile() {
   //   }
   // };
   return (
-    <div className="container">
+    <div className="profileDiv">
+      <div className="box1">
+        <div className="upperMenu">
 
-      <form className="changeAva" onSubmit={handleSubmit}>
-        <div className="formInput">
-          <label className="form-label ">Изменить аватар</label>
-          <input type="file" name="file" onChange={uploudImg} />
+          <button id="1" className={activeButton === '1' ? 'activeButton1' : 'unActiveButton1'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<ChangeAvatar />); }}>АВАТАР</button>
+          <button id="2" className={activeButton === '2' ? 'activeButton1' : 'unActiveButton1'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<ChangePersonalData />); }}>ДАННЫЕ</button>
+          <button id="3" className={activeButton === '3' ? 'activeButton1' : 'unActiveButton1'} type="button" onClick={(event) => { setActiveButton(event.target.id); setComponent(<ChangePasswordForm />); }}>ПАРОЛЬ</button>
+
         </div>
-        <button type="submit" className="buttonSubmit">Submit</button>
-      </form>
-
-      <div className="profileAvatar"><img className="imgProfile" src={`http://localhost:6622/${userInfo.avatar}`} alt="аватарка" /></div>
-      {/* <form className="formDiv" onSubmit={handleSubmit1}>
-
-        <div className="formInput">
-          <label className="form-label ">login</label>
-          <input type="text" className="form-control" value={form.login} name="login" placeholder={user.login} onChange={handleInput} />
-        </div>
-
-        <div className="formInput">
-          <label className="form-label ">password</label>
-          <input type="password" defaultValue="dsfsdfdsfdsf" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
-        </div>
-
-        <div className="formInput">
-          <label className="form-label ">email</label>
-          <input type="email" className="form-control" value={form.email} name="email" placeholder="email" onChange={handleInput} />
-        </div>
-
-        <div className="formInput">
-          <label className="form-label ">телефон</label>
-          <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
-        </div>
-        <div className="formInput">
-          <label className="form-label ">Загрузить Аватар</label>
-          <input type="file" name="file" onChange={uploudImg} />
-        </div>
-
-        <button type="submit" className="buttonSubmit">Submit</button>
-      </form> */}
+        <div className="lowerComponents">{component}</div>
+      </div>
     </div>
+
   );
 }
+
+{ /* <div className="formInput">
+<label className="form-label ">password</label>
+<input type="password" defaultValue="dsfsdfdsfdsf" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
+</div> */ }
