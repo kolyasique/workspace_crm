@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import { ProfileContext } from '../../../context/Profile.context';
 import { showToast } from '../../../lib/toasti';

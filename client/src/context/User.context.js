@@ -13,7 +13,6 @@ export default function UserContextProvider({ children }) {
   const [taskStatus, setTaskStatus] = useState({});
   const [mainOrProfile, setMainOrProfile] = useState(true);
 
-
   // const [userInfo, setUserInfo] = useState(null);
 
   //   const checkDateNow = new Date();

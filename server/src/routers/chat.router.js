@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { Worker, Message, Sequelize } = require('../../db/models');
+const { Worker, Message } = require('../../db/models');
 
 router.get('/user', async (req, res) => {
   const userId = req.session.company.id;
@@ -15,19 +15,10 @@ router.get('/user', async (req, res) => {
   }
 });
 
-router.post('/message', async (req, res) => {
-  const { userFromId } = req.body;
+router.get('/message', async (req, res) => {
   try {
-    if (userFromId !== undefined) {
-      const revMessages = await Message.findAll({
-        where: {
-          [Sequelize.Op.or]: [{ user_from: userFromId, user_to: req.session.company.id },
-            { user_from: req.session.company.id, user_to: userFromId }],
-        },
-      });
-      const messages = revMessages.reverse();
-      res.json(messages);
-    }
+    const messages = await Message.findAll();
+    res.json(messages);
   } catch (error) {
     console.log(error);
   }

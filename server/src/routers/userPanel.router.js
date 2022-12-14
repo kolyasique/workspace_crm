@@ -22,8 +22,6 @@ userPanelRouter.get('/gettasks', async (req, res) => {
     // { where: { worker_id: Number(id) } }
     const allTasks = await Tasks.findAll({ where: { company_id: Number(company_id), closed_by: null } });
     const workers = await Worker.findAll({ where: { company_id: req.session.company.company_id } });
-    console.log('ff');
-    console.log(allTasks);
     res.json({ allTasks, workers, id });
   } catch (error) {
     console.log(error);
