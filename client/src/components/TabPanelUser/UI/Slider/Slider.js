@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 function SliderComponent({
-  value, handleChange, min, max, step, id, key, disabled,
+  value, handleChange, min, max, step, id, key, disabled, name,
 }) {
   return (
     <Container>
@@ -10,6 +10,7 @@ function SliderComponent({
         disabled={disabled}
         key={key}
         type="range"
+        name={name}
         id={id}
         defaultValue={value}
         onChange={handleChange}

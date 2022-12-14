@@ -29,7 +29,6 @@ export default function TaskList() {
   const [userId, setUserId] = useState(null);
   const [filter, setFilter] = useState('actual');
   const [clientsForTasks, setClientsForTasks] = useState([]);
-  // const [dateNow, setDateNow] = useState(null);
 
   const getProgressStatus = (progressStatus) => {
     switch (progressStatus) {
@@ -59,6 +58,7 @@ export default function TaskList() {
         setTasks(data.allTasks);
         setAllWorkers(data.workers);
         setUserId(data.id);
+        // setFirstShow(true);
       });
   }, []);
 
@@ -74,10 +74,10 @@ export default function TaskList() {
 
   const handleChange = (e) => {
     const taskId = e.target.id;
+
     const taskProgressStatus = getProgressStatus(e.target.value);
     const taskToUpdate = { [taskId]: taskProgressStatus };
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
-
     const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
     fetch(url, {
       method: 'POST',
@@ -287,6 +287,7 @@ export default function TaskList() {
       default: return 0;
     }
   }
+
   return (
     <div className="taskContainer">
       <div className="taskTools">
@@ -393,6 +394,7 @@ export default function TaskList() {
                     disabled={disabledSlider[task.id]}
                     step={25}
                     id={task.id}
+                    name={task.progress_status}
                     value={setSliderValueFromBase(task.progress_status)}
                     handleChange={handleChange}
                     min={0}
