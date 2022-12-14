@@ -33,6 +33,7 @@ app.use('/api', BaseRouter);
 //   res.status(500).send('Something broke!');
 // });
 app.locals.usersMap = new Map();
+app.locals.wsClientMap = new Map();
 const server = http.createServer(app);
 
 server.on('upgrade', (req, socket, head) => {
@@ -42,7 +43,7 @@ server.on('upgrade', (req, socket, head) => {
       socket.destroy();
     }
     wss.handleUpgrade(req, socket, head, (ws) => {
-      wss.emit('connection', ws, req, app.locals.usersMap);
+      wss.emit('connection', ws, req, app.locals.usersMap, app.locals.wsClientMap);
     });
   });
 });

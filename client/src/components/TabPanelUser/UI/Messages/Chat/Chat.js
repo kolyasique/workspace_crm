@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 import React, {
   useRef, useEffect, useContext, useState,
@@ -12,6 +13,7 @@ export default function Chat({ recValue, showMessages }) {
   const { socket } = useContext(SocketContext);
   const [status, setStatus] = useState('Не в сети');
   const test = useRef();
+  const [userList, setUserList] = useState([]);
 
   const addMessage = (newMessage, auth) => {
     const div = document.createElement('div');
@@ -29,14 +31,11 @@ export default function Chat({ recValue, showMessages }) {
   };
 
   useEffect(() => {
-    socket.onopen = () => {
-      socket.send(JSON.stringify({ type: 'open', payload: { chatWithUser: recValue.id } }));
-    };
-
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
 
       const { type, payload } = message;
+      console.log({ type });
 
       switch (type) {
         case 'online':
@@ -52,6 +51,16 @@ export default function Chat({ recValue, showMessages }) {
           console.log('rabotaet case offline');
           setStatus('Не в сети');
           break;
+        case 'new_connection':
+          console.log('new_connection');
+          console.log({ type, payload });
+          setUserList((userList) => [...userList, payload]);
+          break;
+        case 'all_connections':
+          console.log('all_connections');
+          console.log({ type, payload });
+          setUserList((userList) => [...userList, ...payload]);
+          break;
 
         default:
           break;
@@ -61,11 +70,19 @@ export default function Chat({ recValue, showMessages }) {
       setStatus('Не в сети');
       console.log('rabotaet onclose');
     };
+    socket.onerror = (error) => {
+      console.log('socekt', error);
+    };
 
     return () => {
       socket.close();
     };
   }, []);
+  useEffect(() => {
+    if (userList.includes(recValue.id)) {
+      setStatus('В сети');
+    }
+  }, [userList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,6 +93,7 @@ export default function Chat({ recValue, showMessages }) {
     }));
     chatForm.current.reset();
   };
+  console.log('PROVERKA', userList);
   return (
     <div className="chat" key={recValue.id}>
       <h3 className="chatWith">
