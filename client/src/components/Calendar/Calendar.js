@@ -57,6 +57,7 @@ function CalendarComponent() {
     //   }
     //   setNewEvent(initialState);
     // }
+    //
 
     const { start } = newEvent;
     const { end } = newEvent;
