@@ -10,6 +10,11 @@ export default function ClientDocuments({ client }) {
     text: '',
     image: '',
   });
+  console.log(form);
+
+  const handleImput = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const abortController = new AbortController();
   useEffect(() => {
@@ -49,10 +54,6 @@ export default function ClientDocuments({ client }) {
           });
           showToast({ message: 'Файл загружен', type: 'success' });
         });
-      // console.log(form);
-      // if (res.status === 200) {
-      //   showToast({ message: 'Файл загружен', type: 'success' });
-      // }
     } catch (error) {
       console.log(error);
       showToast({ message: 'Не получилось', type: 'error' });
@@ -62,10 +63,6 @@ export default function ClientDocuments({ client }) {
     setImg(e.target.files[0]);
     console.log(e.target.files[0]);
   };
-  // const uploadImg = (e) => {
-  //   setText(e.target.value[0]);
-  //   console.log(e.target.files[0]);
-  // };
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -83,8 +80,8 @@ export default function ClientDocuments({ client }) {
 
   return (
     <div className={cl.clientDocFormAndList}>
-      <input type="file" name="avatar" onChange={uploudImg} />
-      {/* <input type="text" name="avatar" onChange={uploadText} /> */}
+      <input className="form-control" type="text" value={form.text} name="text" placeholder="Название документа" onChange={handleImput} />
+      <input className="form-control" type="file" name="avatar" onChange={uploudImg} />
       <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить</button>
       <div className={cl.clientDocList}>
         {docs?.filter((el) => el.client_id === client.id).map((doc) => (

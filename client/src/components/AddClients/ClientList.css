@@ -4,7 +4,8 @@
     align-items: center;
     justify-content: space-between;
     margin: 16px 0;
-    background-color: #303245;
+    /* background-color: #303245; */
+    background-color: #b1b5d7;
     border-radius: 10px;
     border: 0;
     color: #eee;
@@ -16,7 +17,8 @@
 }
 
 .client-list {
-    background-color: #15172b;
+    /* background-color: #15172b; */
+    background-color: #ffffff21;
     border-radius: 20px;
     box-sizing: border-box;
     padding: 20px;
@@ -50,7 +52,7 @@ color: white;
     height: 62px;
     outline: 0;
     text-align: center;
-    width: 120px;
+    max-width: 100px;
 }
 
 
