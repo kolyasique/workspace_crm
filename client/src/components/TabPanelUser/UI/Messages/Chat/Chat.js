@@ -13,7 +13,7 @@ export default function Chat({ recValue, showMessages }) {
   const { socket } = useContext(SocketContext);
   const [status, setStatus] = useState('Не в сети');
   const test = useRef();
-  const [list, setList] = useState('123');
+  const [userList, setUserList] = useState([]);
 
   const addMessage = (newMessage, auth) => {
     const div = document.createElement('div');
@@ -54,12 +54,12 @@ export default function Chat({ recValue, showMessages }) {
         case 'new_connection':
           console.log('new_connection');
           console.log({ type, payload });
-          setList(payload);
+          setUserList((userList) => [...userList, payload]);
           break;
         case 'all_connections':
           console.log('all_connections');
           console.log({ type, payload });
-          setList(payload);
+          setUserList((userList) => [...userList, ...payload]);
           break;
 
         default:
@@ -78,6 +78,11 @@ export default function Chat({ recValue, showMessages }) {
       socket.close();
     };
   }, []);
+  useEffect(() => {
+    if (userList.includes(recValue.id)) {
+      setStatus('В сети');
+    }
+  }, [userList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,7 +93,7 @@ export default function Chat({ recValue, showMessages }) {
     }));
     chatForm.current.reset();
   };
-  console.log('PROVERKA', list);
+  console.log('PROVERKA', userList);
   return (
     <div className="chat" key={recValue.id}>
       <h3 className="chatWith">

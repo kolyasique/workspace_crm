@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { } from 'react';
 import {
   Chart as ChartJS,
   BarElement,
@@ -10,7 +10,6 @@ import {
 } from 'chart.js';
 // eslint-disable-next-line import/no-unresolved
 import { Bar } from 'react-chartjs-2';
-import { MainContext } from '../../../../../../context/Main.context';
 
 ChartJS.register(
   BarElement,
@@ -21,9 +20,7 @@ ChartJS.register(
   Title,
 );
 
-export default function MonthStat() {
-  const { tasks } = useContext(MainContext);
-
+export default function MonthStat({ tasks }) {
   function amount(arr, status) {
     const month = `0${String(((new Date()).getMonth() + 1))}`.slice(-2);
     const first = arr.filter((el) => el.status === status);

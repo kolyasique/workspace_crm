@@ -54,14 +54,13 @@ wss.on('connection', (ws, req, usersMap, wsClientMap) => {
 
         wsClientMap.forEach(
           (connection) => {
-            userArray.push(connection.user);
+            userArray.push(connection.user.id);
             if (user.id !== connection.user.id) {
-              connection.ws.send(JSON.stringify({ type: 'new_connection', payload: user }));
+              connection.ws.send(JSON.stringify({ type: 'new_connection', payload: user.id }));
             }
-            connection.ws.send(JSON.stringify({ type: 'all_connections', payload: userArray }));
           },
         );
-        // ws.send(JSON.stringify({ type: 'all_connections', payload: userArray }));
+        ws.send(JSON.stringify({ type: 'all_connections', payload: userArray }));
         console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', userArray);
 
         break;

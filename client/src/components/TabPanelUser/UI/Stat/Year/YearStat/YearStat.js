@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+/* eslint-disable consistent-return */
+import React from 'react';
 import {
   Chart as ChartJS,
   BarElement,
@@ -10,7 +11,6 @@ import {
 } from 'chart.js';
 // eslint-disable-next-line import/no-unresolved
 import { Bar } from 'react-chartjs-2';
-import { MainContext } from '../../../../../../context/Main.context';
 
 ChartJS.register(
   BarElement,
@@ -21,15 +21,15 @@ ChartJS.register(
   Title,
 );
 
-export default function YearStat() {
-  const { tasks } = useContext(MainContext);
-
+export default function YearStat({ tasks }) {
   function amount(arr, month, status) {
-    const year = new Date().getFullYear();
-    const first = arr.filter((el) => el.start.substring(0, 4) === String(year));
-    const second = first.filter((el) => el.start.substring(5, 7) === month);
-    const result = second.filter((el) => el.status === status);
-    return result.length;
+    if (arr !== null) {
+      const year = new Date().getFullYear();
+      const first = arr.filter((el) => el.start.substring(0, 4) === String(year));
+      const second = first.filter((el) => el.start.substring(5, 7) === month);
+      const result = second.filter((el) => el.status === status);
+      return result.length;
+    }
   }
 
   const data = {

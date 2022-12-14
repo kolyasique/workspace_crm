@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+/* eslint-disable consistent-return */
+import React, { } from 'react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -7,7 +8,6 @@ import {
 } from 'chart.js';
 // eslint-disable-next-line import/no-unresolved
 import { Doughnut } from 'react-chartjs-2';
-import { MainContext } from '../../../../../../context/Main.context';
 
 ChartJS.register(
   ArcElement,
@@ -15,21 +15,23 @@ ChartJS.register(
   Legend,
 );
 
-export default function YearEffectivity() {
-  const { tasks } = useContext(MainContext);
-
+export default function YearEffectivity({ tasks }) {
   const year = new Date().getFullYear();
 
   function amount(arr, status) {
-    const first = arr.filter((el) => el.start.substring(0, 4) === String(year));
-    const second = first.filter((el) => el.status === status);
-    return second.length;
+    if (arr !== null) {
+      const first = arr.filter((el) => el.start.substring(0, 4) === String(year));
+      const second = first.filter((el) => el.status === status);
+      return second.length;
+    }
   }
 
   function getStat() {
-    const completed = tasks.filter((el) => el.status === true || false);
-    const result = completed.filter((el) => el.start.substring(0, 4) === String(year));
-    return result.length;
+    if (tasks !== null) {
+      const completed = tasks.filter((el) => el.status === true || false);
+      const result = completed.filter((el) => el.start.substring(0, 4) === String(year));
+      return result.length;
+    }
   }
 
   const textCenter = {
@@ -37,12 +39,12 @@ export default function YearEffectivity() {
     beforeDatasetDraw(chart) {
       const { ctx, data } = chart;
       ctx.save();
-      ctx.font = '25px sans-serif';
+      ctx.font = '35px sans-serif';
       //   ctx.fillStyle = 'red';
       ctx.textAlign = 'center';
       ctx.fillText(
         getStat() === 0 ? 'Нет данных'
-          : `${((data.datasets[0].data[1] / (Math.round(data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
+          : `${Math.round(((data.datasets[0].data[1] / (data.datasets[0].data[1] + data.datasets[0].data[2]))) * 100)}%`,
         chart.getDatasetMeta(0).data[0].x,
         chart.getDatasetMeta(0).data[0].y,
       );
@@ -83,6 +85,8 @@ export default function YearEffectivity() {
     },
   };
 
+  console.log('yearEff', getStat());
+
   return (
     <div className="yearEff">
       <div className="yearEffHeader">Процент эффективности:</div>
@@ -90,7 +94,8 @@ export default function YearEffectivity() {
         display: 'flex', width: '100%', height: '90%', alignItems: 'center',
       }}
       >
-        <Doughnut data={data} options={options} plugins={[textCenter]} />
+        {tasks === null ? '' : <Doughnut data={data} options={options} plugins={[textCenter]} />}
+
       </div>
     </div>
   );
