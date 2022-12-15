@@ -49,7 +49,11 @@ function App() {
   return (
     loading ? (
     <div className="spinner-container">
-    <img className="spinner" src="https://i.gifer.com/AGNS.gif" alt="spinner" />
+    {/* <img className="spinner" src="https://i.gifer.com/AGNS.gif" alt="spinner" /> */}
+    <div className="lds-ripple">
+<div />
+<div />
+    </div>
     </div>
     )
       : (
