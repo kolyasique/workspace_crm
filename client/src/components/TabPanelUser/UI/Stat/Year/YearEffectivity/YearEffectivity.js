@@ -39,7 +39,7 @@ export default function YearEffectivity({ tasks }) {
     beforeDatasetDraw(chart) {
       const { ctx, data } = chart;
       ctx.save();
-      ctx.font = '35px sans-serif';
+      ctx.font = '30px sans-serif';
       //   ctx.fillStyle = 'red';
       ctx.textAlign = 'center';
       ctx.fillText(
