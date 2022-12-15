@@ -17,6 +17,10 @@ export default function ChangeAvatar() {
   // console.log(form);
 
   // ; setForm(formInitialState);
+  const uploudImg = (e) => {
+    setImg(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
 
   const handleSubmit = (e) => {
     // try {
@@ -25,7 +29,7 @@ export default function ChangeAvatar() {
     data12.append('avatar', img);
     console.log(img, 'это имг');
     // data.append('form', JSON.stringify(form));
-    if (data12.img !== undefined) {
+    if (img !== null) {
       const url = 'http://localhost:6622/api/avatar';
       fetch(url, {
         method: 'POST',
@@ -41,14 +45,10 @@ export default function ChangeAvatar() {
           setUserInfo({
             avatar: newdata.findThisUser.avatar,
           });
+          // setImg(null);
           showToast({ message: 'Файл загружен', type: 'success' });
         });
     } else { showToast({ message: 'Добавьте файл!', type: 'warning' }); }
-  };
-
-  const uploudImg = (e) => {
-    setImg(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
 
   return (
