@@ -18,39 +18,43 @@ function WorkerList({ workers, setWorkers }) {
   };
 
   return (
-    <div className="mainpage client-list">
+    <div className="worker-list">
       {workers.length !== 0 ? (
 
         <ul>
           {workers.filter((el) => el.category_id === 1).length >= 1 && (
           <>
             <h3>Список управляющих:</h3>
-            { workers.filter((el) => el.category_id === 1).map((el) => (
-              <div key={el.id} className="oneClient">
-                <li>
-                  {`${el.second_name} `}
-                  {`${el.name} `}
-                  {el.patronymic}
-                </li>
-                <button id={el.id} onClick={handleDelete} type="submit">Удалить сотрудника</button>
-              </div>
-            ))}
+            <div className="workerList">
+              { workers.filter((el) => el.category_id === 1).map((el) => (
+                <div key={el.id} className="oneWorker">
+                  <li>
+                    {`${el.second_name} `}
+                    {`${el.name} `}
+                    {el.patronymic}
+                  </li>
+                  <button id={el.id} onClick={handleDelete} type="submit">Уволить</button>
+                </div>
+              ))}
+            </div>
           </>
           )}
 
           {workers.filter((el) => el.category_id === 2).length >= 1 && (
           <>
             <h3>Список исполнителей:</h3>
-            { workers.filter((el) => el.category_id === 2).map((el) => (
-              <div key={el.id} className="oneClient">
-                <li>
-                  {`${el.second_name} `}
-                  {`${el.name} `}
-                  {el.patronymic}
-                </li>
-                <button id={el.id} onClick={handleDelete} type="submit">Удалить сотрудника</button>
-              </div>
-            ))}
+            <div className="workerList">
+              { workers.filter((el) => el.category_id === 2).map((el) => (
+                <div key={el.id} className="oneWorker">
+                  <li>
+                    {`${el.second_name} `}
+                    {`${el.name} `}
+                    {el.patronymic}
+                  </li>
+                  <button id={el.id} onClick={handleDelete} type="submit">Уволить</button>
+                </div>
+              ))}
+            </div>
           </>
           )}
 
