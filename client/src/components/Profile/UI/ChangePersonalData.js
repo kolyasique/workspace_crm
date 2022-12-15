@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ProfileContext } from '../../../context/Profile.context';
 import { showToast } from '../../../lib/toasti';
+import cl from './Personal.module.css';
 
 export default function ChangePersonalData() {
   const { form, setForm, userInfo } = useContext(ProfileContext);
@@ -38,32 +39,32 @@ export default function ChangePersonalData() {
       <form className="formPersonalData" onSubmit={handleSubmit}>
         <div className="formInput">
           <label className="form-label ">login</label>
-          <input type="text" className="form-control" value={form.login} name="login" placeholder={userInfo.login} onChange={handleInput} />
+          <input type="text" className={cl.nameOfDoc} value={form.login} name="login" placeholder={userInfo.login} onChange={handleInput} />
         </div>
 
         <div className="formInput">
           <label className="form-label ">Фамилия</label>
-          <input type="text" className="form-control" value={form.second_name} name="second_name" placeholder="Вы поменяли фамилию?" onChange={handleInput} />
+          <input type="text" className={cl.nameOfDoc} value={form.second_name} name="second_name" placeholder="Вы поменяли фамилию?" onChange={handleInput} />
         </div>
         <div className="formInput">
           <label className="form-label ">Имя</label>
-          <input type="text" className="form-control" value={form.name} name="name" placeholder="У вас сменилось имя?" onChange={handleInput} />
+          <input type="text" className={cl.nameOfDoc} value={form.name} name="name" placeholder="У вас сменилось имя?" onChange={handleInput} />
         </div>
         <div className="formInput">
           <label className="form-label ">Отчество</label>
-          <input type="text" className="form-control" value={form.patronymic} name="patronymic" placeholder="У вас поменяся отец?" onChange={handleInput} />
+          <input type="text" className={cl.nameOfDoc} value={form.patronymic} name="patronymic" placeholder="У вас поменяся отец?" onChange={handleInput} />
         </div>
 
         <div className="formInput">
           <label className="form-label ">E-mail</label>
-          <input type="email" className="form-control" value={form.email} name="email" placeholder="email" onChange={handleInput} />
+          <input type="email" className={cl.nameOfDoc} value={form.email} name="email" placeholder="email" onChange={handleInput} />
         </div>
 
         <div className="formInput">
           <label className="form-label ">Контактный номер</label>
-          <input type="text" className="form-control" value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
+          <input type="text" className={cl.nameOfDoc} value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
         </div>
-        <button type="submit" className="buttonSubmitData">Подтвердить</button>
+        <button type="submit" className={cl.submitDownload}>Подтвердить</button>
       </form>
     </div>
   );

@@ -1,0 +1,36 @@
+.nameOfDoc{
+  background-color: #fdfdfd;
+  text-align: center;
+  font-size: 10px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 0;
+  color: rgb(57, 52, 143);
+  font-size: 14px;
+  margin: 2px;
+  height: 35px;
+  outline: 0;
+  width: 70%;
+  box-shadow: 0 0 3px rgb(39 42 120 / 50%);
+}
+
+.submitDownload{
+  background: #314797;
+  border: 2px solid #314797;
+  width: 150px;
+  height: 40px;
+  font-size: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  font-weight: 300;
+  transition: .4s;
+  text-align: center;
+}
+.submitDownload:hover{
+  background: #0e1739;
+}
