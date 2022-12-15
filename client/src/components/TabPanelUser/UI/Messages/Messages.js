@@ -15,6 +15,7 @@ export default function Messages() {
   const { socket } = useContext(SocketContext);
   const [userList, setUserList] = useState(userListContext);
 
+  // eslint-disable-next-line no-unused-vars
   const [activeSobesednik, setActiveSobesednik] = useState();
 
   const handleClick = (e) => {
@@ -22,7 +23,7 @@ export default function Messages() {
     const value = JSON.parse(data);
     setRecValue(value);
     setShowChat(true);
-    setActiveSobesednik(e.target.id);
+    // setActiveSobesednik(value.id);
   };
 
   useEffect(() => {
@@ -75,6 +76,8 @@ export default function Messages() {
     };
   }, []);
 
+  console.log('vremya', showMessages.length > 0 ? typeof showMessages[0].createdAt : 'net');
+
   return (
     <div className="chatPage">
       {showChat ? <Chat showMessages={showMessages} recValue={recValue} userList={userList} /> : (
@@ -87,10 +90,56 @@ export default function Messages() {
         <h3 className="h3">Сотрудники</h3>
         <div className="chatContacts">
           {state === null ? '' : state.companyUsers.map((user) => (
-            <div key={user.id} id={user.id} style={state.authUser.id === user.id ? { display: 'none' } : { display: 'flex' }} className={activeSobesednik == user.id ? 'activeContact' : 'contact'} data-value={JSON.stringify(user)} onClick={handleClick}>
-              {user.second_name}
-              {' '}
-              {user.name}
+            <div key={user.id} id={user.id} style={state.authUser.id === user.id ? { display: 'none' } : { display: 'flex' }} className={activeSobesednik === user.id ? 'activeContact' : 'contactbox'} data-value={JSON.stringify(user)} onClick={handleClick}>
+              {user.avatar === null ? (
+                <div className="circleAvatar">
+                  <div className="circleAvatar1">
+                    <img data-value={JSON.stringify(user)} onClick={handleClick} src="https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png" alt="аватарка" />
+                    <div data-value={JSON.stringify(user)} onClick={handleClick} className={userList.includes(user.id) ? 'iconOnlineA' : 'iconOfflineA'} />
+                  </div>
+                </div>
+              ) : (
+                <div className="circleAvatar">
+                  <div data-value={JSON.stringify(user)} onClick={handleClick} className={userList.includes(user.id) ? 'iconOnlineA' : 'iconOfflineA'} />
+                  <img data-value={JSON.stringify(user)} onClick={handleClick} src={`http://localhost:6622/${user.avatar}`} alt="аватарка" />
+                </div>
+              )}
+              <div data-value={JSON.stringify(user)} onClick={handleClick} className="contact">
+                <div className="chatWithName" data-value={JSON.stringify(user)} onClick={handleClick}>
+                  {user.second_name}
+                  {' '}
+                  {user.name}
+                </div>
+                <div className="lastMsg" data-value={JSON.stringify(user)} onClick={handleClick}>
+                  {(showMessages.filter((el) => ((
+                    el.user_from === state.authUser.id && el.user_to === user.id)) || (
+                    el.user_from === user.id && el.user_to === state.authUser.id)).length > 0)
+                     && (showMessages.filter((el) => ((
+                       el.user_from === state.authUser.id && el.user_to === user.id)) || (
+                       el.user_from === user.id && el.user_to === state.authUser.id))[0].user_from
+                     === user.id)
+                    ? (
+                      <div
+                        className="lastMsgFrom"
+                        data-value={JSON.stringify(user)}
+                        onClick={handleClick}
+                      >
+                        {`${user.name}: `}
+
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  <div className="lastMsgText" data-value={JSON.stringify(user)} onClick={handleClick}>
+                    {showMessages.filter((el) => ((
+                      el.user_from === state.authUser.id && el.user_to === user.id)) || (
+                      el.user_from === user.id && el.user_to === state.authUser.id)).length > 0
+                      ? showMessages.filter((el) => ((
+                        el.user_from === state.authUser.id && el.user_to === user.id)) || (
+                        el.user_from === user.id && el.user_to === state.authUser.id))[0].text : ''}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>

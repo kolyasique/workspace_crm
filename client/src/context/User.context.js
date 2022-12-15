@@ -17,9 +17,10 @@ export default function UserContextProvider({ children }) {
   const [clients, setClients] = useState([]);
   // const [userInfo, setUserInfo] = useState(null);
 
-  //   const checkDateNow = new Date();
 
-  // const abortController = new AbortController();
+  const checkDateNow = new Date();
+
+  const abortController = new AbortController();
 
   // useEffect(() => {
   //   fetch('http://localhost:6622/api/userpanel/getuserinfo', {

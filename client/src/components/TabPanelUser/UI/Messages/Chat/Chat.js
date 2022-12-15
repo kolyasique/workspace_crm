@@ -27,6 +27,7 @@ export default function Chat({ recValue, showMessages, userList }) {
         {recValue.second_name}
         {' '}
         {recValue.name}
+        <div className={userList.includes(recValue.id) ? 'iconOnline' : 'iconOffline'} />
       </h3>
       <span className="chatStatus">{userList.includes(recValue.id) ? 'В сети' : 'Не в сети'}</span>
       <div ref={chatbox} id="chatbox" className="chatbox">
@@ -43,7 +44,7 @@ export default function Chat({ recValue, showMessages, userList }) {
         <input type="text" name="text" />
         <input type="hidden" name="user_from" value={state === null ? '' : state.authUser.id} />
         <input type="hidden" name="user_to" value={recValue.id} />
-        <button type="submit">Отправить</button>
+        <button className="sendBtn" type="submit">Отправить</button>
       </form>
     </div>
   );
