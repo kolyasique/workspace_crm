@@ -13,9 +13,25 @@ justify-content: space-evenly
     flex-direction: column;
     padding: 10px;
     margin: 10px;
-    height: 200px;
+    height: 240px;
+    width: 25%;
+    background-color: #fff;
     border: 1px solid lightblue;
     border-radius: 5px;
+    align-items: center; 
+    box-shadow: 0 0 3px rgb(39 42 120 / 50%);
+}
+.workerDivMe{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+    width: 25%;
+    height: 240px;
+    border: 1px solid rgb(173, 230, 202);
+    border-radius: 5px;
+    align-items: center;
+    box-shadow: 0 0 3px rgba(11, 139, 17, 0.5);
 }
 .circleAvatar {
     width: 100px; /* задаете свои размеры */
@@ -42,4 +58,27 @@ justify-content: space-evenly
 .img{
  width: 100px;
  height: 100px;
+}
+.workerSeconName{
+    display: flex;
+    flex-direction: row;
+}
+.workerPhone{
+    display: flex;
+flex-direction: row;
+}
+.workerContacts{
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+    margin: 5px;
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 3px rgb(39 42 120 / 50%);
+    align-items: center;
+}
+.MailTo{
+text-decoration: none;
+cursor: pointer;
+color: #314797;
 }

@@ -7,8 +7,8 @@ export default function ClientDocuments({ client }) {
   const [img, setImg] = useState(null);
   const [docs, setDocs] = useState([]);
   const [form, setForm] = useState({
-    text: '',
-    image: '',
+    text: null,
+    image: null,
   });
   console.log(form);
 
@@ -32,6 +32,8 @@ export default function ClientDocuments({ client }) {
 
   const handleSubmit = (e) => {
     try {
+      console.log(form.file, form.text);
+
       // e.preventDefault();
       const { id } = e.target;
       const data = new FormData();
@@ -39,24 +41,26 @@ export default function ClientDocuments({ client }) {
       // data.append('text', text)
       data.append('form', JSON.stringify(form));
       data.append('client_id', id);
-      const url = 'http://localhost:6622/api/upload';
-      fetch(url, {
-        method: 'POST',
-        credentials: 'include',
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((newdata) => {
-          setDocs([...docs, newdata]);
-          setForm({
-            text: '',
-            image: '',
+      if (data.img !== null) {
+        const url = 'http://localhost:6622/api/upload';
+        fetch(url, {
+          method: 'POST',
+          credentials: 'include',
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((newdata) => {
+            setDocs([...docs, newdata]);
+            setForm({
+              text: '',
+              image: '',
+            });
+            showToast({ message: 'Файл загружен', type: 'success' });
           });
-          showToast({ message: 'Файл загружен', type: 'success' });
-        });
+      } else { showToast({ message: 'Добавьте файл!', type: 'warning' }); }
     } catch (error) {
       console.log(error);
-      showToast({ message: 'Не получилось', type: 'error' });
+      showToast({ message: 'Не удалось', type: 'error' });
     }
   };
   const uploudImg = (e) => {
@@ -80,14 +84,16 @@ export default function ClientDocuments({ client }) {
 
   return (
     <div className={cl.clientDocFormAndList}>
-      <input className="form-control" type="text" value={form.text} name="text" placeholder="Название документа" onChange={handleImput} />
-      <input className="form-control" type="file" name="avatar" onChange={uploudImg} />
-      <button type="submit" id={client.id} onClick={handleSubmit}>Загрузить</button>
+      <div className={cl.docForm}>
+        <input className={cl.nameOfDoc} type="text" value={form.text} name="text" placeholder="Название документа" onChange={handleImput} required />
+        <input className={cl.downloadFile} type="file" id="downLoadBtn" name="avatar" onChange={uploudImg} required />
+        <button type="submit" className={cl.submitDownload} id={client.id} onClick={handleSubmit}>Загрузить</button>
+      </div>
       <div className={cl.clientDocList}>
         {docs?.filter((el) => el.client_id === client.id).map((doc) => (
           <div className={cl.clientDoc}>
             <a href={`http://localhost:6622/${doc.file}`} target="_blank" rel="noreferrer">
-              { doc.file }
+              { doc.text }
             </a>
             <button type="button" className={cl.clientDocListDelBtn} id={doc.id} onClick={handleDelete}>❌</button>
           </div>
