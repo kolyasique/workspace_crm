@@ -87,8 +87,13 @@ export default function TaskList() {
       },
       body: JSON.stringify(taskToUpdate),
     })
-      .then((res) => res.json())
-      .catch(console.error);
+      .then((res) => res.json());
+    // .then((data2) => {
+    //   setTasks(data2.allTasks1);
+    //   setAllWorkers(data2.workers1);
+    //   setUserId(data2.id);
+    // // setFirstShow(true);
+    // });
 
     if (e.target.value === '100') {
       setDisabledSlider({ ...disabledSlider, [e.target.id]: true });

@@ -15,7 +15,8 @@ export default function UserContextProvider({ children }) {
 
   const [history, setHistory] = useState([]);
   const [clients, setClients] = useState([]);
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
+
 
   const checkDateNow = new Date();
 

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
 import { MainContext } from '../../../../context/Main.context';
