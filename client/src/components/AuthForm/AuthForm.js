@@ -80,7 +80,7 @@ export default function AuthForm() {
         </div>
         <div className="form-input">
           <label className="form-label">ИНН организации</label>
-          <input type="number" className="form-control" value={form.inn} name="inn" onChange={handleInput} />
+          <input type="text" className="form-control" value={form.inn} name="inn" onChange={handleInput} minLength="12" maxLength="12" placeholder="Введите 12-значный номер ИНН" />
         </div>
         <div className="form-input tel">
           <label className="form-label">Телефон</label>

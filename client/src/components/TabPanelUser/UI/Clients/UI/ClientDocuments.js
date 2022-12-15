@@ -24,6 +24,8 @@ export default function ClientDocuments({ client }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log('🚀🚀🚀🚀 =>>>>> file: ClientDocuments.js:27 =>>>>> .then =>>>>> data', data);
+
         setDocs(data);
         // setAllWorkers(data.workers);
         // setUserId(data.id);
@@ -41,7 +43,7 @@ export default function ClientDocuments({ client }) {
       // data.append('text', text)
       data.append('form', JSON.stringify(form));
       data.append('client_id', id);
-      if (data.img !== undefined) {
+      if (img !== null) {
         const url = 'http://localhost:6622/api/upload';
         fetch(url, {
           method: 'POST',
