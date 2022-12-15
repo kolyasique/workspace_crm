@@ -67,7 +67,7 @@
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 3px rgba(21, 21, 21, 0.5);
+    box-shadow: 0 0 3px rgba(22, 21, 21, 0.5);
 }
 .doneTaskItem{
     display: flex;
