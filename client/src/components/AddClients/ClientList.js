@@ -22,18 +22,22 @@ function ClientList({ clients, setClients }) {
       {clients.length !== 0 ? (
         <ul>
           <h3>Список клиентов:</h3>
-          { clients.map((el) => (
-            <div key={el.id} className="oneClient">
-              <li>
-                {`${el.name} `}
-                {`${el.email} `}
-              </li>
-              <button id={el.id} onClick={handleDelete} type="submit">Удалить клиента</button>
-            </div>
-          ))}
+          <div className="allClientsForAdm">
+            { clients.map((el) => (
+              <div key={el.id} className="oneClient">
+                <li>
+                  {`${el.name} `}
+                  {`${el.email} `}
+                </li>
+                <button id={el.id} onClick={handleDelete} type="submit">Удалить</button>
+              </div>
+            ))}
+          </div>
         </ul>
       ) : (
-        <div>Список пуст</div>
+        <div className="allClientsForAdm">
+          <div>Список пуст</div>
+        </div>
       )}
 
     </div>

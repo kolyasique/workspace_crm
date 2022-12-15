@@ -12,7 +12,7 @@ import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
   const {
-    dateNow, setDateNow, converterDate1, tasks, setTasks,
+    dateNow, setDateNow, converterDate1, tasks, setTasks, done, setDone
   } = useContext(UserContext);
 
   const {
@@ -20,7 +20,6 @@ export default function TaskList() {
   } = useContext(UserContext);
   const [disabledBtn, setDisabledBtn] = useState({});
   // const {taskStatus, setTaskStatus} = useContext()
-  const [done, setDone] = useState({});
   const [closed, setClosed] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);

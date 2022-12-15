@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import './Clients.css';
@@ -13,7 +14,7 @@ export default function Clients() {
   const [clientTasks, setClientTasks] = useState([]);
   const [progressValue, setProgressValue] = useState({});
   const {
-    tasks, setTasks, allWorkers, taskStatus, setTaskStatus, clients, setClients,
+    tasks, setTasks, allWorkers, taskStatus, setTaskStatus, clients, setClients, done, setDone,
   } = useContext(UserContext);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
   const [findClient, setFindClient] = useState({ query: '' });
@@ -121,6 +122,14 @@ export default function Clients() {
     [taskStatus],
   );
 
+  function checkRestTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date1.getTime() - date2.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
+
   console.log(tasks, 'ТАСКИ');
   return (
     <div className="taskContainerClient">
@@ -153,7 +162,7 @@ export default function Clients() {
                   </div>
                   {tasks.filter((task) => task.client_id === client.id && (task.status === null || (task.status === false && task.progress_status !== 'Завершить')))
                     .map((clientTask) => (
-                      <div className={(clientTask.status === false && clientTask.progress_status !== 'Завершить') ? 'oneFailedClientTask' : 'oneClientTask'}>
+                      <div className={(checkRestTime(clientTask.end) > 0 ? ((done[clientTask.id] === true) || (clientTask.status === true) ? 'oneClientTask' : 'oneClientTask') : ('oneFailedClientTask'))}>
 
                         <div className="clientTaskTitle">{clientTask.title}</div>
                         <div className="executorTaskStatus">
