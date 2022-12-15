@@ -21,26 +21,29 @@ export default function ChangeAvatar() {
   const handleSubmit = (e) => {
     // try {
     e.preventDefault();
-    const data = new FormData();
-    data.append('avatar', img);
+    const data12 = new FormData();
+    data12.append('avatar', img);
+    console.log(img, 'это имг');
     // data.append('form', JSON.stringify(form));
-    const url = 'http://localhost:6622/api/avatar';
-    fetch(url, {
-      method: 'POST',
-      credentials: 'include',
-      // headers: {
-      //   'content-type': 'multipart/form-data',
-      // },
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((newdata) => {
-        console.log(newdata);
-        setUserInfo({
-          avatar: newdata.findThisUser.avatar,
+    if (data12.img !== null) {
+      const url = 'http://localhost:6622/api/avatar';
+      fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        // headers: {
+        //   'content-type': 'multipart/form-data',
+        // },
+        body: data12,
+      })
+        .then((res) => res.json())
+        .then((newdata) => {
+          console.log(newdata);
+          setUserInfo({
+            avatar: newdata.findThisUser.avatar,
+          });
+          showToast({ message: 'Файл загружен', type: 'success' });
         });
-        showToast({ message: 'Файл загружен', type: 'success' });
-      });
+    } else { showToast({ message: 'Добавьте файл!', type: 'warning' }); }
   };
 
   const uploudImg = (e) => {

@@ -12,7 +12,7 @@ import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
   const {
-    dateNow, setDateNow, converterDate1, tasks, setTasks, done, setDone
+    dateNow, setDateNow, converterDate1, tasks, setTasks, done, setDone,
   } = useContext(UserContext);
 
   const {
@@ -21,14 +21,14 @@ export default function TaskList() {
   const [disabledBtn, setDisabledBtn] = useState({});
   // const {taskStatus, setTaskStatus} = useContext()
   const [closed, setClosed] = useState({});
-  const [filteredTasks, setFilteredTasks] = useState([tasks]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
   const [userId, setUserId] = useState(null);
   const [filter, setFilter] = useState('actual');
   const [clientsForTasks, setClientsForTasks] = useState([]);
-
+  console.log(tasks, filteredTasks, 'tasks');
   const getProgressStatus = (progressStatus) => {
     switch (progressStatus) {
       case '0':
@@ -73,9 +73,18 @@ export default function TaskList() {
 
   const handleChange = (e) => {
     const taskId = e.target.id;
-
     const taskProgressStatus = getProgressStatus(e.target.value);
+    setTasks(filteredTasks.map((a) => {
+      if (+a.id === +taskId) {
+        a.progress_status = taskProgressStatus;
+      } return a;
+    }));
+
+    // console.log(task, 'ТАСКИ');
+    // console.log(e.target.value, 'e');
+
     const taskToUpdate = { [taskId]: taskProgressStatus };
+    // console.log(taskToUpdate, 'taskProgressStatus');
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
     const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
     fetch(url, {
