@@ -57,6 +57,13 @@ export default function CreateClientTask({ client }) {
   const handleInput = (e) => {
     setClientFormTask({ ...formClientTask, [e.target.name]: e.target.value });
   };
+  function checkPastTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date2.getTime() - date1.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
 
   return (
     <form className={cl.myModalForm} id={client.id} onSubmit={handleSubmit}>
@@ -73,7 +80,7 @@ export default function CreateClientTask({ client }) {
       <label className={cl.ModalLabel}>Добавить исполнителя</label>
       <select name="taskForUserId" className={cl.myModalInput} value={formClientTask.taskForUserId} placeholder="кому" onChange={handleInput} required>
         <option selected disabled value="">Выбрать сотрудника</option>
-        {workersForList.map((worker) => (
+        {workersForList.sort((a, b) => checkPastTime(a.updatedAt) - checkPastTime(b.updatedAt)).map((worker) => (
           <option value={worker.id}>
             {worker.second_name}
             {' '}
