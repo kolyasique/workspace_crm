@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable eqeqeq */

@@ -21,8 +21,10 @@ export default function WorkersComponent() {
         <div className={worker.id === state.authUser.id ? cl.workerDivMe : cl.workerDiv}>
           <div>
             {worker.avatar === null ? (
-              <div className={cl.circleAvatar}><img className={cl.img} src="https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png" alt="аватарка" /></div>
+              <div className={cl.circleAvatar}><img className={cl.img} src="https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg" alt="аватарка" /></div>
             ) : (
+              // https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg
+              // https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png
               // <div className={cl.circleAvatar}><p>{worker.avatar}</p></div>
               <div className={cl.circleAvatar}><img className={cl.img} src={`http://localhost:6622/${worker.avatar}`} alt="аватарка" /></div>
             )}

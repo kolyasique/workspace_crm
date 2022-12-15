@@ -25,7 +25,7 @@ export default function ChangeAvatar() {
     data12.append('avatar', img);
     console.log(img, 'это имг');
     // data.append('form', JSON.stringify(form));
-    if (data12.img !== null) {
+    if (data12.img !== undefined) {
       const url = 'http://localhost:6622/api/avatar';
       fetch(url, {
         method: 'POST',
@@ -55,8 +55,9 @@ export default function ChangeAvatar() {
 
     <div className="containerChanges">
       {userInfo.avatar === null ? (
-        <div className="profileAvatar"><img className="imgProfile" src="https://www.meme-arsenal.com/memes/31ce45559a80470ce5aadd5ef3983555.jpg" alt="авaтарка" /></div>
-
+        <div className="profileAvatar"><img className="imgProfile" src="https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg" alt="авaтарка" /></div>
+        //
+        // https://www.meme-arsenal.com/memes/31ce45559a80470ce5aadd5ef3983555.jpg
       ) : (
         <div className="profileAvatar"><img className="imgProfile" src={`http://localhost:6622/${userInfo.avatar}`} alt="аватарка" /></div>
       )}
