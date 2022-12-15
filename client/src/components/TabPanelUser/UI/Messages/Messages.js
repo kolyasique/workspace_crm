@@ -94,16 +94,19 @@ export default function Messages() {
               {user.avatar === null ? (
                 <div className="circleAvatar">
                   <div className="circleAvatar1">
-                    <img data-value={JSON.stringify(user)} onClick={handleClick} src="https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg" alt="аватарка" />
+                    <img data-value={JSON.stringify(user)} onClick={handleClick} src="https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png" alt="аватарка" />
                     <div data-value={JSON.stringify(user)} onClick={handleClick} className={userList.includes(user.id) ? 'iconOnlineA' : 'iconOfflineA'} />
                   </div>
-                  {/* https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png */}
+
                 </div>
               ) : (
                 <div className="circleAvatar">
-                  <div data-value={JSON.stringify(user)} onClick={handleClick} className={userList.includes(user.id) ? 'iconOnlineA' : 'iconOfflineA'} />
-                  <img data-value={JSON.stringify(user)} onClick={handleClick} src={`http://localhost:6622/${user.avatar}`} alt="аватарка" />
+                  <div className="circleAvatar1">
+                    <img data-value={JSON.stringify(user)} onClick={handleClick} src={`http://localhost:6622/${user.avatar}`} alt="аватарка" />
+                    <div data-value={JSON.stringify(user)} onClick={handleClick} className={userList.includes(user.id) ? 'iconOnlineA' : 'iconOfflineA'} />
+                  </div>
                 </div>
+
               )}
               <div data-value={JSON.stringify(user)} onClick={handleClick} className="contact">
                 <div className="chatWithName" data-value={JSON.stringify(user)} onClick={handleClick}>

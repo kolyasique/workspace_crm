@@ -22,7 +22,7 @@ export default function TaskList() {
   const [disabledBtn, setDisabledBtn] = useState({});
   // const {taskStatus, setTaskStatus} = useContext()
   const [closed, setClosed] = useState({});
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
