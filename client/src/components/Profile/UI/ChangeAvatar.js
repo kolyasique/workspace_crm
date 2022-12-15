@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../../../context/Profile.context';
 import { showToast } from '../../../lib/toasti';
 import './ProfileForms.css';
+import cl from './Avatar.module.css';
 
 export default function ChangeAvatar() {
   const {
@@ -57,11 +58,11 @@ export default function ChangeAvatar() {
         <div className="profileAvatar"><img className="imgProfile" src={`http://localhost:6622/${userInfo.avatar}`} alt="аватарка" /></div>
       )}
       <form className="changeAva" onSubmit={handleSubmit}>
-        <div className="formInput">
-          <label className="form-label ">Изменить аватар</label>
-          <input type="file" name="file" onChange={uploudImg} />
+        <div className={cl.docForm}>
+          <h3 className="form-label ">Изменить аватар</h3>
+          <input className={cl.downloadFile} type="file" name="file" onChange={uploudImg} />
+          <button type="submit" className={cl.submitDownload}>Загрузить</button>
         </div>
-        <button type="submit" className="buttonSubmitAva">Загрузить</button>
       </form>
     </div>
   );
