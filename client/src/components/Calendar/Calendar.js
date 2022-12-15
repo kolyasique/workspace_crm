@@ -88,7 +88,7 @@ function CalendarComponent() {
 
   return (
     <div className="Calendar">
-      <div className="wrapper">
+      <div className="Calendar-hat">
         <input type="text" className="inputCalendar" placeholder="Добавить задачу" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
         <input type="text" className="inputCalendar" placeholder="Описание задачи" value={newEvent.content} onChange={(e) => setNewEvent({ ...newEvent, content: e.target.value })} />
         <div className="datePickers">
@@ -115,7 +115,7 @@ function CalendarComponent() {
           ➕
         </button>
       </div>
-      <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: '50px' }} />
+      <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: '50px', width: '90%' }} />
     </div>
   );
 }
