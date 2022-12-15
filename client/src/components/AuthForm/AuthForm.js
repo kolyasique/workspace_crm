@@ -76,7 +76,7 @@ export default function AuthForm() {
         </div>
         <div className="form-input">
           <label className="form-label">E-mail</label>
-          <input type="email" className="form-control" value={form.email} name="email" placeholder="pochta@gmail.com" onChange={handleInput} />
+          <input type="email" className="form-control" value={form.email} name="email" placeholder="pochta@gmail.com" pattern="\S+@\S+\.\S+" onChange={handleInput} />
         </div>
         <div className="form-input">
           <label className="form-label">ИНН организации</label>
@@ -84,10 +84,8 @@ export default function AuthForm() {
         </div>
         <div className="form-input tel">
           <label className="form-label">Телефон</label>
-          <input type="tel" name="phone" placeholder="Телефон" pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" minLength="18" maxLength="18" />
-          <input type="text" className="form-control" value={form.phone} name="phone" onChange={handleInput} />
+          <input type="tel" className="form-control" value={form.phone} name="phone" onChange={handleInput} placeholder="+7(926)9554747" pattern="^\+?[0-9]\s?\(?[0-9]{3}\)?\s?[0-9]{3}\s?[0-9]{2}\s?[0-9]{2}" />
         </div>
-
         <button type="submit" className="buttonSubmit">Submit</button>
       </form>
     </div>
