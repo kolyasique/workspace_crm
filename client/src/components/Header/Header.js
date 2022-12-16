@@ -32,7 +32,7 @@ export default function Navbar() {
       }
     });
   }, []);
-
+    // const
   const handleButtonChange = () => {
     setMainOrProfile(!mainOrProfile);
   };

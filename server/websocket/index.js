@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const WebSocket = require('ws');
 
 const { WebSocketServer } = WebSocket;
@@ -9,7 +10,7 @@ const wss = new WebSocketServer({
   clientTracking: false,
 });
 
-wss.on('connection', (ws, req, usersMap) => {
+wss.on('connection', (ws, req, usersMap, wsClientMap) => {
   const { company } = req.session;
 
   usersMap.set(company.id, { company, ws });
@@ -42,10 +43,25 @@ wss.on('connection', (ws, req, usersMap) => {
 
         break;
       case 'open':
-        if (sender && reciever) {
-          sender.ws.send(JSON.stringify({ type: 'online' }));
-          reciever.ws.send(JSON.stringify({ type: 'online' }));
-        }
+        // if (sender && reciever) {
+        //   sender.ws.send(JSON.stringify({ type: 'online', payload: 'ONLINEEE' }));
+        //   reciever.ws.send(JSON.stringify({ type: 'online', payload: 'ONLINEEE' }));
+        // }
+        const user = payload;
+        const userArray = [];
+
+        wsClientMap.set(user.id, { ws, user });
+
+        wsClientMap.forEach(
+          (connection) => {
+            userArray.push(connection.user.id);
+            if (user.id !== connection.user.id) {
+              connection.ws.send(JSON.stringify({ type: 'new_connection', payload: user.id }));
+            }
+            connection.ws.send(JSON.stringify({ type: 'all_connections', payload: userArray }));
+          },
+        );
+
         break;
 
       default:
@@ -53,6 +69,15 @@ wss.on('connection', (ws, req, usersMap) => {
     }
   });
   ws.on('close', (msg) => {
+    const userArray = [];
+    wsClientMap.delete(company.id);
+    wsClientMap.forEach(
+      (connection) => {
+        userArray.push(connection.user.id);
+        connection.ws.send(JSON.stringify({ type: 'some_close', payload: userArray }));
+      },
+    );
+
     const message = JSON.parse(msg);
     usersMap.delete(company.id);
     const receiver = usersMap.get(+message.chatWithUser);

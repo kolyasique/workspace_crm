@@ -1,12 +1,17 @@
-
-  
   .form {
-    background-color: #15172b;
-    border-radius: 20px;
+    display: flex;
+    /* background-color: #15172b; */
+    background-color: #ffffff21;
+    border-radius: 5px;
     box-sizing: border-box;
     padding: 20px;
     width: 320px;
-    margin: 20px;
+    /* margin: 20px; */
+    height: 400px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-right: 20px;
   }
   
   .title {
@@ -50,6 +55,7 @@
     outline: 0;
     padding: 2px 20px 0;
     width: 100%;
+    box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
   }
   
   .cut {
@@ -117,3 +123,6 @@
     background-color: #06b;
   }
 
+  /* .wrapperAddClient{
+    background-color: #15172b;
+  } */

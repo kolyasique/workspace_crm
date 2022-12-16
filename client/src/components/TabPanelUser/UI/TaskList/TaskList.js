@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable eqeqeq */
@@ -12,7 +13,7 @@ import { UserContext } from '../../../../context/User.context';
 
 export default function TaskList() {
   const {
-    dateNow, setDateNow, converterDate1, tasks, setTasks,
+    dateNow, setDateNow, converterDate1, tasks, setTasks, done, setDone,
   } = useContext(UserContext);
 
   const {
@@ -20,7 +21,6 @@ export default function TaskList() {
   } = useContext(UserContext);
   const [disabledBtn, setDisabledBtn] = useState({});
   // const {taskStatus, setTaskStatus} = useContext()
-  const [done, setDone] = useState({});
   const [closed, setClosed] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,8 +28,8 @@ export default function TaskList() {
   const [find, setFind] = useState({ query: '' });
   const [userId, setUserId] = useState(null);
   const [filter, setFilter] = useState('actual');
-  // const [dateNow, setDateNow] = useState(null);
-
+  const [clientsForTasks, setClientsForTasks] = useState([]);
+  console.log(tasks, filteredTasks, 'tasks');
   const getProgressStatus = (progressStatus) => {
     switch (progressStatus) {
       case '0':
@@ -58,15 +58,35 @@ export default function TaskList() {
         setTasks(data.allTasks);
         setAllWorkers(data.workers);
         setUserId(data.id);
+        // setFirstShow(true);
       });
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:6622/api/userpanel/getclients', {
+      credentials: 'include',
+      // ручка за которую у нас цепляется abortcontroller
+      signal: abortController.signal,
+    })
+      .then((res) => res.json())
+      .then((data) => setClientsForTasks(data));
   }, []);
 
   const handleChange = (e) => {
     const taskId = e.target.id;
     const taskProgressStatus = getProgressStatus(e.target.value);
-    const taskToUpdate = { [taskId]: taskProgressStatus };
-    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
+    setFilteredTasks(filteredTasks.map((a) => {
+      if (+a.id === +taskId) {
+        a.progress_status = taskProgressStatus;
+      } return a;
+    }));
 
+    // console.log(task, 'ТАСКИ');
+    // console.log(e.target.value, 'e');
+
+    const taskToUpdate = { [taskId]: taskProgressStatus };
+    // console.log(taskToUpdate, 'taskProgressStatus');
+    setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
     const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
     fetch(url, {
       method: 'POST',
@@ -76,8 +96,13 @@ export default function TaskList() {
       },
       body: JSON.stringify(taskToUpdate),
     })
-      .then((res) => res.json())
-      .catch(console.error);
+      .then((res) => res.json());
+    // .then((data2) => {
+    //   setTasks(data2.allTasks1);
+    //   setAllWorkers(data2.workers1);
+    //   setUserId(data2.id);
+    // // setFirstShow(true);
+    // });
 
     if (e.target.value === '100') {
       setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
@@ -137,12 +162,18 @@ export default function TaskList() {
 
   function setCreator(creatorId) {
     if (creatorId !== undefined) {
-      const nameAndSecondName = `${(allWorkers.filter((el) => el.id == creatorId))[0].name} ${(allWorkers.filter((el) => el.id == creatorId))[0].second_name}`;
+      const nameAndSecondName = `${(allWorkers.filter((el) => +el.id === +creatorId))[0].name} ${(allWorkers.filter((el) => el.id == creatorId))[0].second_name}`;
       return nameAndSecondName;
     }
     return 'Error';
   }
-
+  function setClient(clientId) {
+    if (clientsForTasks.length > 0) {
+      const clientName = `${(clientsForTasks.filter((el) => +el.id === +clientId))[0].name}`;
+      return clientName;
+    }
+    return 'error';
+  }
   function createdDate(date) {
     const newDate = new Date(date);
     const oldMonth = newDate.getMonth();
@@ -207,11 +238,11 @@ export default function TaskList() {
 
     const timeDiff = date1.getTime() - date2.getTime();
     const diffDaysRaw = (timeDiff / (1000 * 3600 * 24));
-    const diffDaysRawString = `${Math.round(timeDiff / (1000 * 3600 * 24))} дней`;
+    const diffDaysRawString = `${Math.round(timeDiff / (1000 * 3600 * 24))} дн.`;
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     const hoursLeftRaw = timeDiff / (1000 * 3600);
-    const hoursLeftString = `${Math.ceil(timeDiff / (1000 * 3600))} часов`;
+    const hoursLeftString = `${Math.ceil(timeDiff / (1000 * 3600))} ч.`;
 
     const minutesLeftRaw = timeDiff / (1000 * 60);
     const minutesLeftString = `${Math.ceil(timeDiff / (1000 * 60))} минут`;
@@ -270,6 +301,7 @@ export default function TaskList() {
       default: return 0;
     }
   }
+
   return (
     <div className="taskContainer">
       <div className="taskTools">
@@ -278,12 +310,12 @@ export default function TaskList() {
           <button type="button" className="filterMyTasksBtn" id="successfull" onClick={(e) => doTaskFilter(e)}>Успешные</button>
           <button type="button" className="filterMyTasksBtn" id="failed" onClick={(e) => doTaskFilter(e)}>Неуспешные</button>
         </div> */}
-        <button type="button" className="filterMyTasksBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Свои задачи</button>
-        <button type="button" className="filterMyTaskFromAnotherBtn" id="ordered" onClick={(e) => doTaskFilter(e)}>От сотрудников</button>
-        <button type="button" className="filterMyTaskFromAnotherBtn" id="control" onClick={(e) => doTaskFilter(e)}>Контроль</button>
-        <button type="button" className="clearFilterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
+        <button type="button" className="filterBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Мои задачи</button>
+        <button type="button" className="filterBtn" id="ordered" onClick={(e) => doTaskFilter(e)}> Задачи мне</button>
+        <button type="button" className="filterBtn" id="control" onClick={(e) => doTaskFilter(e)}>Контроль</button>
+        <button type="button" className="filterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
 
-        <input type="text" id="searchfilter" value={find.query} onChange={(e) => doTaskFilter(e)} placeholder="найти задание" />
+        <input type="text" id="searchfilter" value={find.query} onChange={(e) => doTaskFilter(e)} placeholder="Поиск задач" />
         {/* setFind({ ...find, query: e.target.value }) */}
 
         <button
@@ -306,9 +338,21 @@ export default function TaskList() {
             if ((done[task.id] === true || task.status === true) || (done[task.id] === false || task.status === false)) {
               return (
                 <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'failedTaskItem'}>
+                  {task?.client_id === null ? (
+                    null
+                  ) : (
+                    <div className="taskForClient">
+                      {' '}
+                      {setClient(task?.client_id)}
+                    </div>
+                  )}
                   <div className="taskItemUpperDiv">
                     <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
-                      {task.task_type === 'personal' ? ('Личная') : (`${setCreator(task.creator_id)}`)}
+                      {task.task_type === 'personal' ? ('Личная') : (task.creator_id === userId ? (
+                        `${setCreator(task.worker_id)}`
+                      ) : (
+                        `${setCreator(task.creator_id)}`
+                      ))}
                     </div>
                     <div className="taskTitle">{task.title}</div>
                     <div className="taskStatus">
@@ -333,9 +377,21 @@ export default function TaskList() {
             //   <div></div>) : (
             //     <div></div>)}
               <div key={task.id} className={(checkRestTime(task.end) > 0 ? ((done[task.id] === true) || (task.status === true) ? 'doneTaskItem' : 'taskItem') : ('failedTaskItem'))}>
+                {task?.client_id === null ? (
+                  null
+                ) : (
+                  <div className="taskForClient">
+                    {' '}
+                    {setClient(task?.client_id)}
+                  </div>
+                )}
                 <div className="taskItemUpperDiv">
                   <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
-                    {task.task_type === 'personal' ? ('Личная') : (`${setCreator(task.creator_id)}`)}
+                    {task.task_type === 'personal' ? ('Личная') : (task.creator_id === userId ? (
+                      `${setCreator(task.worker_id)}`
+                    ) : (
+                      `${setCreator(task.creator_id)}`
+                    ))}
                   </div>
                   <div className="taskTitle">{task.title}</div>
                   {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
@@ -352,6 +408,7 @@ export default function TaskList() {
                     disabled={disabledSlider[task.id]}
                     step={25}
                     id={task.id}
+                    name={task.progress_status}
                     value={setSliderValueFromBase(task.progress_status)}
                     handleChange={handleChange}
                     min={0}

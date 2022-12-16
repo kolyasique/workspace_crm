@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import './Clients.css';
@@ -9,11 +11,11 @@ import { UserContext } from '../../../../context/User.context';
 
 export default function Clients() {
   const [component, setComponent] = useState(null);
-  const [clients, setClients] = useState([]);
+
   const [clientTasks, setClientTasks] = useState([]);
   const [progressValue, setProgressValue] = useState({});
   const {
-    tasks, setTasks, allWorkers, taskStatus, setTaskStatus,
+    tasks, setTasks, allWorkers, taskStatus, setTaskStatus, clients, setClients, done, setDone,
   } = useContext(UserContext);
   const [visibleModalForOrder, setVisibleModalForOrder] = useState(false);
   const [findClient, setFindClient] = useState({ query: '' });
@@ -121,66 +123,84 @@ export default function Clients() {
     [taskStatus],
   );
 
-  console.log(tasks, 'ТАСКИ');
+  function checkRestTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date1.getTime() - date2.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
+
+  function checkPastTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date2.getTime() - date1.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
+
   return (
-    <div>
-      <div className="clientPanel">
+    <div className="taskContainerClient">
+
+      <div className="taskContainerClientTools">
         <input type="text" className="searchClientInput" id="searchfilter" value={findClient.query} onChange={(e) => { setFindClient({ query: e.target.value }); }} placeholder="Поиск ИНН | e-mail | Название" />
       </div>
-      <div className="clientListDiv">
-        {findClients.map((client) => (
-          <div key={client.id} className="clientItem">
-            <div className="clientInfo">
-              <div className="clientInfoHead">
-                <div className="clientName">{client.name}</div>
-                <div className="clientInn">{client.inn}</div>
-                <div className="clientPartnershipAge">
-                  {`С нами уже: ${getUserDays(client.createdAt)} дня`}
+      <div className="taskContainerClient2">
+        <div className="clientContainerAll">
+          {findClients.sort((a, b) => checkPastTime(a.createdAt) - checkPastTime(b.createdAt)).map((client) => (
+            <div key={client.id} className="clientItem">
+              <div className="clientInfo">
+                <div className="clientInfoHead">
+                  <div className="clientName">{client.name}</div>
+                  <div className="clientInn">{client.inn}</div>
+                  <div className="clientPartnershipAge">
+                    {`С нами уже: ${getUserDays(client.createdAt)} дн.`}
+                  </div>
                 </div>
-              </div>
-              <div>{`адрес: ${client.adress}`}</div>
+                <div className="clientAdress12">{`адрес: ${client.adress}`}</div>
 
-              <div>{client.email}</div>
-              <div className="clientsTasksListDiv">
-                <div className="taskListTitle">
-                  {' '}
-                  Активные задачи:
-                  {' '}
-                  {tasks.filter((task) => task.client_id === client.id && (task.status === null || (task.status === false && task.progress_status !== 'Завершить'))).length}
-                  {' '}
-                </div>
-                {tasks.filter((task) => task.client_id === client.id && (task.status === null || (task.status === false && task.progress_status !== 'Завершить')))
-                  .map((clientTask) => (
-                    <div className={(clientTask.status === false && clientTask.progress_status !== 'Завершить') ? 'oneFailedClientTask' : 'oneClientTask'}>
+                <div className="clientEmailDiv"><a className="clientEmail12" href={`mailto:${client.email}`}>{client.email}</a></div>
+                <div className="clientsTasksListDiv">
+                  <div className="taskListTitle">
+                    {' '}
+                    Активные задачи:
+                    {' '}
+                    {tasks.filter((task) => task.client_id === client.id && (task.status === null || (task.status === false && task.progress_status !== 'Завершить'))).length}
+                    {' '}
+                  </div>
+                  {tasks.filter((task) => task.client_id === client.id && (task.status === null || (task.status === false && task.progress_status !== 'Завершить')))
+                    .map((clientTask) => (
+                      <div className={(checkRestTime(clientTask.end) > 0 ? ((done[clientTask.id] === true) || (clientTask.status === true) ? 'oneClientTask' : 'oneClientTask') : ('oneFailedClientTask'))}>
 
-                      <div className="clientTaskTitle">{clientTask.title}</div>
-                      <div className="executorTaskStatus">
-                        <div className="clientTaskExecutor">
-                          {`Ответственный: ${(allWorkers.filter((el) => +el.id === +clientTask.worker_id))[0].name} ${(allWorkers.filter((el) => +el.id === +clientTask.worker_id))[0].second_name}`}
-                        </div>
-                        <div className="executorProgressStatus">
-                          <progress max="100" value={progressValue[clientTask.id] !== undefined ? progressValue[clientTask.id] : caseForProgressFromBase(clientTask.progress_status)}> </progress>
+                        <div className="clientTaskTitle">{clientTask.title}</div>
+                        <div className="executorTaskStatus">
+                          <div className="clientTaskExecutor">
+                            {`Ответственный: ${(allWorkers.filter((el) => +el.id === +clientTask.worker_id))[0].name} ${(allWorkers.filter((el) => +el.id === +clientTask.worker_id))[0].second_name}`}
+                          </div>
+                          <div className="executorProgressStatus">
+                            <progress max="100" value={progressValue[clientTask.id] !== undefined ? progressValue[clientTask.id] : caseForProgressFromBase(clientTask.progress_status)}> </progress>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
 
+                </div>
               </div>
-            </div>
-            {/* <input type="file" onChange={uploudImg} />
+              {/* <input type="file" onChange={uploudImg} />
           <button type="submit" id={client.id}
           onClick={handleSubmit}>Загрузить документ</button> */}
-            <div className="clientButtonBar">
-              <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
-              <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientHistory client={client} />); }}> История</button>
-              <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>
+              <div className="clientButtonBar">
+                <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
+                <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientHistory client={client} />); }}> История</button>
+                <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientDocuments client={client} />); }}>Документы</button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <ModalClient visible={visibleModalForOrder} setVisible={setVisibleModalForOrder}>
+          {component}
+        </ModalClient>
       </div>
-      <ModalClient visible={visibleModalForOrder} setVisible={setVisibleModalForOrder}>
-        {component}
-      </ModalClient>
     </div>
   );
 }

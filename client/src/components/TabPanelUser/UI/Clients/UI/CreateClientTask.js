@@ -57,38 +57,40 @@ export default function CreateClientTask({ client }) {
   const handleInput = (e) => {
     setClientFormTask({ ...formClientTask, [e.target.name]: e.target.value });
   };
+  function checkPastTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date2.getTime() - date1.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
 
   return (
-    <div>
-      <div>
-        Добавить задачу по клиенту:
-        {' '}
-        {client.name}
-      </div>
-      <form className={cl.myModalForm} id={client.id} onSubmit={handleSubmit}>
-        <label className="form-label ">Добавить название</label>
-        <input type="text" value={formClientTask.title} name="title" placeholder="Название" onChange={handleInput} />
-        <label className="form-label ">Добавить описание</label>
-        <textarea value={formClientTask.content} name="content" placeholder="описание" onChange={handleInput} />
-        <label className="form-label ">Установить дату начала</label>
-        <input type="datetime-local" value={formClientTask.startDate} name="startDate" placeholder="Дата начала" onChange={handleInput} />
-        <label className="form-label ">Установить дедлайн</label>
-        <input type="datetime-local" value={formClientTask.endDate} name="endDate" placeholder="Дата окончания" onChange={handleInput} />
-        <label className="form-label ">Добавить исполнителя</label>
-        <select name="taskForUserId" value={formClientTask.taskForUserId} placeholder="кому" onChange={handleInput}>
-          <option selected disabled value="">Выбрать сотрудника</option>
-          {workersForList.map((worker) => (
-            <option value={worker.id}>
-              {worker.second_name}
-              {' '}
-              {worker.name}
-              {' '}
-              {worker.patronymic}
-            </option>
-          ))}
-        </select>
-        <button type="submit"> Добавить </button>
-      </form>
-    </div>
+    <form className={cl.myModalForm} id={client.id} onSubmit={handleSubmit}>
+      <p className={cl.pForModal}>Задача по клиенту</p>
+      <p className={cl.p2ForModal}>{client.name}</p>
+      <label className={cl.ModalLabel}>Добавить название</label>
+      <input type="text" className={cl.myModalInput} value={formClientTask.title} name="title" placeholder="Название" maxLength="30" onChange={handleInput} required />
+      <label className={cl.ModalLabel}>Добавить описание</label>
+      <textarea value={formClientTask.content} className={cl.myModalInputTextArea} name="content" placeholder="описание" maxLength="150" onChange={handleInput} />
+      <label className={cl.ModalLabel}>Установить дату начала</label>
+      <input type="datetime-local" className={cl.myModalInputData} value={formClientTask.startDate} name="startDate" min="2022-12-16T00:00" max="2055-12-31T00:00" placeholder="Дата начала" onChange={handleInput} required />
+      <label className={cl.ModalLabel}>Установить дедлайн</label>
+      <input type="datetime-local" className={cl.myModalInputData} value={formClientTask.endDate} name="endDate" min="2022-12-16T00:00" max="2055-12-31T00:00" placeholder="Дата окончания" onChange={handleInput} required />
+      <label className={cl.ModalLabel}>Добавить исполнителя</label>
+      <select name="taskForUserId" className={cl.myModalInput} value={formClientTask.taskForUserId} placeholder="кому" onChange={handleInput} required>
+        <option selected disabled value="">Выбрать сотрудника</option>
+        {workersForList.sort((a, b) => checkPastTime(a.updatedAt) - checkPastTime(b.updatedAt)).map((worker) => (
+          <option value={worker.id}>
+            {worker.second_name}
+            {' '}
+            {worker.name}
+            {' '}
+            {worker.patronymic}
+          </option>
+        ))}
+      </select>
+      <button type="submit" className={cl.myModalSubmit}> Добавить </button>
+    </form>
   );
 }

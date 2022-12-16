@@ -23,6 +23,7 @@
     flex-direction: column-reverse;
     /* background-color: white; */
     overflow: auto;
+    overscroll-behavior: contain;
 }
 
 .chatform {
@@ -50,8 +51,18 @@
     width: 80%;
     box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
 }
-.chatform > button {
+.sendBtn {
     width: 20%;
+    border: none;
+    margin: 9px 10px 10px 0;
+    border-radius: 6px;
+    /* background: #00ccff; */
+    background: #6a84e0;
+    color: white;
+    font-size: 15px;
+}
+.sendBtn:hover {
+  background: #05637a;
 }
 .chatPage {
     display: flex;
@@ -61,33 +72,65 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     height: 90%;
-    box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+    padding: 0 10px 0 10px;
+    box-shadow: 0px 8px 10px rgb(0 0 0 / 20%);
     background: white;
-}
-.contact {
-    display: flex;
-    align-items: center;
-    justify-content: center;;
     width: 100%;
-    background: #FAFAFA;
-    height: 10%;
-    transition: 0,5s;
-    border-bottom: 1px solid #c3c3c3;
+    /* overflow-y: auto; */
 }
-.contact:hover {
-    transform: scale(1.01);
-    cursor: pointer;
+.contactbox {
+    display: flex;
+    color: #314797;
+    width: 100%;
+    height: 10%;
+    border: 0px;
+    border-radius: 3px;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 400;
+    padding: 10px;
+    background-color: white;
+    transition: .1s ease-in-out;
+    justify-content: flex-start;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+.contactbox:hover {
+    /* transform: scale(1.01);
+    cursor: pointer; */
+    scale: 1.01;
+    background-color: #dfe1fd56;
+}
+.activeContact {
+  display: flex;
+  color: #314797;
+  width: 100%;
+  height: 10%;
+  border: 0px;
+  border-radius: 3px;
+  font-size: 18px;
+  text-align: left;
+  font-weight: 400;
+  padding: 10px;
+  transition: .1s ease-in-out;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  align-items: center;
+  /* background-color: #aab9f1; */
+  /* background-color: #00ccff; */
 }
 .chatbox-textstart {
     align-self: flex-start;
     display: flex;
     flex-direction: column;
     width: 40%;
-    background:#f6f6f6;
+    /* background:#f6f6f6; */
+    background: white;
     margin: 2.5% 0 2.5% 5%;
-    border-radius: 15px;
+    border-radius: 15px 15px 15px 0;
     padding: 3%;
   }
   
@@ -98,7 +141,7 @@
     width: 40%;
     background:#e3effd;
     margin: 2.5% 5% 2.5% 0;
-    border-radius: 15px;
+    border-radius: 15px 15px 0 15px;
     padding: 1%;
   }
   
@@ -120,6 +163,7 @@
     align-items: center;
     flex-wrap: wrap;
     word-break: break-word;
+    margin: 5px;
   }
   .chatWith {
     height: 6%;
@@ -150,3 +194,192 @@
     height: 100%;
     width: 30%;
   }
+  .iconOffline {
+    height: 8px;
+    width: 8px;
+    margin-bottom: 1.1%;
+    margin-left: 5px;
+    z-index: 100;
+    border-radius: 50%;
+    background: rgb(212, 2, 2);
+  }
+  .iconOnline {
+    height: 8px;
+    width: 8px;
+    margin-bottom: 1.1%;
+    margin-left: 5px;
+    z-index: 100;
+    border-radius: 50%;
+    background: rgb(10, 175, 10);
+  }
+  .circleAvatar {
+
+    width: auto; 
+
+    min-width: 47px;
+    max-width: 57px;
+    height: 100%;
+    margin-right: 10px;
+}
+.circleAvatar1{
+  /* display: flex; */
+  position: relative;
+
+  height: 100%;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  padding: 5px;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+.circleAvatar1 img {
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    width:100%;
+    height: 100%;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+.img1{
+
+  width: 100%;
+  height: 100%;
+
+}
+.contact {
+  display: flex;
+    color: #314797;
+    width: 80%;
+    height: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    flex-direction: column;
+    border-bottom: solid 1px rgb(216, 210, 210);
+}
+.iconOfflineA {
+  position: absolute;
+  height: 8px;
+  z-index: 100;
+  width: 8px;
+  margin-bottom: 1.1%;
+  margin-left: 5px;
+  border-radius: 50%;
+  background: rgb(212, 2, 2);
+  border: solid 2px white;
+  top: 70%;
+  left: 65%;
+}
+.iconOnlineA {
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  z-index: 100;
+  margin-bottom: 1.1%;
+  margin-left: 5px;
+  border-radius: 50%;
+  background: rgb(10, 175, 10);
+  border: solid 2px white;
+  top: 70%;
+  left: 65%;
+}
+.lastMsg {
+  display: flex;
+  color: black;
+  font-size: 15px;
+  width: 100%;
+}
+.lastMsgFrom {
+  color: #314797;
+  margin-right: 5px;
+  /* width: 15% */
+}
+.lastMsgText {
+  /* width: 85%; */
+  /* text-overflow: 'ellipsis';
+  white-space: 'nowrap';
+  overflow: 'hidden'; */
+}
+@media (min-width: 600px) and (max-width: 1200px) {
+  .chatWithName {
+    font-size: 16px;
+  }
+  .lastMsg {
+    display: flex;
+    color: black;
+    font-size: 13px;
+    width: 100%;
+  }
+.circleAvatar {
+  width: auto; 
+  min-width: 44px;
+  height: 80%;
+  margin-right: 10px;
+}
+.circleAvatar1{
+position: relative;
+height: 100%;
+width: 100%;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background: #fff;
+padding: 5px;
+border-radius: 50%;
+-moz-border-radius: 50%;
+-webkit-border-radius: 50%;
+}
+.circleAvatar1 img {
+
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  width:100%;
+  height: 100%;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+
+}
+.iconOfflineA {
+  position: absolute;
+  height: 7px;
+  width: 7px;
+  margin-bottom: 1.1%;
+  margin-left: 5px;
+  border-radius: 50%;
+  background: rgb(212, 2, 2);
+  border: solid 2px white;
+  top: 65%;
+  left: 60%;
+}
+.iconOnlineA {
+  position: absolute;
+  height: 7px;
+  width: 7px;
+  margin-bottom: 1.1%;
+  margin-left: 5px;
+  border-radius: 50%;
+  background: rgb(10, 175, 10);
+  border: solid 2px white;
+  top: 65%;
+  left: 60%;
+}
+.contact {
+  display: flex;
+    color: #314797;
+    width: 80%;
+    height: 100%;
+    padding: 10px;
+    justify-content: space-around;
+    flex-direction: column;
+    border-bottom: solid 1px rgb(216, 210, 210);
+}
+ 
+}

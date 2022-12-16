@@ -5,8 +5,9 @@ const { Tasks } = require('../../db/models');
 calendarRouter.get('/', async (req, res) => {
   try {
     const workerId = req.session.company.id;
-    const events = await Tasks.findAll({ where: { worker_id: workerId } });
-    res.json(events);
+    const events = await Tasks.findAll({ where: { worker_id: workerId }, raw: true });
+    const filteredEvents = events.filter((el) => el.closed_by === null);
+    res.json(filteredEvents);
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: error.message });
@@ -20,10 +21,14 @@ calendarRouter.post('/', async (req, res) => {
     const {
       title, start, end, content,
     } = req.body;
-    await Tasks.create({
-      title, content, start, end, worker_id: workerId, creator_id: workerId, task_type: 'personal', company_id,
-    });
-    res.status(200);
+    if (!title || !content || !start || !end) {
+      res.send({ msg: 'не все поля заполнены' });
+    } else {
+      await Tasks.create({
+        title, content, start, end, worker_id: workerId, creator_id: workerId, task_type: 'personal', company_id,
+      });
+      res.status(200);
+    }
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: error.message });

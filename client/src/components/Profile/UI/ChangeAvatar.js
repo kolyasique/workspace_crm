@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../../../context/Profile.context';
 import { showToast } from '../../../lib/toasti';
 import './ProfileForms.css';
+import cl from './Avatar.module.css';
 
 export default function ChangeAvatar() {
   const {
@@ -16,52 +17,56 @@ export default function ChangeAvatar() {
   // console.log(form);
 
   // ; setForm(formInitialState);
+  const uploudImg = (e) => {
+    setImg(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
 
   const handleSubmit = (e) => {
     // try {
     e.preventDefault();
-    const data = new FormData();
-    data.append('avatar', img);
+    const data12 = new FormData();
+    data12.append('avatar', img);
+    console.log(img, 'это имг');
     // data.append('form', JSON.stringify(form));
-    const url = 'http://localhost:6622/api/avatar';
-    fetch(url, {
-      method: 'POST',
-      credentials: 'include',
-      // headers: {
-      //   'content-type': 'multipart/form-data',
-      // },
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((newdata) => {
-        console.log(newdata);
-        setUserInfo({
-          avatar: newdata.findThisUser.avatar,
+    if (img !== null) {
+      const url = 'http://localhost:6622/api/avatar';
+      fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        // headers: {
+        //   'content-type': 'multipart/form-data',
+        // },
+        body: data12,
+      })
+        .then((res) => res.json())
+        .then((newdata) => {
+          console.log(newdata);
+          setUserInfo({
+            avatar: newdata.findThisUser.avatar,
+          });
+          // setImg(null);
+          showToast({ message: 'Файл загружен', type: 'success' });
         });
-        showToast({ message: 'Файл загружен', type: 'success' });
-      });
-  };
-
-  const uploudImg = (e) => {
-    setImg(e.target.files[0]);
-    console.log(e.target.files[0]);
+    } else { showToast({ message: 'Добавьте файл!', type: 'warning' }); }
   };
 
   return (
 
     <div className="containerChanges">
       {userInfo.avatar === null ? (
-        <div className="profileAvatar"><img className="imgProfile" src="http://localhost:6622/images/avatar/2022-12-13T15:57:25.638Z-nullAvatar.jpeg" alt="аватарка" /></div>
-
+        <div className="profileAvatar"><img className="imgProfile" src="https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg" alt="авaтарка" /></div>
+        //
+        // https://www.meme-arsenal.com/memes/31ce45559a80470ce5aadd5ef3983555.jpg
       ) : (
         <div className="profileAvatar"><img className="imgProfile" src={`http://localhost:6622/${userInfo.avatar}`} alt="аватарка" /></div>
       )}
       <form className="changeAva" onSubmit={handleSubmit}>
-        <div className="formInput">
-          <label className="form-label ">Изменить аватар</label>
-          <input type="file" name="file" onChange={uploudImg} />
+        <div className={cl.docForm}>
+          <h3 className="formLabel13">Изменить аватар</h3>
+          <input className={cl.downloadFile} type="file" name="file" onChange={uploudImg} />
+          <button type="submit" className={cl.submitDownload}>Загрузить</button>
         </div>
-        <button type="submit" className="buttonSubmitAva">Загрузить</button>
       </form>
     </div>
   );

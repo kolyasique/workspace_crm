@@ -22,13 +22,15 @@ border: 1px solid lightblue;
     box-shadow: 0px 4px 10px rgb(0 0 0 / 10%);
 }
 .clientItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: azure;
+    width: 90%;
     margin: 5px;
-    height:fit-content;
-    background-color: aliceblue;
-    box-shadow: 0 0 7px rgba(21, 21, 21, 0.5);
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid lightblue;
+    box-shadow: 0 0 3px rgb(21 21 21 / 50%);
 
 }
 .clientInfoHead{
@@ -47,8 +49,10 @@ border: 1px solid lightblue;
     color: rgb(74, 74, 74);
 }
 .clientPartnershipAge{
-    background-color: aquamarine;
+    background-color: rgb(234, 234, 234);
     padding: 3px;
+    border-radius: 3px;
+    border: 0.5px solid lightblue;
     font-size: 12px;
 }
 .clientsTasksListDiv{
@@ -86,12 +90,20 @@ border: 1px solid lightblue;
 }
 .clientTaskTitle{
     text-align: center;
+
 }
 .clientTaskExecutor{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 2px;
+    margin-right: 2px;
     font-size: 10px;
     color: rgb(51, 51, 51)
 }
 .executorProgressStatus progress{
+    display: flex;
+    flex-direction: column;
     width: 100px;
 }
 .searchClientInput{
@@ -132,4 +144,90 @@ border: 1px solid lightblue;
     font-weight: 300;
     transition: .4s;
     text-align: center;
+}
+.clientButton:hover{
+    background-color: #fbfbfc;
+    color: #314797;
+    border: 2px solid #314797;
+}
+
+.taskContainerClient{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    /* background-color: rgb(222, 229, 227); */
+    width: 100%;
+    height: 100%;
+}
+.taskContainerClient2{
+    position: relative;
+    /* left: 0; */
+    /* right: 0; */
+    /* top: 0; */
+    /* bottom: 0; */
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(222 229 227 / 0%);
+    justify-content: space-around;
+    padding: 10px;
+    overflow: auto;
+}
+.taskContainerClientTools{
+    display: flex;
+    flex-direction: row;
+    min-height: 50px;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    justify-content: space-evenly;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgb(0 0 0 / 10%)
+}
+.clientContainerAll{
+    background: linear-gradient(rgba(1, 3, 56, .8), rgba(1, 3, 56, .4)) no-repeat;
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid lightblue;
+}
+.clientAdress12{
+font-size: 14px;
+color: rgb(38, 38, 38);
+margin: 5px;
+}
+.clientEmail12{
+text-decoration: none;
+background-color: rgb(234, 234, 234);
+padding: 3px;
+border-radius: 3px;
+border: 0.5px solid lightblue;
+font-size: 12px;
+cursor: pointer;
+color: rgb(46, 46, 46);
+transition: .4s;
+
+}
+.clientEmail12:hover{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
+    }
+.clientEmailDiv{
+    margin-bottom: 5px;
+    margin-left: 5px;
+    transition: .4s;
+}
+.clientEmailDiv:hover{
+ 
 }

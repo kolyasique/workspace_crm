@@ -6,14 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 import './toggle.css';
+import { showToast } from '../../lib/toasti';
 
 const formInitialState = {
   login: '',
   password: '',
+  inn: '',
 };
 
 export default function Login() {
-  const [loginForm, setLoginForm] = useState([]);
+  const [loginForm, setLoginForm] = useState(formInitialState);
   const [admSignup, setAdmSignup] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,14 +36,12 @@ export default function Login() {
       },
       body: JSON.stringify(loginForm),
     })
+      .then((res) => res.json())
       .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        throw new Error('Something went wrong');
-      })
-      .then((res) => {
-        dispatch({ type: 'USER_SIGNIN', payload: res });
+        if (res.msg === 'Wrong login') { showToast({ message: 'Неверные данные!', type: 'error' }); navigate('/login'); } else if (res.msg === 'Wrong pass') { showToast({ message: 'Вы ввели неверный пароль!!', type: 'error' }); navigate('/login'); } else if (res.msg === 'не все поля заполнены') {
+          showToast({ message: 'Заполните все поля!', type: 'warning' });
+          navigate('/login');
+        } else { dispatch({ type: 'USER_SIGNIN', payload: res }); }
       })
       .catch(console.error);
     if (admSignup) { navigate('/workerpage'); } else { navigate('/adminpage'); }
@@ -53,29 +53,26 @@ export default function Login() {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
   return (
-    // {`mb-3 ${isSignup ? 'visible' : 'invisible'}`}
     <div className="loginFormDiv">
       <form className="loginForm" onSubmit={handleSubmit}>
-        {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
-          {/* <img className="log8o" src={log8o} alt="VB" /> */}
           <p className="inftext">Вход</p>
         </div>
         {!admSignup ? (
           <div className="form-input1">
             <label className="form-label">ИНН организации</label>
-            <input type="text" className="form-control" value={loginForm.inn} name="inn" onChange={handleInput} />
+            <input type="text" className="form-control" value={loginForm.inn} name="inn" onChange={handleInput} required />
           </div>
         ) : (
           <div className="form-input1">
             <label className="form-label">Логин пользователя</label>
-            <input type="text" className="form-control" value={loginForm.login} name="login" onChange={handleInput} />
+            <input type="text" className="form-control" value={loginForm.login} name="login" onChange={handleInput} required />
           </div>
         )}
 
         <div className="form-input1">
           <label className="form-label">Password</label>
-          <input type="password" className="form-control" value={loginForm.password} name="password" onChange={handleInput} />
+          <input type="password" className="form-control" value={loginForm.password} name="password" onChange={handleInput} required />
         </div>
 
         <div className="toggle1-switch">
@@ -87,7 +84,7 @@ export default function Login() {
           <p>Войти как админ</p>
         </div>
 
-        <button type="submit" className="buttonSubmit">Submit</button>
+        <button type="submit" className="buttonSubmit">Войти</button>
       </form>
     </div>
   );

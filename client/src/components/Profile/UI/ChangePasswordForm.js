@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import { ProfileContext } from '../../../context/Profile.context';
 import { showToast } from '../../../lib/toasti';
+import cl from './Password.module.css';
 
 const initialValuePasswordForm = {
   oldpassword: '',
@@ -42,13 +44,14 @@ export default function ChangePasswordForm() {
   };
   console.log(passwordForm);
   return (
-    <div className="passwordFormDin">
-      <form onSubmit={handleSubmit}>
-        <input type="password" name="oldpassword" value={passwordForm.oldpassword} placeholder="Ваш пароль" onChange={handleInput} />
-        <input type="password" name="password" value={passwordForm.password} placeholder="Введите новый пароль" onChange={handleInput} />
-        <input type="password" name="repassword" value={passwordForm.repassword} placeholder="Подтвердите пароль" onChange={handleInput} />
-        <button type="submit">Изменить</button>
-      </form>
-    </div>
+    <form className={cl.docForm} onSubmit={handleSubmit}>
+      <div className={cl.text}>Создать новый пароль</div>
+      {/* <div className={cl.docForm}> */}
+      <input className={cl.nameOfDoc} type="password" name="oldpassword" value={passwordForm.oldpassword} placeholder="Ваш пароль" onChange={handleInput} />
+      <input className={cl.nameOfDoc} type="password" name="password" value={passwordForm.password} placeholder="Введите новый пароль" onChange={handleInput} />
+      <input className={cl.nameOfDoc} type="password" name="repassword" value={passwordForm.repassword} placeholder="Подтвердите пароль" onChange={handleInput} />
+      <button className={cl.submitDownload} type="submit">Изменить</button>
+      {/* </div> */}
+    </form>
   );
 }

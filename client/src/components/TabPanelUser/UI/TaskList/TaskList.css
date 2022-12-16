@@ -23,6 +23,7 @@
     background-color: rgb(222 229 227 / 0%);
     justify-content: space-around;
     padding: 10px;
+    overflow: auto;
 }
 .taskTools{
     display: flex;
@@ -33,6 +34,7 @@
     height: 80px;
     justify-content: space-evenly;
     background-color: white;
+    border-radius: 5px;
     box-shadow: 0px 4px 10px rgb(0 0 0 / 10%)
 }
 .toDoTasks{
@@ -66,7 +68,7 @@
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 3px rgba(21, 21, 21, 0.5);
+    box-shadow: 0 0 3px rgba(22, 21, 21, 0.5);
 }
 .doneTaskItem{
     display: flex;
@@ -258,6 +260,7 @@ color: #000000;
     border-radius: 3px;
     font-size: 12px;
     color: #000000;
+    width: fit-content;
 }
 .statusBtnPlace{
     display: flex;
@@ -266,63 +269,40 @@ color: #000000;
     align-items: center;
     margin-top: 15px;
 }
-.filterMyTasksBtn{
+.filterBtn{
     display: flex;
     flex-direction: row;
         align-items: center;
         justify-content: space-around;
-        border: 0px;
+        /* border: 0px; */
         text-align: center;
-    background-color: rgb(228, 228, 228);
+    background-color: #314797;
     padding: 3px;
-    width: 80px;
+    width: 90px;
     border-radius: 3px;
+    border: 0px solid rgb(0, 51, 68);
     font-size: 12px;
-    color: #4a4a4a;
+    color: #f9f9f9;
     box-shadow: none;
+    transition: .4s;
 }
-.filterMyTaskFromAnotherBtn{
-    display: flex;
-    flex-direction: row;
-        align-items: center;
-        justify-content: space-around;
-        border: 0px;
-        text-align: center;
-    background-color: rgb(228, 228, 228);
-    padding: 3px;
-    width: 80px;
-    border-radius: 3px;
-    font-size: 12px;
-    color: #4a4a4a;
-    box-shadow: none;
-}
-.clearFilterBtn{
-    display: flex;
-    flex-direction: row;
-        align-items: center;
-        justify-content: space-around;
-        border: 0px;
-        text-align: center;
-    background-color: rgb(228, 228, 228);
-    padding: 3px;
-    width: 80px;
-    border-radius: 3px;
-    font-size: 12px;
-    color: #4a4a4a;
-    box-shadow: none;
+.filterBtn:hover{
+    background-color: #fbfbfc;
+    color: #314797;
+    border: 2px solid #314797;
 }
 
 #searchfilter{
     background-color: #fdfdfd;
-    text-align: center;
-    font-size: 16px;
+    text-align: left;
+    font-size: 14px;
     border-radius: 3px;
     box-sizing: border-box;
     border: 0;
     color: rgb(57, 52, 143);
     font-size: 14px;
     margin: 10px;
-    height: 40px;
+    height: 30px;
     outline: 0;
     padding: 2px 20px 0;
     width: 40%;
@@ -338,10 +318,40 @@ color: #000000;
         text-align:left;
         border: .5em solid rgba(0,0,0,0);
         border-radius: 100%;
-        background: rgb(245,245,245) linear-gradient(rgb(245,245,245), rgb(188,192,193)) 50% 50% / calc(1.5em + .5em*2) calc(1.5em + .5em*2);
+        background: #314797 linear-gradient(rgb(245,245,245), rgb(188,192,193)) 50% 50% / calc(1.5em + .5em*2) calc(1.5em + .5em*2);
         box-shadow:
          inset 0 -3px 10px rgba(255,255,255,1),
          inset 0 3px 10px rgba(0,0,0,.4),
          0 2px 4px rgba(0,0,0,.9);
-      
+}
+.addTaskBtn{
+    display: flex;
+    justify-content: center;
+    width: 30px;
+height: 30px;
+    /* vertical-align: middle; */
+    text-decoration: none;
+    text-align:left;
+    border: .5em solid rgba(0,0,0,0);
+    border-radius: 100%;
+    background: #314797 linear-gradient(rgb(245,245,245), rgb(188,192,193)) 50% 50% / calc(1.5em + .5em*2) calc(1.5em + .5em*2);
+    box-shadow:
+     inset 0 -3px 10px rgba(255,255,255,1),
+     inset 0 3px 10px rgba(0,0,0,.4),
+     0 2px 4px rgba(0,0,0,.9);
+}
+.taskForClient{
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    font-weight: 300;
+    /* margin: 3px; */
+    width: fit-content;
+    margin-bottom: 3px;
+    background-color: #314797;
+    border-radius: 3px;
+    padding: 3px;
+    color: white;
+    justify-content: flex-start;
+    align-items: stretch;
 }

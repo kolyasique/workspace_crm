@@ -1,6 +1,79 @@
 .oneWorker{
-    background-color: aliceblue;
     display: flex;
     flex-direction: row;
-    margin: 5px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #bdc1e2;
+    border-radius: 5px;
+    border: 0;
+    box-sizing: border-box;
+    color: rgb(4, 5, 49);
+    font-size: 14px;
+    height: 35px;
+    outline: 0;
+    padding: 10px;
+    width: 80%;
+    z-index: 2;
+    margin: 7px;
+}
+.workerList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #bdc1e240;
+    border-radius: 3px;
+    overflow: auto;
+    max-height: 250px;
+    box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
+}
+.worker-list{
+       /* background-color: #15172b; */
+       background-color: #ffffff21;
+       border-radius: 5px;
+       box-sizing: border-box;
+       padding: 20px;
+       width: 360px;
+       height: 500px;
+       margin-left: 20px;
+       /* overflow: auto; */
+}
+.worker-list ul{
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.worker-list li {
+list-style: none;
+
+}
+
+.worker-list h3 {
+color: white;
+}
+
+.worker-list button {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(252, 74, 74, 0.774);
+    border-radius: 3px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 12;
+    height: 20px;
+    outline: 0;
+    text-align: center;
+    max-width: 80px;
+}
+.emptyList{
+    font-size: 20px;
+    font-weight: 500;
+    color:white;
+
+    text-align: center;
 }

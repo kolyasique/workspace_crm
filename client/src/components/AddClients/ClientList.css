@@ -3,31 +3,41 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 16px 0;
-    background-color: #303245;
-    border-radius: 10px;
+    background-color: #bdc1e2;
+    border-radius: 5px;
     border: 0;
-    color: #eee;
+    box-sizing: border-box;
+    color: rgb(4, 5, 49);
     font-size: 14px;
-    height: 62px;
+    height: 35px;
     outline: 0;
-    padding: 0 0 0 20px;
-   
+    padding: 10px;
+    width: 95%;
+
+    z-index: 2;
+    margin: 7px;
 }
 
+
 .client-list {
-    background-color: #15172b;
-    border-radius: 20px;
+    /* background-color: #15172b; */
+    background-color: #ffffff21;
+    border-radius: 5px;
     box-sizing: border-box;
     padding: 20px;
     width: 360px;
-    margin: 20px;
+    height: 400px;
+    margin-left: 20px;
+    /* overflow: auto; */
 }
 
 .client-list ul{
-list-style: none;
-margin: 0;
-padding: 0;
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
 }
 
 .client-list li {
@@ -40,17 +50,36 @@ color: white;
 }
 
 .client-list button {
+    display: flex;
+    flex-direction: column;
     background-color: rgba(252, 74, 74, 0.774);
-    border-radius: 12px;
+    border-radius: 3px;
     border: 0;
     box-sizing: border-box;
     color: #eee;
     cursor: pointer;
-    font-size: 16px;
-    height: 62px;
+    font-size: 12;
+    height: 20px;
     outline: 0;
     text-align: center;
-    width: 120px;
+    max-width: 80px;
 }
 
 
+.allClientsForAdm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #bdc1e240;
+    border-radius: 3px;
+    overflow: auto;
+    max-height: 250px;
+    box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
+}
+.emptyList{
+    font-size: 20px;
+    font-weight: 500;
+    color:white;
+
+    text-align: center;
+}
