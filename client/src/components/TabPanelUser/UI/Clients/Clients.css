@@ -145,6 +145,11 @@ border: 1px solid lightblue;
     transition: .4s;
     text-align: center;
 }
+.clientButton:hover{
+    background-color: #fbfbfc;
+    color: #314797;
+    border: 2px solid #314797;
+}
 
 .taskContainerClient{
     display: flex;
