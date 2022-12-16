@@ -8,14 +8,15 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // import { setDefaultOptions } from 'date-fns';
-import { ru } from 'date-fns/locale';
+// import { ru } from 'date-fns/locale';
+import enUS from 'date-fns/locale/en-US';
 import './Calendar.css';
 import { showToast } from '../../lib/toasti';
 
 // setDefaultOptions({ locale: ru });
 
 const locales = {
-  'ru-UA': ru,
+  'en-US': enUS,
 };
 
 const initialState = {
@@ -60,12 +61,14 @@ function CalendarComponent() {
     // }
     //
 
-    const { start } = newEvent;
-    const { end } = newEvent;
-    const { title, content } = newEvent;
+    const {
+      title, content, start, end,
+    } = newEvent;
+
     const date = {
       title, content, start, end,
     };
+
     const url = 'http://localhost:6622/api/calendar';
     fetch(url, {
       method: 'POST',
