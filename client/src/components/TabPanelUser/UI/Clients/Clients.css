@@ -90,6 +90,7 @@ border: 1px solid lightblue;
 }
 .clientTaskTitle{
     text-align: center;
+
 }
 .clientTaskExecutor{
     display: flex;
@@ -195,4 +196,33 @@ border: 1px solid lightblue;
     height: 100%;
     border-radius: 5px;
     border: 1px solid lightblue;
+}
+.clientAdress12{
+font-size: 14px;
+color: rgb(38, 38, 38);
+margin: 5px;
+}
+.clientEmail12{
+text-decoration: none;
+background-color: rgb(234, 234, 234);
+padding: 3px;
+border-radius: 3px;
+border: 0.5px solid lightblue;
+font-size: 12px;
+cursor: pointer;
+color: rgb(46, 46, 46);
+transition: .4s;
+
+}
+.clientEmail12:hover{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
+    }
+.clientEmailDiv{
+    margin-bottom: 5px;
+    margin-left: 5px;
+    transition: .4s;
+}
+.clientEmailDiv:hover{
+ 
 }
