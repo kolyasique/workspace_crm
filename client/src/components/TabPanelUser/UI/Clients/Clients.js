@@ -149,9 +149,9 @@ export default function Clients() {
                     {`С нами уже: ${getUserDays(client.createdAt)} дня`}
                   </div>
                 </div>
-                <div>{`адрес: ${client.adress}`}</div>
+                <div className="clientAdress12">{`адрес: ${client.adress}`}</div>
 
-                <div>{client.email}</div>
+                <div className="clientEmailDiv"><a className="clientEmail12" href={`mailto:${client.email}`}>{client.email}</a></div>
                 <div className="clientsTasksListDiv">
                   <div className="taskListTitle">
                     {' '}
