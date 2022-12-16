@@ -77,9 +77,9 @@ function Modal({
           <input className={cl.myModalInput} type="text" value={formTask.title} name="title" placeholder="Название" maxLength="30" onChange={handleInput} required />
           <textarea className={cl.myModalInputTextArea} value={formTask.content} name="content" placeholder="Описание" maxLength="150" onChange={handleInput} />
           <label className={cl.myModalLabel}>Дата начала</label>
-          <input className={cl.myModalInputData} type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" min="2022-12-13T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
+          <input className={cl.myModalInputData} type="datetime-local" value={formTask.startDate} name="startDate" placeholder="Дата начала" min="2022-12-16T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
           <label className={cl.myModalLabel}>Дата окончания</label>
-          <input className={cl.myModalInputData} type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" min="2022-12-13T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
+          <input className={cl.myModalInputData} type="datetime-local" value={formTask.endDate} name="endDate" placeholder="Дата окончания" min="2022-12-16T00:00" max="2055-12-31T00:00" onChange={handleInput} required />
           <label className={cl.myModalLabel}>Исполнитель задачи</label>
           <select className={cl.myModalInput} name="taskForUserId" value={formTask.taskForUserId} placeholder="кому" onChange={handleInput} required>
             <option selected disabled value="">Сотрудники</option>

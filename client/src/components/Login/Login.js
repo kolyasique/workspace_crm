@@ -84,7 +84,7 @@ export default function Login() {
           <p>Войти как админ</p>
         </div>
 
-        <button type="submit" className="buttonSubmit">Submit</button>
+        <button type="submit" className="buttonSubmit">Войти</button>
       </form>
     </div>
   );
