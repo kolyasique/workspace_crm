@@ -102,7 +102,7 @@ export default function Messages() {
               ) : (
                 <div className="circleAvatar">
                   <div className="circleAvatar1">
-                    <img data-value={JSON.stringify(user)} onClick={handleClick} src={`http://localhost:6622/${user.avatar}`} alt="аватарка" />
+                    <img className="img1" data-value={JSON.stringify(user)} onClick={handleClick} src={`http://localhost:6622/${user.avatar}`} alt="аватарка" />
                     <div data-value={JSON.stringify(user)} onClick={handleClick} className={userList.includes(user.id) ? 'iconOnlineA' : 'iconOfflineA'} />
                   </div>
                 </div>
