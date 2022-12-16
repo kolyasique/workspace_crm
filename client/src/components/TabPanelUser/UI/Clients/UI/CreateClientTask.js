@@ -74,9 +74,9 @@ export default function CreateClientTask({ client }) {
       <label className={cl.ModalLabel}>Добавить описание</label>
       <textarea value={formClientTask.content} className={cl.myModalInputTextArea} name="content" placeholder="описание" maxLength="150" onChange={handleInput} />
       <label className={cl.ModalLabel}>Установить дату начала</label>
-      <input type="datetime-local" className={cl.myModalInputData} value={formClientTask.startDate} name="startDate" min="2022-12-13T00:00" max="2055-12-31T00:00" placeholder="Дата начала" onChange={handleInput} required />
+      <input type="datetime-local" className={cl.myModalInputData} value={formClientTask.startDate} name="startDate" min="2022-12-16T00:00" max="2055-12-31T00:00" placeholder="Дата начала" onChange={handleInput} required />
       <label className={cl.ModalLabel}>Установить дедлайн</label>
-      <input type="datetime-local" className={cl.myModalInputData} value={formClientTask.endDate} name="endDate" min="2022-12-13T00:00" max="2055-12-31T00:00" placeholder="Дата окончания" onChange={handleInput} required />
+      <input type="datetime-local" className={cl.myModalInputData} value={formClientTask.endDate} name="endDate" min="2022-12-16T00:00" max="2055-12-31T00:00" placeholder="Дата окончания" onChange={handleInput} required />
       <label className={cl.ModalLabel}>Добавить исполнителя</label>
       <select name="taskForUserId" className={cl.myModalInput} value={formClientTask.taskForUserId} placeholder="кому" onChange={handleInput} required>
         <option selected disabled value="">Выбрать сотрудника</option>

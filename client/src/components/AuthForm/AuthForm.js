@@ -86,7 +86,7 @@ export default function AuthForm() {
           <label className="form-label">Телефон</label>
           <input type="tel" className="form-control" value={form.phone} name="phone" onChange={handleInput} placeholder="+7(926)9554747" pattern="^\+?[0-9]\s?\(?[0-9]{3}\)?\s?[0-9]{3}\s?[0-9]{2}\s?[0-9]{2}" />
         </div>
-        <button type="submit" className="buttonSubmit">Submit</button>
+        <button type="submit" className="buttonSubmit">Регистрация</button>
       </form>
     </div>
   );
