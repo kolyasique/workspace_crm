@@ -38,30 +38,30 @@ export default function ChangePersonalData() {
 
       <form className="formPersonalData" onSubmit={handleSubmit}>
         <div className="formInput">
-          <label className="form-label ">login</label>
+          <label className="formlabel12">login</label>
           <input type="text" className={cl.nameOfDoc} value={form.login} name="login" placeholder={userInfo.login} onChange={handleInput} />
         </div>
 
         <div className="formInput">
-          <label className="form-label ">Фамилия</label>
+          <label className="formlabel12">Фамилия</label>
           <input type="text" className={cl.nameOfDoc} value={form.second_name} name="second_name" placeholder="Вы поменяли фамилию?" onChange={handleInput} />
         </div>
         <div className="formInput">
-          <label className="form-label ">Имя</label>
+          <label className="formlabel12">Имя</label>
           <input type="text" className={cl.nameOfDoc} value={form.name} name="name" placeholder="У вас сменилось имя?" onChange={handleInput} />
         </div>
         <div className="formInput">
-          <label className="form-label ">Отчество</label>
+          <label className="formlabel12">Отчество</label>
           <input type="text" className={cl.nameOfDoc} value={form.patronymic} name="patronymic" placeholder="У вас поменяся отец?" onChange={handleInput} />
         </div>
 
         <div className="formInput">
-          <label className="form-label ">E-mail</label>
+          <label className="formlabel12">E-mail</label>
           <input type="email" className={cl.nameOfDoc} value={form.email} name="email" placeholder="email" onChange={handleInput} />
         </div>
 
         <div className="formInput">
-          <label className="form-label ">Контактный номер</label>
+          <label className="formlabel12">Контактный номер</label>
           <input type="text" className={cl.nameOfDoc} value={form.phone} name="phone" placeholder="телефон" onChange={handleInput} />
         </div>
         <button type="submit" className={cl.submitDownload}>Подтвердить</button>

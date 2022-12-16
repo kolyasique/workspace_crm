@@ -66,8 +66,8 @@ border-radius: 3px;
     background-color: #dfe1fd56;
 }
 .containerChanges{
-    width: 50%;
-    height: 450px;
+    width: 60%;
+        height: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,8 +75,10 @@ border-radius: 3px;
     background-color: #ffffff21;
     border-radius: 5px;
     justify-content: space-evenly;
+
 }
 .profileAvatar{
+    display: flex;
     width: 200px; /* задаете свои размеры */
     height: 200px;
     overflow: hidden;
@@ -110,6 +112,7 @@ border-radius: 3px;
     align-items: center;
     background-color: #ffffff21;
     border-radius: 5px;
+    padding: 20px;
    }
    .changeAva{
     display: flex;
@@ -156,4 +159,17 @@ text-align: center;
     background-color: #00D4C6;
     color:#ffffff;
     transition: .2s ease-in-out;
+  }
+  .formlabel12{
+    display: flex;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+  }
+  .formLabel13{
+    display: flex;
+    font-weight: 400;
+    font-size: 18px;
+    color: #ffffff;
+    text-align: center;
   }

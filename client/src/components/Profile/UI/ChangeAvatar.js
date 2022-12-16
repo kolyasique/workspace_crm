@@ -63,7 +63,7 @@ export default function ChangeAvatar() {
       )}
       <form className="changeAva" onSubmit={handleSubmit}>
         <div className={cl.docForm}>
-          <h3 className="form-label ">Изменить аватар</h3>
+          <h3 className="formLabel13">Изменить аватар</h3>
           <input className={cl.downloadFile} type="file" name="file" onChange={uploudImg} />
           <button type="submit" className={cl.submitDownload}>Загрузить</button>
         </div>
