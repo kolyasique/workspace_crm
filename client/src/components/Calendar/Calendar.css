@@ -101,7 +101,7 @@
     height: 30px;
     outline: 0;
     padding: 2px 20px 0;
-    width: 35%;
+    width: 25%;
     box-shadow: 0 0 3px rgb(39 42 120 / 50%);
 }
 .inputCalendar2{
@@ -113,7 +113,8 @@
     border: 0;
     color: rgb(57, 52, 143);
     font-size: 12px;
-    margin: 10px;
+    /* margin: 10px; */
+    margin-bottom: 5px;
     height: 20px;
     outline: 0;
     padding: 2px 20px 0;

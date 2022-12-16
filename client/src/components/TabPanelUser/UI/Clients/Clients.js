@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
@@ -130,7 +131,14 @@ export default function Clients() {
     return diffDays;
   }
 
-  console.log(tasks, 'ТАСКИ');
+  function checkPastTime(dateOfEnd) {
+    const date1 = new Date(dateOfEnd);
+    const date2 = new Date();
+    const timeDiff = date2.getTime() - date1.getTime();
+    const diffDays = (timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
+
   return (
     <div className="taskContainerClient">
 
@@ -139,14 +147,14 @@ export default function Clients() {
       </div>
       <div className="taskContainerClient2">
         <div className="clientContainerAll">
-          {findClients.map((client) => (
+          {findClients.sort((a, b) => checkPastTime(a.createdAt) - checkPastTime(b.createdAt)).map((client) => (
             <div key={client.id} className="clientItem">
               <div className="clientInfo">
                 <div className="clientInfoHead">
                   <div className="clientName">{client.name}</div>
                   <div className="clientInn">{client.inn}</div>
                   <div className="clientPartnershipAge">
-                    {`С нами уже: ${getUserDays(client.createdAt)} дня`}
+                    {`С нами уже: ${getUserDays(client.createdAt)} дн.`}
                   </div>
                 </div>
                 <div className="clientAdress12">{`адрес: ${client.adress}`}</div>

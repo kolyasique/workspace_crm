@@ -238,11 +238,11 @@ export default function TaskList() {
 
     const timeDiff = date1.getTime() - date2.getTime();
     const diffDaysRaw = (timeDiff / (1000 * 3600 * 24));
-    const diffDaysRawString = `${Math.round(timeDiff / (1000 * 3600 * 24))} дней`;
+    const diffDaysRawString = `${Math.round(timeDiff / (1000 * 3600 * 24))} дн.`;
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
     const hoursLeftRaw = timeDiff / (1000 * 3600);
-    const hoursLeftString = `${Math.ceil(timeDiff / (1000 * 3600))} часов`;
+    const hoursLeftString = `${Math.ceil(timeDiff / (1000 * 3600))} ч.`;
 
     const minutesLeftRaw = timeDiff / (1000 * 60);
     const minutesLeftString = `${Math.ceil(timeDiff / (1000 * 60))} минут`;
