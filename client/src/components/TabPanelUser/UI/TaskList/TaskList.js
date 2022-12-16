@@ -349,9 +349,9 @@ export default function TaskList() {
                   <div className="taskItemUpperDiv">
                     <div className={task.task_type === 'personal' ? 'personalClass' : 'orderedClass'}>
                       {task.task_type === 'personal' ? ('Личная') : (task.creator_id === userId ? (
-                        `для:${setCreator(task.worker_id)}`
+                        `${setCreator(task.worker_id)}`
                       ) : (
-                        `от:${setCreator(task.creator_id)}`
+                        `${setCreator(task.creator_id)}`
                       ))}
                     </div>
                     <div className="taskTitle">{task.title}</div>
