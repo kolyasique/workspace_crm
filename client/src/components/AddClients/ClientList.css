@@ -27,6 +27,7 @@
     padding: 20px;
     width: 360px;
     height: 400px;
+    margin-left: 20px;
     /* overflow: auto; */
 }
 
@@ -74,4 +75,11 @@ color: white;
     overflow: auto;
     max-height: 250px;
     box-shadow: 0 0 3px rgba(39, 42, 120, 0.5);
+}
+.emptyList{
+    font-size: 20px;
+    font-weight: 500;
+    color:white;
+
+    text-align: center;
 }

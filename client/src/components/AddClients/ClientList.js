@@ -35,9 +35,9 @@ function ClientList({ clients, setClients }) {
           </div>
         </ul>
       ) : (
-        <div className="allClientsForAdm">
-          <div>Список пуст</div>
-        </div>
+
+        <div className="emptyList">Список пуст</div>
+
       )}
 
     </div>

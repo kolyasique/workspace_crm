@@ -61,7 +61,7 @@ function WorkerList({ workers, setWorkers }) {
         </ul>
 
       ) : (
-        <div>Список пуст</div>
+        <div className="emptyList">Список пуст</div>
       )}
 
     </div>
