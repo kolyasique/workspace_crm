@@ -217,15 +217,32 @@
 }
 .circleAvatar1{
   position: relative;
-  width: 100%;
-  height: 100%;
+  /* width: 50px;
+  height: 50px; */
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  background: #fff;
+  padding: 5px; /* создание отступов */
+  border-radius: 50%;
+  /* не забываем о кроссбраузерности */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
 }
-.circleAvatar1>img {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
+.circleAvatar1 img {
+    /* object-fit: contain;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%; */
+    display: block;
+    width:100%;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+.img1{
+  width: 100px;
+  height: 100px;
 }
 .contact {
   display: flex;

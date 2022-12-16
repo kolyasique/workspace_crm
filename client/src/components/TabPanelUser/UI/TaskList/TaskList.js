@@ -22,7 +22,7 @@ export default function TaskList() {
   const [disabledBtn, setDisabledBtn] = useState({});
   // const {taskStatus, setTaskStatus} = useContext()
   const [closed, setClosed] = useState({});
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
   const [disabledSlider, setDisabledSlider] = useState({});
   const [find, setFind] = useState({ query: '' });
@@ -75,7 +75,7 @@ export default function TaskList() {
   const handleChange = (e) => {
     const taskId = e.target.id;
     const taskProgressStatus = getProgressStatus(e.target.value);
-    setTasks(filteredTasks.map((a) => {
+    setFilteredTasks(filteredTasks.map((a) => {
       if (+a.id === +taskId) {
         a.progress_status = taskProgressStatus;
       } return a;

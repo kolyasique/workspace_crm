@@ -43,6 +43,7 @@ export default function ClientDocuments({ client }) {
       // data.append('text', text)
       data.append('form', JSON.stringify(form));
       data.append('client_id', id);
+
       if (img !== null) {
         const url = 'http://localhost:6622/api/upload';
         fetch(url, {
@@ -57,6 +58,7 @@ export default function ClientDocuments({ client }) {
               text: '',
               image: '',
             });
+            // setImg(null);
             showToast({ message: 'Файл загружен', type: 'success' });
           });
       } else { showToast({ message: 'Добавьте файл!', type: 'warning' }); }
