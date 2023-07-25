@@ -46,12 +46,10 @@ export default function ChangePasswordForm() {
   return (
     <form className={cl.docForm} onSubmit={handleSubmit}>
       <div className={cl.text}>Создать новый пароль</div>
-      {/* <div className={cl.docForm}> */}
       <input className={cl.nameOfDoc} type="password" name="oldpassword" value={passwordForm.oldpassword} placeholder="Ваш пароль" onChange={handleInput} />
       <input className={cl.nameOfDoc} type="password" name="password" value={passwordForm.password} placeholder="Введите новый пароль" onChange={handleInput} />
       <input className={cl.nameOfDoc} type="password" name="repassword" value={passwordForm.repassword} placeholder="Подтвердите пароль" onChange={handleInput} />
       <button className={cl.submitDownload} type="submit">Изменить</button>
-      {/* </div> */}
     </form>
   );
 }

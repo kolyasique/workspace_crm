@@ -10,7 +10,6 @@ export default function MainPageUser() {
   return (
     <div className={cl.workerPanel}>
       <MainContextProvider><VerticalTabs /></MainContextProvider>
-
     </div>
   );
 }

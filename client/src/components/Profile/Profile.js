@@ -18,97 +18,6 @@ export default function Profile() {
     form, setForm, userInfo, setUserInfo, userAvatar, setUserAvatar, img, setImg,
   } = useContext(ProfileContext);
 
-  // const formInitialState = {
-  //   second_name: userInfo.second_name,
-  //   name: userInfo?.name,
-  //   patronymic: userInfo?.patronymic,
-  //   login: userInfo?.login,
-  //   phone: userInfo?.phone,
-  //   email: userInfo?.email,
-  // };
-
-  // ; setForm(formInitialState);
-  // const handleInput = (e) => {
-  //   setForm({ ...form, [e.target.name]: e.target.value });
-  // };
-  // const handleSubmit = (e) => {
-  //   // try {
-  //   e.preventDefault();
-  //   const data = new FormData();
-  //   data.append('avatar', img);
-  //   // data.append('form', JSON.stringify(form));
-  //   const url = 'http://localhost:6622/api/avatar';
-  //   fetch(url, {
-  //     method: 'POST',
-  //     credentials: 'include',
-  //     // headers: {
-  //     //   'content-type': 'multipart/form-data',
-  //     // },
-  //     body: data,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((newdata) => {
-  //       console.log(newdata);
-  //       setUserInfo({
-  //         avatar: newdata.findThisUser.avatar,
-  //       });
-  //       showToast({ message: 'Файл загружен', type: 'success' });
-  //     });
-  // };
-  // const handleSubmit1 = (e) => {
-  //   // try {
-  //   e.preventDefault();
-  //   // data.append('form', JSON.stringify(form));
-  //   const url = 'http://localhost:6622/api/updworkerinfo';
-  //   fetch(url, {
-  //     method: 'POST',
-  //     credentials: 'include',
-  //     // headers: {
-  //     //   'content-type': 'multipart/form-data',
-  //     // },
-  //     body: JSON.stringify(form),
-  //   })
-  //     .then((res) => res.json());
-  // .then((newdata) => {
-  //   console.log(newdata);
-  //   setUserInfo({
-  //     avatar: newdata.findThisUser.avatar,
-  //   });
-  //   showToast({ message: 'Файл загружен', type: 'success' });
-  // });
-
-  // if (res.status === 200) {
-  //   showToast({ message: 'Данные изменены', type: 'success' });
-  //   setUserInfo({ avatar: data.avatar });
-  // }
-
-  // .then((data) => { console.log(data); });
-  // };
-  // setUserInfo({ avatar: data1.avatar });
-  // setForm(formInitialState);
-  //     if (res.status === 200) {
-  //       showToast({ message: 'Данные изменены', type: 'success' });
-  //       setUserInfo({ avatar: res.avatar });
-  //     }
-  //   } catch (error) {
-  //     console.log('======>>>', error);
-  //     showToast({ message: 'Не получилось', type: 'error' });
-  //   }
-  // };
-  // const handleSubmit1 = (e) => {
-  //   console.log('forma');
-  // };
-
-  // const uploudImg = (e) => {
-  //   setImg(e.target.files[0]);
-  //   console.log(e.target.files[0]);
-  // };
-
-  // const avatarPath = () => {
-  //   if (userAvatar.path === undefined) {
-  //     return userInfo.avatar;
-  //   }
-  // };
   return (
     <div className="profileDiv">
       <div className="box1">
@@ -125,8 +34,3 @@ export default function Profile() {
 
   );
 }
-
-{ /* <div className="formInput">
-<label className="form-label ">password</label>
-<input type="password" defaultValue="dsfsdfdsfdsf" className="form-control" value={form.password} name="password" placeholder="Пароль сотрудника" onChange={handleInput} />
-</div> */ }

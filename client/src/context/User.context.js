@@ -15,23 +15,10 @@ export default function UserContextProvider({ children }) {
   const [done, setDone] = useState({});
   const [history, setHistory] = useState([]);
   const [clients, setClients] = useState([]);
-  // const [userInfo, setUserInfo] = useState(null);
 
   const checkDateNow = new Date();
 
   const abortController = new AbortController();
-
-  // useEffect(() => {
-  //   fetch('http://localhost:6622/api/userpanel/getuserinfo', {
-  //     credentials: 'include',
-  //     signal: abortController.signal,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setUserInfo(data);
-  //     });
-  //   console.log(userInfo);
-  // }, [mainOrProfile]);
 
   useEffect(() => {
     const interval = setInterval(() => { setDateNow(Date.now()); }, 60000);
@@ -39,7 +26,6 @@ export default function UserContextProvider({ children }) {
       clearInterval(interval);
     };
   }, []);
-  console.log(dateNow);
   const dataT = new Date(dateNow);
 
   function rusufucateMonth(month) {
@@ -105,10 +91,6 @@ export default function UserContextProvider({ children }) {
       data.getHours()}:${
       data.getMinutes()}`;
   }
-  console.log(convertDate2(dataT));
-  //   const ttt = dateNow.getMonth();
-  //   console.log(ttt);
-  //   console.log(dateNow);
 
   const value = useMemo(() => ({
     dateNow,
@@ -128,8 +110,6 @@ export default function UserContextProvider({ children }) {
     setClients,
     done,
     setDone,
-    // userInfo,
-    // setUserInfo,
 
   }));
 

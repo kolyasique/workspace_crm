@@ -26,14 +26,10 @@ export default function CreateClientTask({ client }) {
       .then((res) => res.json())
       .then((data) => setWorkersForList(data));
   }, []);
-  console.log(client.id, '😉😉😉');
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(e.target.id, '😉');
-    console.log(formClientTask);
-    // formClientTask.append('client_id', client.id);
-    // const taskId = { taskId: [e.target.id] };
     const url = 'http://localhost:6622/api/userpanel/createtaskforclient';
     fetch(url, {
       method: 'POST',
@@ -45,13 +41,10 @@ export default function CreateClientTask({ client }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        // if (+data.sessionId === +formClientTask.taskForUserId) {
         setTasks([...tasks, data.createTask]);
-        // }
       })
       .catch(console.error);
     setClientFormTask(initialvalue);
-    // setVisible(false);
   };
 
   const handleInput = (e) => {

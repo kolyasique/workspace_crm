@@ -24,46 +24,24 @@ export default function Clients() {
   const findClients = clients
     .filter((el) => (el.name.toLowerCase() + String(el.inn) + el.email + el.adress
       .toLowerCase()).includes(findClient.query.toLowerCase()));
-  // const handeleInput = (e) => {
-  //   setForm({ ...form, [e.target.name]: e.target.value });
-  // };
+
   const handleClick = async (e) => {
     try {
       console.log(e, 'Создать заявку');
       setVisibleModalForOrder(true);
     } catch (error) {
       console.log(error);
-      // showToast({ message: 'Не получилось', type: 'error' });
     }
   };
 
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/getclients', {
       credentials: 'include',
-      // ручка за которую у нас цепляется abortcontroller
       signal: abortController.signal,
     })
       .then((res) => res.json())
       .then((data) => setClients(data));
   }, []);
-
-  // useEffect(() => {
-  //   fetch('http://localhost:6622/api/userpanel/gettasks', {
-  //     credentials: 'include',
-  //     signal: abortController.signal,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setTasks(data.allTasks);
-  //       // setAllWorkers(data.workers);
-  //     });
-  // }, []);
-  // const getUserDays = (userCreationDay) => {
-  //   const date = new Date();
-  //   const timeDiff = Math.abs(date.getTime() - userCreationDay.getTime());
-  //   const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  //   return console.log(diffDays);
-  // };
 
   function getUserDays(userCreationDay) {
     const date1 = new Date(userCreationDay);
@@ -77,7 +55,6 @@ export default function Clients() {
   }
 
   function caseForProgress(id, value) {
-    console.log(id, 'id', value, 'value');
     switch (value) {
       case 'Начало':
         return setProgressValue({ ...progressValue, [id]: 0 });
@@ -186,9 +163,7 @@ export default function Clients() {
 
                 </div>
               </div>
-              {/* <input type="file" onChange={uploudImg} />
-          <button type="submit" id={client.id}
-          onClick={handleSubmit}>Загрузить документ</button> */}
+
               <div className="clientButtonBar">
                 <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<CreateClientTask client={client} />); }}>Создать задачу</button>
                 <button type="button" className="clientButton" id={client.id} onClick={(e) => { handleClick(e); setComponent(<ClientHistory client={client} />); }}> История</button>

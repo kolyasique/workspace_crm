@@ -23,7 +23,6 @@ export default function Messages() {
     const value = JSON.parse(data);
     setRecValue(value);
     setShowChat(true);
-    // setActiveSobesednik(value.id);
   };
 
   useEffect(() => {
@@ -48,7 +47,6 @@ export default function Messages() {
       const message = JSON.parse(event.data);
 
       const { type, payload } = message;
-      console.log({ type });
 
       switch (type) {
         case 'message':
@@ -69,14 +67,11 @@ export default function Messages() {
       }
     };
     socket.onclose = () => {
-      console.log('rabotaet onclose');
     };
     socket.onerror = (error) => {
       console.log('socket', error);
     };
   }, []);
-
-  console.log('vremya', showMessages.length > 0 ? typeof showMessages[0].createdAt : 'net');
 
   return (
     <div className="chatPage">

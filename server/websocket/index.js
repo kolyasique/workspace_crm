@@ -43,10 +43,7 @@ wss.on('connection', (ws, req, usersMap, wsClientMap) => {
 
         break;
       case 'open':
-        // if (sender && reciever) {
-        //   sender.ws.send(JSON.stringify({ type: 'online', payload: 'ONLINEEE' }));
-        //   reciever.ws.send(JSON.stringify({ type: 'online', payload: 'ONLINEEE' }));
-        // }
+
         const user = payload;
         const userArray = [];
 

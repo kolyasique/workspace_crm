@@ -42,26 +42,18 @@ export default function AddCleintsForm({ setClients }) {
         <div className="title">Добавить клиента</div>
         <div className="input-container ic1">
           <input id="name" type="text" className="input" value={form.name} name="name" placeholder="Название клиента" onChange={handleInput} required />
-
-          {/* <label htmlFor="name" className="placeholder">Наименование компании</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="adress" type="text" className="input" value={form.adress} name="adress" placeholder="Адрес" onChange={handleInput} required />
-
-          {/* <label htmlFor="adress" className="placeholder">Адрес</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="inn" type="text" className="input" value={form.inn} name="inn" placeholder="ИНН" onChange={handleInput} required />
-
-          {/* <label htmlFor="inn" className="placeholder">ИНН</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="email" type="text" className="input" value={form.email} name="email" placeholder="E-mail" onChange={handleInput} required />
-
-          {/* <label htmlFor="email" className="placeholder">email</label> */}
         </div>
 
         <button type="submit" className="submit">Добавить</button>

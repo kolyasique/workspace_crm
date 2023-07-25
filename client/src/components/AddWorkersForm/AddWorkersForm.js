@@ -46,42 +46,30 @@ export default function AddWorkersForm({ setWorkers }) {
         <div className="title">Добавить сотрудника</div>
         <div className="input-container ic1">
           <input id="login" type="text" className="input" value={form.login} name="login" placeholder="Логин" onChange={handleInput} required />
-
-          {/* <label htmlFor="login" className="placeholder">Логин</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="pass" type="password" className="input" value={form.password} name="password" placeholder="Пароль для входа" onChange={handleInput} required />
-
-          {/* <label htmlFor="pass" className="placeholder">Пароль</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="secondName" type="text" className="input" value={form.second_name} name="second_name" placeholder="Фамилия" onChange={handleInput} required />
-          {/* <label htmlFor="secondName" className="placeholder">Фамилия</label> */}
         </div>
+
         <div className="input-container ic2">
           <input id="firstName" type="text" className="input" value={form.name} name="name" placeholder="Имя" onChange={handleInput} required />
-
-          {/* <label htmlFor="firstName" className="placeholder">Имя</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="thirdName" type="text" className="input" value={form.patronymic} name="patronymic" placeholder="Отчество" onChange={handleInput} required />
-
-          {/* <label htmlFor="thirdName" className="placeholder">Отчество</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="email" type="text" className="input" value={form.email} name="email" placeholder="E-mail" onChange={handleInput} required />
-
-          {/* <label htmlFor="email" className="placeholder">email</label> */}
         </div>
 
         <div className="input-container ic2">
           <input id="phone" type="text" className="input" value={form.phone} name="phone" placeholder="Контактный номер" onChange={handleInput} required />
-
-          {/* <label htmlFor="phone" className="placeholder">Телефон</label> */}
         </div>
         <div className="select-container">
           <div className="form-group">

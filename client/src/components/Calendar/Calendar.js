@@ -7,13 +7,9 @@ import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// import { setDefaultOptions } from 'date-fns';
-// import { ru } from 'date-fns/locale';
 import enUS from 'date-fns/locale/en-US';
 import './Calendar.css';
 import { showToast } from '../../lib/toasti';
-
-// setDefaultOptions({ locale: ru });
 
 const locales = {
   'en-US': enUS,
@@ -45,22 +41,6 @@ function CalendarComponent() {
   }, []);
 
   async function handleAddEvent() {
-    // for (let i = 0; i < allEvents.length; i += 1) {
-    //   const d1 = new Date(allEvents[i].start);
-    //   const d2 = new Date(newEvent.start);
-    //   const d3 = new Date(allEvents[i].end);
-    //   const d4 = new Date(newEvent.end);
-    //   if (
-    //     ((d1 <= d2) && (d2 <= d3)) || ((d1 <= d4) && (d4 <= d3))
-    //   ) {
-    //     alert('Наложение задач');
-    //     setNewEvent(initialState);
-    //     break;
-    //   }
-    //   setNewEvent(initialState);
-    // }
-    //
-
     const {
       title, content, start, end,
     } = newEvent;
