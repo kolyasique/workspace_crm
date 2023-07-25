@@ -8,8 +8,6 @@ const fileRouter = require('./upload.router');
 const avatarRouter = require('./avatar.router');
 const statRouter = require('./stat.router');
 
-// const isAuth = require('../middlewares/isAuth');
-
 BaseRouter.use('/auth', AuthRouter);
 BaseRouter.use('/adminpanel', AdminPanelRouter);
 BaseRouter.use('/calendar', calendarRouter);

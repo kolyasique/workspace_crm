@@ -41,7 +41,6 @@ function Modal({
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handlesubmit');
-    // const taskId = { taskId: [e.target.id] };
     const url = 'http://localhost:6622/api/userpanel/createtask';
     fetch(url, {
       method: 'POST',
@@ -55,9 +54,6 @@ function Modal({
       .then((data) => {
         console.log(data.createTask);
         console.log(data.sessionId, formTask.taskForUserId);
-        // if (+data.sessionId === +formTask.taskForUserId) {
-
-        // }
         setTasks([...tasks, data.createTask]);
       })
       .catch(console.error);
@@ -96,8 +92,6 @@ function Modal({
           <button className={cl.myModalSubmit} type="submit"> Добавить </button>
         </form>
         {children}
-        {/* <ModalTimer timeLeft={timeLeft} />
-        <QuestionForm question={question} id={id} setVisibleBtn={setVisibleBtn} value={value} /> */}
       </div>
     </div>
   );

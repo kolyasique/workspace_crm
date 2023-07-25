@@ -3,7 +3,6 @@
     flex-direction: row;
     height: 100%;
     width: 100%;
-    /* justify-content: space-evenly */
     justify-content: center
 }
 
@@ -36,7 +35,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background-color: rgb(164, 167, 150); */
-    /* min-height: 850px; */
 
   }

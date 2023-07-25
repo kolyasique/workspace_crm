@@ -23,9 +23,6 @@ export default function WorkersComponent() {
             {worker.avatar === null ? (
               <div className={cl.circleAvatar}><img className={cl.img} src="https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg" alt="аватарка" /></div>
             ) : (
-              // https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg
-              // https://sribu-sg.s3.amazonaws.com/assets/media/avatar/sukmaumbaran/AVA.png
-              // <div className={cl.circleAvatar}><p>{worker.avatar}</p></div>
               <div className={cl.circleAvatar}><img className={cl.img} src={`http://localhost:6622/${worker.avatar}`} alt="аватарка" /></div>
             )}
           </div>
@@ -36,11 +33,6 @@ export default function WorkersComponent() {
             <div className={cl.workerPhone}>{worker.phone}</div>
             <div className={cl.MailTo}><a className={cl.MailTo} href={`mailto:${worker.email}`}>{worker.email}</a></div>
           </div>
-          {/* {
-          worker.id === state.authUser.id ? (
-            null
-          ) : (<button type="button">Написать</button>)
-          } */}
 
         </div>
       ))}

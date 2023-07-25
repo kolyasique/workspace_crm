@@ -32,13 +32,10 @@ export default function Navbar() {
       }
     });
   }, []);
-    // const
+
   const handleButtonChange = () => {
     setMainOrProfile(!mainOrProfile);
   };
-  // const handleChange = (e) => {
-  //   dispatch(startFilterCandidatesAC(e.target.value));
-  // };
   return (
 
     <div className={cl.header}>

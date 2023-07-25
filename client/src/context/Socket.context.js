@@ -13,7 +13,6 @@ export default function SocketContextProvider({ children }) {
     socket.send(JSON.stringify({ type: 'open', payload: user }));
   };
   socket.onclose = () => {
-    console.log('rabotaet onclose s contexta');
   };
   useEffect(() => () => {
     socket.close();

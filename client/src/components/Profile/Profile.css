@@ -1,19 +1,10 @@
-/* .formDivProfile{
- 
-} */
+
 .container{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-/* .containerChanges{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #aaa;
-  width: 50%;
-  height: 450px;
-} */
+
 
 .formInput{
   display: flex;

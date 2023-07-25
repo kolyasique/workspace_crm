@@ -20,7 +20,6 @@ export default function TaskList() {
     allWorkers, setAllWorkers, taskStatus, setTaskStatus,
   } = useContext(UserContext);
   const [disabledBtn, setDisabledBtn] = useState({});
-  // const {taskStatus, setTaskStatus} = useContext()
   const [closed, setClosed] = useState({});
   const [filteredTasks, setFilteredTasks] = useState([tasks]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,14 +57,12 @@ export default function TaskList() {
         setTasks(data.allTasks);
         setAllWorkers(data.workers);
         setUserId(data.id);
-        // setFirstShow(true);
       });
   }, []);
 
   useEffect(() => {
     fetch('http://localhost:6622/api/userpanel/getclients', {
       credentials: 'include',
-      // ручка за которую у нас цепляется abortcontroller
       signal: abortController.signal,
     })
       .then((res) => res.json())
@@ -81,11 +78,7 @@ export default function TaskList() {
       } return a;
     }));
 
-    // console.log(task, 'ТАСКИ');
-    // console.log(e.target.value, 'e');
-
     const taskToUpdate = { [taskId]: taskProgressStatus };
-    // console.log(taskToUpdate, 'taskProgressStatus');
     setTaskStatus({ ...taskStatus, [e.target.id]: e.target.value, [e.target.id]: [getProgressStatus(e.target.value)] });
     const url = 'http://localhost:6622/api/userpanel/changetaskprogress';
     fetch(url, {
@@ -97,24 +90,15 @@ export default function TaskList() {
       body: JSON.stringify(taskToUpdate),
     })
       .then((res) => res.json());
-    // .then((data2) => {
-    //   setTasks(data2.allTasks1);
-    //   setAllWorkers(data2.workers1);
-    //   setUserId(data2.id);
-    // // setFirstShow(true);
-    // });
 
     if (e.target.value === '100') {
       setDisabledSlider({ ...disabledSlider, [e.target.id]: true });
       setDisabledBtn({ ...disabledBtn, [e.target.id]: true });
     }
-    // }}, [taskStatus]);
   };
 
   const handleClose = (e) => {
     const taskId = { taskId: [e.target.id] };
-    // const taskValue = { taskValue: [e.target.value] };
-    // const taskToUpdate = { [taskId]: taskProgressStatus };
     const url = 'http://localhost:6622/api/userpanel/settaskclosed';
     fetch(url, {
       method: 'POST',
@@ -146,8 +130,6 @@ export default function TaskList() {
       .then((res) => res.json())
       .then((data) => {
         setDone({ ...done, [data]: true });
-        // setFilteredTasks((state) => state.filter((el) => el.id !== +e.target.id));
-        // setTasks((state) => state.filter((el) => el.id !== +e.target.id));
       })
       .catch(console.error);
   };
@@ -155,10 +137,6 @@ export default function TaskList() {
   useEffect(() => {
     setFilteredTasks(tasks);
   }, [tasks]);
-
-  // const sortedAndSearchedPosts = useMemo(()=>{
-  //   return sortedPosts.filter(post=>post.title.toLowerCase().includes(filter.query))
-  // }, [filter.query,sortedPosts])
 
   function setCreator(creatorId) {
     if (creatorId !== undefined) {
@@ -219,8 +197,6 @@ export default function TaskList() {
         break;
       default: console.log('Что-то не так с твоим месяцем!');
     }
-    // const time = [newDate.getHours(), newDate.getMinutes()].map((x) => (x < 10 ? `0${x}` : x)).join(':');
-    // ${time}
     const creationDate = `${String(dayDate)} ${month} ${dateFullYear}`;
     return creationDate;
   }
@@ -267,24 +243,14 @@ export default function TaskList() {
         return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'personal')), setFilter('personal'));
       case 'ordered':
         return (setFilteredTasks(findTasks.filter((el) => el.task_type === 'ordered' && +el.worker_id === +userId)), setFilter('ordered'));
-        // && el.status === null
       case 'searchfilter':
         return (setFilteredTasks(findTasks), setFilter('searchfilter'));
       case 'control':
         return (setFilteredTasks(findTasks.filter((el) => +el.creator_id === +userId && +el.worker_id !== +userId)), setFilter('control'));
-      // case 'successfull':
-      //   // (state) => state.filter((el) => el.id !== +e.target.id)
-      //   return (setFilteredTasks(findTasks.filter((el) => el.status === true)), setFilter('successfull'));
-      // case 'failed':
-      //   return (setFilteredTasks(findTasks.filter((el) => el.status === false)), setFilter('failed'));
       default:
         return (setFilteredTasks(tasks), setFilter('clear'));
     }
   }
-  // useEffect(() => {
-  //   const e = { e: { target: { filter } } };
-  //   doTaskFilter(e);
-  // }, [filteredTasks]);
 
   function setSliderValueFromBase(progress) {
     switch (progress) {
@@ -305,19 +271,12 @@ export default function TaskList() {
   return (
     <div className="taskContainer">
       <div className="taskTools">
-        {/* <div>
-          <button type="button" className="filterMyTasksBtn" id="actual" onClick={(e) => doTaskFilter(e)}>Актуальные</button>
-          <button type="button" className="filterMyTasksBtn" id="successfull" onClick={(e) => doTaskFilter(e)}>Успешные</button>
-          <button type="button" className="filterMyTasksBtn" id="failed" onClick={(e) => doTaskFilter(e)}>Неуспешные</button>
-        </div> */}
         <button type="button" className="filterBtn" id="personal" onClick={(e) => doTaskFilter(e)}>Мои задачи</button>
         <button type="button" className="filterBtn" id="ordered" onClick={(e) => doTaskFilter(e)}> Задачи мне</button>
         <button type="button" className="filterBtn" id="control" onClick={(e) => doTaskFilter(e)}>Контроль</button>
         <button type="button" className="filterBtn" id="clear" onClick={(e) => doTaskFilter(e)}>Все задачи</button>
 
         <input type="text" id="searchfilter" value={find.query} onChange={(e) => doTaskFilter(e)} placeholder="Поиск задач" />
-        {/* setFind({ ...find, query: e.target.value }) */}
-
         <button
           className="addTaskBtn"
           type="button"
@@ -331,10 +290,7 @@ export default function TaskList() {
       </div>
       <div className="taskContainer2">
         <div className="toDoTasks">
-          {/* filteredTasks findTasks (214) */}
-          {/* .filter((taskF) => taskF.worker_id === userId) */}
           {filteredTasks?.filter((taskF) => taskF.worker_id === userId || taskF.creator_id === userId).map((task) => {
-            // const sliderValue = getProgressStatus(task?.progress_status);
             if ((done[task.id] === true || task.status === true) || (done[task.id] === false || task.status === false)) {
               return (
                 <div key={task.id} className={(done[task.id] === true) || ((task.status === true)) ? 'doneTaskItem' : 'failedTaskItem'}>
@@ -373,9 +329,6 @@ export default function TaskList() {
               );
             }
             return (
-            // {done[task.id] === true || task.status === true ? (
-            //   <div></div>) : (
-            //     <div></div>)}
               <div key={task.id} className={(checkRestTime(task.end) > 0 ? ((done[task.id] === true) || (task.status === true) ? 'doneTaskItem' : 'taskItem') : ('failedTaskItem'))}>
                 {task?.client_id === null ? (
                   null
@@ -394,7 +347,6 @@ export default function TaskList() {
                     ))}
                   </div>
                   <div className="taskTitle">{task.title}</div>
-                  {/* <div className="taskStatus">{taskStatus[task.id] ? taskStatus[task.id] : (<>Начать</>) }</div> */}
                   <button className="taskStatusBtn" id={task.id} disabled={!disabledBtn[task.id]} type="button" onClick={handleClick}>{taskStatus[task.id] ? taskStatus[task.id] : task.progress_status }</button>
                 </div>
                 <div className="taskItemLowerDiv">

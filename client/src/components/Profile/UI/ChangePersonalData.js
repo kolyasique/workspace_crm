@@ -12,10 +12,8 @@ export default function ChangePersonalData() {
   };
 
   const handleSubmit = (e) => {
-    // try {
     e.preventDefault();
     console.log('_+_+__+_+_+_', form);
-    // data.append('form', JSON.stringify(form));
     const url = 'http://localhost:6622/api/updworkerinfo';
     fetch(url, {
       method: 'POST',

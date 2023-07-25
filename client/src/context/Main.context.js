@@ -37,13 +37,11 @@ export default function MainContextProvider({ children }) {
 
       switch (type) {
         case 'new_connection':
-          console.log('new_connection');
-          console.log({ type, payload });
+
           setUserListContext((userListContext) => [...userListContext, payload]);
           break;
         case 'all_connections':
-          console.log('all_connections');
-          console.log({ type, payload });
+
           setUserListContext((userListContext) => [...userListContext, ...payload]);
           break;
 

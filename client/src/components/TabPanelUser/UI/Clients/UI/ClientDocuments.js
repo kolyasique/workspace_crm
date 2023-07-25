@@ -27,8 +27,6 @@ export default function ClientDocuments({ client }) {
         console.log('🚀🚀🚀🚀 =>>>>> file: ClientDocuments.js:27 =>>>>> .then =>>>>> data', data);
 
         setDocs(data);
-        // setAllWorkers(data.workers);
-        // setUserId(data.id);
       });
   }, []);
 
@@ -36,11 +34,10 @@ export default function ClientDocuments({ client }) {
     try {
       console.log(form.file, form.text);
 
-      // e.preventDefault();
       const { id } = e.target;
       const data = new FormData();
       data.append('avatar', img);
-      // data.append('text', text)
+
       data.append('form', JSON.stringify(form));
       data.append('client_id', id);
 
@@ -58,7 +55,6 @@ export default function ClientDocuments({ client }) {
               text: '',
               image: '',
             });
-            // setImg(null);
             showToast({ message: 'Файл загружен', type: 'success' });
           });
       } else { showToast({ message: 'Добавьте файл!', type: 'warning' }); }

@@ -34,9 +34,7 @@ export default function LoginAdmin() {
   return (
     <div className="loginform">
       <form onSubmit={handleSubmit}>
-        {/* <div className={`mb-3 ${isSignup ? 'visible' : 'invisible'}`}> */}
         <div className="inf">
-          {/* <img className="log8o" src={log8o} alt="VB" /> */}
           <p className="inftext">Вход для Админа</p>
         </div>
         <div className="form-input">

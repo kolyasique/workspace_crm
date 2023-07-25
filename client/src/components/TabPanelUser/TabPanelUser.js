@@ -15,9 +15,6 @@ import ChatContextProvider from '../../context/Main.context';
 import Messages from './UI/Messages/Messages';
 import WorkersComponent from './UI/WorkersComponent/WorkersComponent';
 
-// const functionalBlocks = {
-
-// };
 export default function VerticalTabs() {
   const [component, setComponent] = useState(<TaskList />);
   const [activeButton, setActiveButton] = useState('1');

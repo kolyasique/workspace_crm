@@ -26,12 +26,6 @@ app.use(sessionParser);
 
 app.use('/api', BaseRouter);
 
-// app.use(errorHandler);
-
-// app.use((err, req, res, next) => {
-//   console.error('====>>>>', err.stack);
-//   res.status(500).send('Something broke!');
-// });
 app.locals.usersMap = new Map();
 app.locals.wsClientMap = new Map();
 const server = http.createServer(app);

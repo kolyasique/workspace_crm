@@ -18,7 +18,6 @@ export default function ProfileContextProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, 'это сейчас приходит');
         setUserInfo(data);
         setForm(data);
       });
